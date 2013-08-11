@@ -1,0 +1,12 @@
+windows:
+  - name: "update"
+    clear: true
+    root: "~"
+    layout: tiled
+    panes:
+      - cmd: ["sudo softwareupdate --install --all -v"]
+        width: 50
+        focus: true
+      - cmd: ["sudo brew update", "sudo brew upgrade"]
+      - cmd: ["sudo /opt/chef/embedded/bin/gem update"]
+      - cmd: ["sudo su -", "cd /Applications/Apps"]

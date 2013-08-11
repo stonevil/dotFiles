@@ -1,0 +1,9 @@
+windows:
+  - name: "si-chef"
+    clear: true
+    root: "~"
+    layout: even-horizontal
+    panes:
+      - cmd: ['cd ~/Documents/SoftServe/Shareable\ Ink/_development_/']
+        focus: true
+      - cmd: ['cd ~/Documents/SoftServe/Shareable\ Ink/_development_/']
