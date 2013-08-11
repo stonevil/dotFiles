@@ -19,19 +19,14 @@ export VIMRUNTIME="/opt/homebrew/share/vim/vim73"
 
 # Set my editor and git editor
 export EDITOR="/opt/homebrew/bin/vim"
-export GIT_EDITOR='/opt/homebrew/bin/vim'
-
-export VISUAL="/opt/homebrew/bin/vim"
-export EDITOR="/opt/homebrew/bin/vim"
+export GIT_EDITOR=$EDITOR
+export VISUAL=$EDITOR
 
 # Don't check mail when opening terminal.
 unset MAILCHECK
 
 # Change this to your console based IRC client of choice.
 export IRC_CLIENT='irssi'
-
-# Set this to the command you use for todo.txt-cli
-export TODO="t"
 
 # Force support UTF8
 export LANG=en_US.UTF-8

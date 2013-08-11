@@ -38,9 +38,9 @@ VIMRUNTIME="/opt/homebrew/share/vim/vim73"
 
 # Set my editor and git editor
 EDITOR="/opt/homebrew/bin/vim"
-GIT_EDITOR='/opt/homebrew/bin/vim'
-VISUAL="/opt/homebrew/bin/vim"
-EDITOR="/opt/homebrew/bin/vim"
+GIT_EDITOR=$EDITOR
+VISUAL=$EDITOR
+EDITOR=$EDITOR
 
 # Change this to your console based IRC client of choice.
 IRC_CLIENT='irssi'
