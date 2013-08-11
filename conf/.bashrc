@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Add rvm gems and nginx to the path
-export PATH=/opt/bin:/opt/sbin:/opt/homebrew/bin:/opt/homebrew/opt/gettext/bin:/opt/chef/bin:/opt/chef/embedded/bin:/usr/bin:/usr/sbin:/bin:/sbin:$PATH
+export PATH=/opt/bin:/opt/sbin:/opt/homebrew/bin:/opt/homebrew/opt/gettext/bin:/opt/chef/bin:/opt/chef/embedded/bin:/usr/bin:/usr/sbin:/bin:/sbin:~/.Files/bin:$PATH
 
 export MANPATH=/opt/share/man:/opt/homebrew/share/man:/usr/local/share/man:$MANPATH
 
