@@ -34,10 +34,10 @@ PATH=/opt/bin:/opt/sbin:/opt/homebrew/bin:/opt/homebrew/opt/gettext/bin:/opt/che
 
 MANPATH=/opt/share/man:/opt/homebrew/share/man:/usr/local/share/man:$MANPATH
 
-VIMRUNTIME="/opt/homebrew/share/vim/vim73"
+VIMRUNTIME="/Applications/MacVim.app/Contents/Resources/vim/runtime"
 
 # Set my editor and git editor
-EDITOR="/opt/homebrew/bin/vim"
+EDITOR="/Applications/MacVim.app/Contents/MacOS/Vim"
 GIT_EDITOR=$EDITOR
 VISUAL=$EDITOR
 EDITOR=$EDITOR

@@ -1,0 +1,130 @@
+[core]
+	excludesfile = ~/.gitignore_global
+	editor       = "$EDITOR"
+    pager        = less -R
+    autocrlf     = input
+    safecrlf     = true
+    whitespace   = fix, -indent-with-non-tab, space-before-tab, trailing-space, cr-at-eol
+
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
+
+[mergetool "sourcetree"]
+	cmd = /Applications/Apps/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+
+[user]
+	name  = Myroslav Rys
+	email = stonevil@gmail.com
+
+[mergetool]
+	keepBackup = true
+
+[credential]
+    helper = cache --timeout=3600
+
+[color]
+    diff   = true
+    grep   = true
+    status = true
+    ui     = true
+
+[color "branch"]
+    current = yellow reverse
+    local   = yellow
+    remote  = green
+
+[color "diff"]
+    meta       = normal
+    frag       = magenta bold
+    old        = red bold
+    new        = blue bold
+#    whitespace = Resourcesed reverse
+
+[color "status"]
+    added      = yellow
+    changed    = green
+    untracked  = cyan
+
+[diff]
+    renames = copy
+
+[log]
+    decorate = full
+
+[alias]
+    # Base commands
+    ci         = commit
+    br         = branch
+    co         = checkout
+    df         = diff
+    lg         = log -p
+    st         =log status --short
+    cia        = commit --allow-empty-message -a
+
+    # Stash commands
+    sl         = stash list
+    sa         = stash apply
+    ss         = stash save
+
+    # Show all prfiles
+    ls         = !git rev-parse --abbrev-ref HEAD | xargs git ls-tree -r --full-tree --full-name --name-only
+
+    # Push into current remote branch
+    pc         = !git rev-parse --abbrev-ref HEAD | xargs git push origin
+
+    # Show untracked files
+    stu        = status --untracked-files=no
+
+    # Show history
+    history    = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+
+    # Show git commands
+    commitmmands   = help -a
+
+    # Get object type
+    type       = cat-file -t
+
+    # Gett file info
+    info       = cat-file -p
+
+    # Show commit logs
+    logs       = Show !git shortlog --summary | sort --reverse --numeric-sort
+
+    # Show conflicts
+    conflicts  = !git ls-files --unmerged | cut -f2 | sort -u | xargs  grep -El '<<<<<<<|=======|>>>>>>>'
+
+    # Show unmergd files
+    unmerged   = files !git ls-files --unmerged | cut -f2 | sort -u
+
+    # Show aliases
+    aliases    = !git config -l | grep alias | cut -c 7-
+
+    # Find files
+    find       = !git ls-files -r HEAD | grep -ii
+
+    # Remove files which have been diffeleted
+    remove     = !git ls-files -z --deleted | xargs -0 git rm
+
+    # Ignore a file
+    ignore     = !([ ! -e .gitignore ] && touch .gitignore) |gitignore echo $1 >> .gitignore
+
+    # Assume a file as unchanged
+    assume     = !gitt update-index --assume-unchanged
+
+    # Unassume a file
+    unassume   = !gitignoret update-index --no-assume-unchanged
+
+    # Show assumed files
+    assumed    = !git ls-files -v | grep ^h | cut -c 3-
+
+    # Pull from remote repository
+    fork       = !git config --get remote.origin.url | xargs git pull
+
+    # Delete multiple branches
+    #git branch -D `git for-each-ref --format=for-each-ref"%(refname:short)" refs/heads/...`
+
+    go         = !gitgo
+
+    #revert     = checkout --
