@@ -34,10 +34,10 @@ PATH=/opt/bin:/opt/sbin:/opt/homebrew/bin:/opt/homebrew/opt/gettext/bin:/opt/che
 
 MANPATH=/opt/share/man:/opt/homebrew/share/man:/usr/local/share/man:$MANPATH
 
-VIMRUNTIME="/Applications/MacVim.app/Contents/Resources/vim/runtime"
+VIMRUNTIME="/opt/homebrew/share/vim/vim74"
 
 # Set my editor and git editor
-EDITOR="/Applications/MacVim.app/Contents/MacOS/Vim"
+EDITOR="/opt/homebrew/bin/vim"
 GIT_EDITOR=$EDITOR
 VISUAL=$EDITOR
 EDITOR=$EDITOR
@@ -52,8 +52,11 @@ LC_CTYPE=en_US.UTF-8
 LC_ALL=en_US.UTF-8
 
 ## Aliases
+alias zr='source ~/.zshrc'
+
 alias tail='/opt/homebrew/bin/multitail'
-alias v='/opt/homebrew/bin/vim'
+alias v=$EDITOR
+alias vim=$EDITOR
 alias plint='puppet-lint --no-hard_tabs-check --no-2sp_soft_tabs-check'
 alias pval='puppet parser validate'
 alias po2mo='/opt/homebrew/opt/gettext/bin/msgfmt'

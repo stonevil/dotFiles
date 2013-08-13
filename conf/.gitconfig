@@ -1,6 +1,6 @@
 [core]
-	excludesfile = ~/.gitignore_global
-	editor       = "$EDITOR"
+	excludesfile   = ~/.gitignore_global
+  editor         = "/Applications/MacVim.app/Contents/MacOS/Vim"
     pager        = less -R
     autocrlf     = input
     safecrlf     = true
