@@ -1,8 +1,0 @@
-windows:
-  - name: "stone"
-    clear: true
-    root: "~"
-    layout: main-vertical
-    panes:
-      - cmd: [""]
-      - cmd: [""]

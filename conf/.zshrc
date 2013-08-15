@@ -125,9 +125,24 @@ alias t='teamocil'
 # Add autocompletion for Teamocil
 compctl -g '~/.teamocil/*(:t:r)' teamocil
 
+# Tmuxinator
+compctl -K _tmuxinator tmuxinator mux
+
+_tmuxinator() {
+  local words completions
+  read -cA words
+
+  if [ "${#words}" -eq 2 ]; then
+    completions="$(tmuxinator commands)"
+  else
+    completions="$(tmuxinator completions ${words[2,-2]})"
+  fi
+
+  reply=("${(ps:\n:)completions}")
+}
+
 ## START TMUX
-if [[ "$TERM" != "screen" ]] &&
-        [[ "$SSH_CONNECTION" == "" ]]; then
+if [[ "$TERM" != "screen" ]] && [[ "$SSH_CONNECTION" == "" ]]; then
     # Attempt to discover a detached session and attach
     # it, else create a new session
 
