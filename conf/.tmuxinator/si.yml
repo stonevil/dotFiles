@@ -1,0 +1,20 @@
+# ~/.tmuxinator/si.yml
+
+name: si
+root: ~/
+
+project_name: Shareabel Ink
+project_root: ~/Documents/SoftServe/Shareable\ Ink/_development_
+windows:
+  - apollo-k:
+      layout: 67d7,208x64,0,0{105x64,0,0,83,102x64,106,0[102x36,106,0,84,102x27,106,37,85]}
+      panes:
+        - cd ~/Documents/SoftServe/Shareable\ Ink/_development_/apollo-k-cookbook; ls -lah
+        - cd ~/Documents/SoftServe/Shareable\ Ink/_development_/apollo-k-cookbook; ls -lah
+        - cd ~/Documents/SoftServe/Shareable\ Ink/_development_/cookbooks/; ls -lah
+  - chef:
+      layout: 67d7,208x64,0,0{105x64,0,0,83,102x64,106,0[102x36,106,0,84,102x27,106,37,85]}
+      panes:
+        - cd ~/Documents/SoftServe/Shareable\ Ink/_development_/; ls -lah
+        - cd ~/Documents/SoftServe/Shareable\ Ink/_development_/; ls -lah
+        - cd ~/Documents/SoftServe/Shareable\ Ink/_development_/cookbooks/; ls -lah
