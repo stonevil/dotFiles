@@ -8,7 +8,7 @@ ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="steeef"
 
 # Set to this to use case-sensitive completion
-# CASE_SENSITIVE="true"
+CASE_SENSITIVE="true"
 
 # Comment this out to disable weekly auto-update checks
 # DISABLE_AUTO_UPDATE="true"
@@ -25,7 +25,7 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git osx ruby zsh-syntax-highlighting)
+plugins=(attery brew colorize copydir copyfile git knife knife_ssh osx ruby thor tmuxinator vagrant vi-mode zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -56,6 +56,7 @@ alias zr='source ~/.zshrc'
 
 alias tail='/opt/homebrew/bin/multitail'
 alias v=$EDITOR
+alias vi=$EDITOR
 alias vim=$EDITOR
 alias plint='puppet-lint --no-hard_tabs-check --no-2sp_soft_tabs-check'
 alias pval='puppet parser validate'
@@ -95,6 +96,7 @@ alias glg='git lg'
 # review all files in a git-managed directory that are not yet added to git
 alias gv='vim $(git ls-files -o -X .gitignore)'
 # Vagrant
+alias vb='vagrant up'
 alias vv='vagrant up --provider vmware_fusion'
 alias va='vagrant up --provider aws'
 alias vh='vagrant halt'
@@ -140,27 +142,3 @@ _tmuxinator() {
 
   reply=("${(ps:\n:)completions}")
 }
-
-## START TMUX
-#if [[ "$TERM" != "screen" ]] && [[ "$SSH_CONNECTION" == "" ]]; then
-    # Attempt to discover a detached session and attach
-    # it, else create a new session
-
-#    WHOAMI=$(whoami)
-#    if tmux has-session -t $WHOAMI 2>/dev/null; then
-#        tmux -2 attach-session -t $WHOAMI
-#    else
-#        tmux -2 new-session -s $WHOAMI
-#    fi
-#else
-
-    # One might want to do other things in this case,
-    # here I print my motd, but only on servers where
-    # one exists
-
-    # If inside tmux session then print MOTD
-#    MOTD=/etc/motd.tcl
-#    if [ -f $MOTD ]; then
-#        $MOTD
-#    fi
-#fi
