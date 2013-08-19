@@ -12,6 +12,30 @@ windows:
         - cd ~/Documents/SoftServe/Shareable\ Ink/_development_/apollo-k-cookbook; ls -lah
         - cd ~/Documents/SoftServe/Shareable\ Ink/_development_/apollo-k-cookbook; ls -lah
         - cd ~/Documents/SoftServe/Shareable\ Ink/_development_/cookbooks/; ls -lah
+  - duke:
+      layout: 67d7,208x64,0,0{105x64,0,0,83,102x64,106,0[102x36,106,0,84,102x27,106,37,85]}
+      panes:
+        - cd ~/Documents/SoftServe/Shareable\ Ink/_development_/duke-cookbook; ls -lah
+        - cd ~/Documents/SoftServe/Shareable\ Ink/_development_/duke-cookbook; ls -lah
+        - cd ~/Documents/SoftServe/Shareable\ Ink/_development_/cookbooks/; ls -lah
+  - dashboard:
+      layout: 67d7,208x64,0,0{105x64,0,0,83,102x64,106,0[102x36,106,0,84,102x27,106,37,85]}
+      panes:
+        - cd ~/Documents/SoftServe/Shareable\ Ink/_development_/dashboard-cookbook ls -lah
+        - cd ~/Documents/SoftServe/Shareable\ Ink/_development_/dashboard-cookbook; ls -lah
+        - cd ~/Documents/SoftServe/Shareable\ Ink/_development_/cookbooks/; ls -lah
+  - nginx:
+      layout: 67d7,208x64,0,0{105x64,0,0,83,102x64,106,0[102x36,106,0,84,102x27,106,37,85]}
+      panes:
+        - cd ~/Documents/SoftServe/Shareable\ Ink/_development_/nginx-package-rebuild-cookbook; ls -lah
+        - cd ~/Documents/SoftServe/Shareable\ Ink/_development_/nginx-package-rebuild-cookbook; ls -lah
+        - cd ~/Documents/SoftServe/Shareable\ Ink/_development_/cookbooks/; ls -lah
+  - package-rebuild-cookbook:
+      layout: 67d7,208x64,0,0{105x64,0,0,83,102x64,106,0[102x36,106,0,84,102x27,106,37,85]}
+      panes:
+        - cd ~/Documents/SoftServe/Shareable\ Ink/_development_/package-rebuild-cookbook; ls -lah
+        - cd ~/Documents/SoftServe/Shareable\ Ink/_development_/package-rebuild-cookbook; ls -lah
+        - cd ~/Documents/SoftServe/Shareable\ Ink/_development_/cookbooks/; ls -lah
   - chef:
       layout: 67d7,208x64,0,0{105x64,0,0,83,102x64,106,0[102x36,106,0,84,102x27,106,37,85]}
       panes:
