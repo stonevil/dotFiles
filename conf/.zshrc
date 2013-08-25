@@ -105,6 +105,8 @@ alias vs='vagrant ssh'
 alias vt='vagrant status'
 alias vl='vagrant reload'
 alias vr='vagrant resume'
+# Guard
+alias guard='guard --no-bundler-warning --latency 10'
 
 
 ## FUNCTIONS
@@ -116,6 +118,8 @@ function myip() {
   ifconfig en1 | grep 'inet ' | sed -e 's/:/ /' | awk '{print "en1 (IPv4): " $2 " " $3 " " $4 " " $5 " " $6}'
   ifconfig en1 | grep 'inet6 ' | sed -e 's/ / /' | awk '{print "en1 (IPv6): " $2 " " $3 " " $4 " " $5 " " $6}'
 }
+
+function search() { open /Applications/Safari.app/ "http://www.google.com/search?q= $1"; }
 
 bindkey -v
 
