@@ -61,7 +61,6 @@ alias vim=$EDITOR
 alias plint='puppet-lint --no-hard_tabs-check --no-2sp_soft_tabs-check'
 alias pval='puppet parser validate'
 alias po2mo='/opt/homebrew/opt/gettext/bin/msgfmt'
-alias lshwd="lspci -vv | awk '/Kernel/{print $5}' | sort -u" # Determine the 1 modules your hardware needs on Linux.
 alias ll='ls -lahG'
 alias l='ls -lahG'
 
