@@ -119,7 +119,8 @@ function myip() {
   ifconfig en1 | grep 'inet6 ' | sed -e 's/ / /' | awk '{print "en1 (IPv6): " $2 " " $3 " " $4 " " $5 " " $6}'
 }
 
-function search() { open /Applications/Safari.app/ "http://www.google.com/search?q= $1"; }
+function search() { open /Applications/Safari.app/ "http://www.google.com/search?q= $@"; }
+function ovftool() { /Applications/VMware\ Fusion.app/Contents/Library/VMware\ OVF\ Tool/ovftool $@; }
 
 bindkey -v
 
