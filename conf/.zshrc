@@ -110,7 +110,7 @@ alias guard='guard --no-bundler-warning --latency 10'
 
 ## FUNCTIONS
 # return my IP address
-function myip() {
+function IP-all() {
   ifconfig lo0 | grep 'inet ' | sed -e 's/:/ /' | awk '{print "lo0       : " $2}'
   ifconfig en0 | grep 'inet ' | sed -e 's/:/ /' | awk '{print "en0 (IPv4): " $2 " " $3 " " $4 " " $5 " " $6}'
   ifconfig en0 | grep 'inet6 ' | sed -e 's/ / /' | awk '{print "en0 (IPv6): " $2 " " $3 " " $4 " " $5 " " $6}'
@@ -120,6 +120,34 @@ function myip() {
 
 function search() { open /Applications/Safari.app/ "http://www.google.com/search?q= $@"; }
 function ovftool() { /Applications/VMware\ Fusion.app/Contents/Library/VMware\ OVF\ Tool/ovftool $@; }
+function vagrant-update-all-plugins() { for plugin in $(vagrant plugin list | cut -f1 -d' '); do vagrant plugin install $plugin; done; }
+function finder-context-menu-flush() { sudo /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain user; killall Finder; echo "Open With has been rebuilt, Finder will relaunch"; }
+function speed-test() { wget -O /dev/null http://speedtest.wdc01.softlayer\.com/downloads/test10.zip; }
+
+function gems-update-all() { gem update `gem list | cut -d ' ' -f 1`; echo "All gems in system path updated"; }
+function gems-remove-all() { for x in `gem list --no-versions`; do gem uninstall $x -a -x -I; done; echo "All gems in system path updated"; }
+
+function memory-stats() {
+FREE_BLOCKS=$(vm_stat | grep free | awk '{ print $3 }' | sed 's/\.//')
+INACTIVE_BLOCKS=$(vm_stat | grep inactive | awk '{ print $3 }' | sed 's/\.//')
+SPECULATIVE_BLOCKS=$(vm_stat | grep speculative | awk '{ print $3 }' | sed 's/\.//')
+FREE=$((($FREE_BLOCKS+SPECULATIVE_BLOCKS)*4096/1048576))
+INACTIVE=$(($INACTIVE_BLOCKS*4096/1048576))
+TOTAL=$((($FREE+$INACTIVE)))
+echo Free:       $FREE MB
+echo Inactive:   $INACTIVE MB
+echo Total free: $TOTAL MB }
+
+function git-submodule-remove() {
+git config -f .git/config --remove-section submodule.$1
+git config -f .gitmodules --remove-section submodule.$1
+git rm --cached $1
+git commit -m "Remove $1 cookbook submodule"
+rm -rf $1
+rm -rf .git/modules/$1; }
+
+function IP-external() { dig +short myip.opendns.com @resolver1.opendns.com; }
+function dns-cache-flush() { sudo killall -HUP mDNSResponder; }
 
 bindkey -v
 
