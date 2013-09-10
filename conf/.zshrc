@@ -27,6 +27,7 @@ COMPLETION_WAITING_DOTS="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(attery brew colorize copydir copyfile git knife knife_ssh osx ruby thor tmuxinator vagrant vi-mode zsh-syntax-highlighting)
 
+# Load oh-my-zsh
 if [[ -f $ZSH/oh-my-zsh.sh && -r $ZSH/oh-my-zsh.sh ]]; then
   source $ZSH/oh-my-zsh.sh
 fi
@@ -40,6 +41,12 @@ HOMEBREW=/opt/homebrew
 if [[ -d $HOMEBREW ]]; then
   PATH=$HOMEBREW/bin:$HOMEBREW/gettext/bin:$PATH
   MANPATH=$HOMEBREW/share/man:$MANPATH
+fi
+
+# Load zsh syntax highlighting
+ZSHSYNTAXHIGHLIGHTING=$HOMEBREW
+if [[ -f $ZSHSYNTAXHIGHLIGHTING/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+  source $ZSHSYNTAXHIGHLIGHTING/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
 # Add OpScode Chef to the PATH
