@@ -27,17 +27,36 @@ COMPLETION_WAITING_DOTS="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(attery brew colorize copydir copyfile git knife knife_ssh osx ruby thor tmuxinator vagrant vi-mode zsh-syntax-highlighting)
 
-source $ZSH/oh-my-zsh.sh
+if [[ -f $ZSH/oh-my-zsh.sh && -r $ZSH/oh-my-zsh.sh ]]; then
+  source $ZSH/oh-my-zsh.sh
+fi
 
 # Customize to your needs...
 PATH=/opt/bin:/opt/sbin:/opt/homebrew/bin:/opt/homebrew/opt/gettext/bin:/opt/chef/bin:/opt/chef/embedded/bin:/usr/bin:/usr/sbin:/bin:/sbin:~/.Files/bin:$PATH
 
 MANPATH=/opt/share/man:/opt/homebrew/share/man:/usr/local/share/man:$MANPATH
 
-VIMRUNTIME="/opt/homebrew/share/vim/vim74"
+if [[ -d /opt/homebrew/share/vim/vim74 ]]; then
+  VIMRUNTIME="/opt/homebrew/share/vim/vim74"
+fi
 
-# Set my editor and git editor
-EDITOR="/opt/homebrew/bin/vim"
+# Load source for AWS CLI completio
+if [[ -f /usr/local/bin/aws_zsh_completer.sh && -r /usr/local/bin/aws_zsh_completer.sh ]]; then
+  source /usr/local/bin/aws_zsh_completer.sh
+fi
+
+# Set EDITOR
+if [[ -f /opt/homebrew/bin/vim ]]; then
+  EDITOR="/opt/homebrew/bin/vim"
+else
+  if [[ -f /Applications/MacVim.app/Contents/MacOS/Vim ]]; then
+    EDITOR="/Applications/MacVim.app/Contents/MacOS/Vim"
+  else
+    if [[ -f /usr/bin/vim ]]; then
+      EDITOR="/usr/bin/vim"
+    fi
+  fi
+fi
 GIT_EDITOR=$EDITOR
 VISUAL=$EDITOR
 EDITOR=$EDITOR
@@ -54,7 +73,9 @@ LC_ALL=en_US.UTF-8
 ## Aliases
 alias zr='source ~/.zshrc'
 
-alias tail='/opt/homebrew/bin/multitail'
+if [[ -f /opt/homebrew/bin/multitail ]]; then
+  alias tail='/opt/homebrew/bin/multitail'
+fi
 alias v=$EDITOR
 alias vi=$EDITOR
 alias vim=$EDITOR
@@ -68,7 +89,9 @@ alias l='ls -lahG'
 alias tl="tty-clock -s -r; vlock"
 
 # VMware aliases
-alias vmrun='/Applications/VMware\ Fusion.app/Contents/Library/vmrun'
+if [[ -f '/Applications/VMware\ Fusion.app/Contents/Library/vmrun' ]]; then
+  alias vmrun='/Applications/VMware\ Fusion.app/Contents/Library/vmrun'
+fi
 
 # Git aliases
 alias ga='git add'
