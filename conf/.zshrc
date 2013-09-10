@@ -81,6 +81,13 @@ GIT_EDITOR=$EDITOR
 VISUAL=$EDITOR
 EDITOR=$EDITOR
 
+# LESS or MORE
+alias more='less'
+if command -v pygmentize >/dev/null; then
+  LESS='-R'
+  LESSOPEN='|~/.lessfilter %s'
+fi
+
 # Change this to your console based IRC client of choice.
 IRC_CLIENT='irssi'
 
@@ -91,17 +98,20 @@ LC_CTYPE=en_US.UTF-8
 LC_ALL=en_US.UTF-8
 
 ## Aliases
+# Reload ZSH configuration
 alias zr='source ~/.zshrc'
 
-if [[ -f /opt/homebrew/bin/multitail ]]; then
-  alias tail='/opt/homebrew/bin/multitail'
+if command -v multitail >/dev/null; then
+  alias tail='multitail -C'
 fi
+
+# Editor aliases
 alias v=$EDITOR
 alias vi=$EDITOR
 alias vim=$EDITOR
+
 alias plint='puppet-lint --no-hard_tabs-check --no-2sp_soft_tabs-check'
 alias pval='puppet parser validate'
-alias po2mo='/opt/homebrew/opt/gettext/bin/msgfmt'
 alias ll='ls -lahG'
 alias l='ls -lahG'
 
