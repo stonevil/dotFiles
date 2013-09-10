@@ -31,29 +31,42 @@ if [[ -f $ZSH/oh-my-zsh.sh && -r $ZSH/oh-my-zsh.sh ]]; then
   source $ZSH/oh-my-zsh.sh
 fi
 
-# Customize to your needs...
-PATH=/opt/bin:/opt/sbin:/opt/homebrew/bin:/opt/homebrew/opt/gettext/bin:/opt/chef/bin:/opt/chef/embedded/bin:/usr/bin:/usr/sbin:/bin:/sbin:~/.Files/bin:$PATH
+# Customize ENV variables
+PATH=/opt/bin:/opt/sbin:/usr/bin:/usr/sbin:/bin:/sbin:~/.Files/bin:$PATH
+MANPATH=/opt/share/man:/usr/local/share/man:$MANPATH
 
-MANPATH=/opt/share/man:/opt/homebrew/share/man:/usr/local/share/man:$MANPATH
+# Add homebreb to the PATH
+HOMEBREW=/opt/homebrew
+if [[ -d $HOMEBREW ]]; then
+  PATH=$HOMEBREW/bin:$HOMEBREW/gettext/bin:$PATH
+  MANPATH=$HOMEBREW/share/man:$MANPATH
+fi
 
-if [[ -d /opt/homebrew/share/vim/vim74 ]]; then
-  VIMRUNTIME="/opt/homebrew/share/vim/vim74"
+# Add OpScode Chef to the PATH
+CHEF=/opt/chef
+if [[ -d $CHEF ]]; then
+  PATH=$CHEF/bin:$CHEF/embedded/bin:$PATH
+  MANPATH=$CHEF/share/man:$CHEF/embedded/share/man:$MANPATH
 fi
 
 # Load source for AWS CLI completio
-if [[ -f /usr/local/bin/aws_zsh_completer.sh && -r /usr/local/bin/aws_zsh_completer.sh ]]; then
-  source /usr/local/bin/aws_zsh_completer.sh
+AWSCLI=/usr/local
+if [[ -f $AWSCLI/bin/aws_zsh_completer.sh && -r $AWSCLI/bin/aws_zsh_completer.sh ]]; then
+  source $AWSCLI/bin/aws_zsh_completer.sh
 fi
 
 # Set EDITOR
 if [[ -f /opt/homebrew/bin/vim ]]; then
   EDITOR="/opt/homebrew/bin/vim"
+  VIMRUNTIME="/opt/homebrew/share/vim/vim74"
 else
   if [[ -f /Applications/MacVim.app/Contents/MacOS/Vim ]]; then
     EDITOR="/Applications/MacVim.app/Contents/MacOS/Vim"
+    VIMRUNTIME="/Applications/MacVim.app/Contents/Resources/vim/runtime"
   else
     if [[ -f /usr/bin/vim ]]; then
       EDITOR="/usr/bin/vim"
+      VIMRUNTIME="/usr/share/vim/vim"
     fi
   fi
 fi
@@ -118,14 +131,17 @@ alias glg='git lg'
 # review all files in a git-managed directory that are not yet added to git
 alias gv='vim $(git ls-files -o -X .gitignore)'
 # Vagrant
-alias vb='vagrant up'
-alias vv='vagrant up --provider vmware_fusion'
-alias va='vagrant up --provider aws'
+if [[ -f '/Applications/VMware\ Fusion.app/Contents/Library/vmrun' ]]; then
+  function vv() { vagrant up $@ --provider vmware_fusion; }
+  function vl() { vagrant reload $@ --provider vmware_fusion; }
+else
+  function vv() { vagrant up $@; }
+  function vl() { vagrant reload $@; }
+fi
 alias vh='vagrant halt'
 alias vd='vagrant destroy'
 alias vs='vagrant ssh'
 alias vt='vagrant status'
-alias vl='vagrant reload'
 alias vr='vagrant resume'
 # Guard
 alias guard='guard --no-bundler-warning --latency 10'
@@ -143,7 +159,7 @@ function IP-all() {
 
 function search() { open /Applications/Safari.app/ "http://www.google.com/search?q= $@"; }
 function ovftool() { /Applications/VMware\ Fusion.app/Contents/Library/VMware\ OVF\ Tool/ovftool $@; }
-function vagrant-update-all-plugins() { for plugin in $(vagrant plugin list | cut -f1 -d' '); do vagrant plugin install $plugin; done; }
+function vagrant-update-all-plugins() { for plugin in $(vagrant plugin list | cut -f1 -d' '); do vagrant plugin update $plugin; done; }
 function finder-context-menu-flush() { sudo /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain user; killall Finder; echo "Open With has been rebuilt, Finder will relaunch"; }
 function speed-test() { wget -O /dev/null http://speedtest.wdc01.softlayer\.com/downloads/test10.zip; }
 
