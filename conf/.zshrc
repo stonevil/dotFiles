@@ -1,3 +1,6 @@
+# Path to your dotFiles configuration.
+DOTFILES=$HOME/.Files
+
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
@@ -25,7 +28,7 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(attery brew colorize copydir copyfile git knife knife_ssh osx ruby thor tmuxinator vagrant vi-mode zsh-syntax-highlighting)
+plugins=(attery brew colorize copydir copyfile git knife knife_ssh osx ruby terminalapp thor tmuxinator vagrant vi-mode zsh-syntax-highlighting)
 
 # Load oh-my-zsh
 if [[ -f $ZSH/oh-my-zsh.sh && -r $ZSH/oh-my-zsh.sh ]]; then
@@ -33,7 +36,7 @@ if [[ -f $ZSH/oh-my-zsh.sh && -r $ZSH/oh-my-zsh.sh ]]; then
 fi
 
 # Customize ENV variables
-PATH=/opt/bin:/opt/sbin:/usr/bin:/usr/sbin:/bin:/sbin:~/.Files/bin:$PATH
+PATH=/opt/bin:/opt/sbin:/usr/bin:/usr/sbin:/bin:/sbin:$DOTFILES/bin:$PATH
 MANPATH=/opt/share/man:/usr/local/share/man:$MANPATH
 
 # Add homebreb to the PATH
@@ -44,9 +47,28 @@ if [[ -d $HOMEBREW ]]; then
 fi
 
 # Load zsh syntax highlighting
-ZSHSYNTAXHIGHLIGHTING=$HOMEBREW
-if [[ -f $ZSHSYNTAXHIGHLIGHTING/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
-  source $ZSHSYNTAXHIGHLIGHTING/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+ZSHCOMPLETIONS=$DOTFILES/modules/zsh-completions
+if [[ -d $ZSHCOMPLETIONS/zsh-completions/src ]]; then
+  fpath=($ZSHCOMPLETIONS/zsh-completions/src $fpath)
+fi
+
+# Load zsh syntax highlighting
+ZSHHISTORYSUBSTRINGSEARCH=$DOTFILES/modules/zsh-history-substring-search
+if [[ -f $ZSHHISTORYSUBSTRINGSEARCH/zsh-history-substring-search.zsh ]]; then
+  source $ZSHHISTORYSUBSTRINGSEARCH/zsh-history-substring-search.zsh
+  # bind UP and DOWN arrow keys
+  zmodload zsh/terminfo
+  # bindkey "$terminfo[kcuu1]" history-substring-search-up
+  # bindkey "$terminfo[kcud1]" history-substring-search-down
+  # bind k and j for VI mode
+  bindkey -M vicmd 'k' history-substring-search-up
+  bindkey -M vicmd 'j' history-substring-search-down
+fi
+
+# Load zsh syntax highlighting
+ZSHSYNTAXHIGHLIGHTING=$DOTFILES/modules/zsh-syntax-highlighting
+if [[ -f $ZSHSYNTAXHIGHLIGHTING/zsh-syntax-highlighting.zsh ]]; then
+  source $ZSHSYNTAXHIGHLIGHTING/zsh-syntax-highlighting.zsh
 fi
 
 # Add OpScode Chef to the PATH
