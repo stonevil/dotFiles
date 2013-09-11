@@ -6,5 +6,5 @@ My collection of dot and config files and useful scripts. Highly optimised for O
 TODO
 ==================
 
-# Remove hard dependencies on external modules. Maybe to use git submodules?
-# Clean up this mess.
+* Remove hard dependencies on external modules. Maybe to use git submodules?
+* Clean up this mess.
