@@ -1,6 +1,9 @@
+# dotFiles #####################################################################
 # Path to your dotFiles configuration.
 DOTFILES=$HOME/.Files
 
+
+# Oh My ZSH ####################################################################
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
@@ -35,16 +38,10 @@ if [[ -f $ZSH/oh-my-zsh.sh && -r $ZSH/oh-my-zsh.sh ]]; then
   source $ZSH/oh-my-zsh.sh
 fi
 
-# Customize ENV variables
-PATH=/opt/bin:/opt/sbin:/usr/bin:/usr/sbin:/bin:/sbin:$DOTFILES/bin:$PATH
-MANPATH=/opt/share/man:/usr/local/share/man:$MANPATH
 
-# Add homebreb to the PATH
-HOMEBREW=/opt/homebrew
-if [[ -d $HOMEBREW ]]; then
-  PATH=$HOMEBREW/bin:$HOMEBREW/gettext/bin:$PATH
-  MANPATH=$HOMEBREW/share/man:$MANPATH
-fi
+# ZSH ##########################################################################
+# Reload ZSH configuration
+alias zr='source ~/.zshrc'
 
 # Load zsh syntax highlighting
 ZSHCOMPLETIONS=$DOTFILES/modules/zsh-completions
@@ -71,6 +68,33 @@ if [[ -f $ZSHSYNTAXHIGHLIGHTING/zsh-syntax-highlighting.zsh ]]; then
   source $ZSHSYNTAXHIGHLIGHTING/zsh-syntax-highlighting.zsh
 fi
 
+# Customise ls command
+alias ll='ls -lahG'
+alias l='ls -lahG'
+
+
+# ENV ##########################################################################
+# Force support UTF8
+LANG=en_US.UTF-8
+LANGUAGE=en_US.UTF-8
+LC_CTYPE=en_US.UTF-8
+LC_ALL=en_US.UTF-8
+
+# Customize ENV variables
+PATH=/opt/bin:/opt/sbin:/usr/bin:/usr/sbin:/bin:/sbin:$DOTFILES/bin:$PATH
+MANPATH=/opt/share/man:/usr/local/share/man:$MANPATH
+
+
+# Homebrew #####################################################################
+# Add homebreb to the PATH
+HOMEBREW=/opt/homebrew
+if [[ -d $HOMEBREW ]]; then
+  PATH=$HOMEBREW/bin:$HOMEBREW/gettext/bin:$PATH
+  MANPATH=$HOMEBREW/share/man:$MANPATH
+fi
+
+
+# Chef #########################################################################
 # Add OpScode Chef to the PATH
 CHEF=/opt/chef
 if [[ -d $CHEF ]]; then
@@ -78,12 +102,26 @@ if [[ -d $CHEF ]]; then
   MANPATH=$CHEF/share/man:$CHEF/embedded/share/man:$MANPATH
 fi
 
-# Load source for AWS CLI completio
+# Puppet #######################################################################
+PUPPET=/opt/puppet
+if command -v puppet >/dev/null; then
+  alias pval='puppet parser validate'
+fi
+
+if command -v puppet-lint >/dev/null; then
+  alias plint='puppet-lint --no-hard_tabs-check --no-2sp_soft_tabs-check'
+fi
+
+
+# AWS ##########################################################################
+# Load source for AWS CLI completion
 AWSCLI=/usr/local
 if [[ -f $AWSCLI/bin/aws_zsh_completer.sh && -r $AWSCLI/bin/aws_zsh_completer.sh ]]; then
   source $AWSCLI/bin/aws_zsh_completer.sh
 fi
 
+
+# Editors ######################################################################
 # Set EDITOR
 if [[ -f /opt/homebrew/bin/vim ]]; then
   EDITOR="/opt/homebrew/bin/vim"
@@ -99,53 +137,46 @@ else
     fi
   fi
 fi
+
+# ENV Variables
 GIT_EDITOR=$EDITOR
 VISUAL=$EDITOR
 EDITOR=$EDITOR
 
-# LESS or MORE
-alias more='less'
-if command -v pygmentize >/dev/null; then
-  LESS='-R'
-  LESSOPEN='|~/.lessfilter %s'
-fi
-
-# Change this to your console based IRC client of choice.
-IRC_CLIENT='irssi'
-
-# Force support UTF8
-LANG=en_US.UTF-8
-LANGUAGE=en_US.UTF-8
-LC_CTYPE=en_US.UTF-8
-LC_ALL=en_US.UTF-8
-
-## Aliases
-# Reload ZSH configuration
-alias zr='source ~/.zshrc'
-
-if command -v multitail >/dev/null; then
-  alias tail='multitail -C'
-fi
-
-# Editor aliases
+# Aliases
 alias v=$EDITOR
 alias vi=$EDITOR
 alias vim=$EDITOR
 
-alias plint='puppet-lint --no-hard_tabs-check --no-2sp_soft_tabs-check'
-alias pval='puppet parser validate'
-alias ll='ls -lahG'
-alias l='ls -lahG'
 
-# Lock console with a nice screensaver. Requires password to unlock.
-alias tl="tty-clock -s -r; vlock"
-
-# VMware aliases
+# VMware #######################################################################
 if [[ -f '/Applications/VMware\ Fusion.app/Contents/Library/vmrun' ]]; then
   alias vmrun='/Applications/VMware\ Fusion.app/Contents/Library/vmrun'
+  function ovftool() { /Applications/VMware\ Fusion.app/Contents/Library/VMware\ OVF\ Tool/ovftool $@; }
 fi
 
-# Git aliases
+
+# Vagrant ######################################################################
+if command -v vagrant >/dev/null; then
+  if [[ -f '/Applications/VMware\ Fusion.app/Contents/Library/vmrun' ]]; then
+    function vv() { vagrant up $@ --provider vmware_fusion; }
+    function vl() { vagrant reload $@ --provider vmware_fusion; }
+  else
+    function vv() { vagrant up $@; }
+    function vl() { vagrant reload $@; }
+  fi
+
+  alias vh='vagrant halt'
+  alias vd='vagrant destroy'
+  alias vs='vagrant ssh'
+  alias vt='vagrant status'
+  alias vr='vagrant resume'
+
+  function vagrant-update-all-plugins() { for plugin in $(vagrant plugin list | cut -f1 -d' '); do vagrant plugin update $plugin; done; }
+fi
+
+
+# Git ##########################################################################
 alias ga='git add'
 alias gA='git add -A'
 alias gp='git push'
@@ -169,25 +200,66 @@ alias glg2='git lg2'
 alias glg='git lg'
 # review all files in a git-managed directory that are not yet added to git
 alias gv='vim $(git ls-files -o -X .gitignore)'
-# Vagrant
-if [[ -f '/Applications/VMware\ Fusion.app/Contents/Library/vmrun' ]]; then
-  function vv() { vagrant up $@ --provider vmware_fusion; }
-  function vl() { vagrant reload $@ --provider vmware_fusion; }
-else
-  function vv() { vagrant up $@; }
-  function vl() { vagrant reload $@; }
+
+function git-submodule-remove() {
+git config -f .git/config --remove-section submodule.$1
+git config -f .gitmodules --remove-section submodule.$1
+git rm --cached $1
+git commit -m "Remove $1 cookbook submodule"
+rm -rf $1
+rm -rf .git/modules/$1; }
+
+
+# Guard ########################################################################
+if command -v guard >/dev/null; then
+  alias guard='guard --no-bundler-warning --latency 10'
 fi
-alias vh='vagrant halt'
-alias vd='vagrant destroy'
-alias vs='vagrant ssh'
-alias vt='vagrant status'
-alias vr='vagrant resume'
-# Guard
-alias guard='guard --no-bundler-warning --latency 10'
 
 
-## FUNCTIONS
-# return my IP address
+# TMUX #########################################################################
+if command -v mux >/dev/null; then
+  # tmux automation alias
+  alias t='mux'
+  # Tmuxinator
+  compctl -K _tmuxinator tmuxinator mux
+
+  _tmuxinator() {
+    local words completions
+    read -cA words
+
+    if [ "${#words}" -eq 2 ]; then
+      completions="$(tmuxinator commands)"
+    else
+      completions="$(tmuxinator completions ${words[2,-2]})"
+    fi
+
+    reply=("${(ps:\n:)completions}")
+  }
+fi
+
+
+# Tools ########################################################################
+# Replace tail with multitail
+if command -v multitail >/dev/null; then
+  alias tail='multitail -C'
+fi
+
+# More OR Less
+if command -v pygmentize >/dev/null; then
+  function more() { pygmentize -g $1 | less -R; }
+fi
+
+# Change this to your console based IRC client of choice.
+if command -v irssi >/dev/null; then
+  IRC_CLIENT='irssi'
+fi
+
+# Lock console with a nice screensaver. Requires password to unlock.
+if command -v vlock >/dev/null; then
+  alias tl="tty-clock -s -r; vlock"
+fi
+
+# Return my IP address
 function IP-all() {
   ifconfig lo0 | grep 'inet ' | sed -e 's/:/ /' | awk '{print "lo0       : " $2}'
   ifconfig en0 | grep 'inet ' | sed -e 's/:/ /' | awk '{print "en0 (IPv4): " $2 " " $3 " " $4 " " $5 " " $6}'
@@ -195,16 +267,17 @@ function IP-all() {
   ifconfig en1 | grep 'inet ' | sed -e 's/:/ /' | awk '{print "en1 (IPv4): " $2 " " $3 " " $4 " " $5 " " $6}'
   ifconfig en1 | grep 'inet6 ' | sed -e 's/ / /' | awk '{print "en1 (IPv6): " $2 " " $3 " " $4 " " $5 " " $6}'
 }
+function IP-external() { dig +short myip.opendns.com @resolver1.opendns.com; }
 
-function search() { open /Applications/Safari.app/ "http://www.google.com/search?q= $@"; }
-function ovftool() { /Applications/VMware\ Fusion.app/Contents/Library/VMware\ OVF\ Tool/ovftool $@; }
-function vagrant-update-all-plugins() { for plugin in $(vagrant plugin list | cut -f1 -d' '); do vagrant plugin update $plugin; done; }
-function finder-context-menu-flush() { sudo /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain user; killall Finder; echo "Open With has been rebuilt, Finder will relaunch"; }
+# Speed Test
 function speed-test() { wget -O /dev/null http://speedtest.wdc01.softlayer\.com/downloads/test10.zip; }
 
+# Ruby Gems
 function gems-update-all() { gem update `gem list | cut -d ' ' -f 1`; echo "All gems in system path updated"; }
 function gems-remove-all() { for x in `gem list --no-versions`; do gem uninstall $x -a -x -I; done; echo "All gems in system path updated"; }
 
+## OS X specific
+# Return OS X memory status
 function memory-stats() {
 FREE_BLOCKS=$(vm_stat | grep free | awk '{ print $3 }' | sed 's/\.//')
 INACTIVE_BLOCKS=$(vm_stat | grep inactive | awk '{ print $3 }' | sed 's/\.//')
@@ -216,39 +289,13 @@ echo Free:       $FREE MB
 echo Inactive:   $INACTIVE MB
 echo Total free: $TOTAL MB }
 
-function git-submodule-remove() {
-git config -f .git/config --remove-section submodule.$1
-git config -f .gitmodules --remove-section submodule.$1
-git rm --cached $1
-git commit -m "Remove $1 cookbook submodule"
-rm -rf $1
-rm -rf .git/modules/$1; }
-
-function IP-external() { dig +short myip.opendns.com @resolver1.opendns.com; }
+# Flush DNS cache
 function dns-cache-flush() { sudo killall -HUP mDNSResponder; }
 
+# Search in Internet with Safari from CLI
+function search() { open /Applications/Safari.app/ "http://www.google.com/search?q= $@"; }
+
+# Flush Finder Context Menu
+function finder-context-menu-flush() { sudo /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain user; killall Finder; echo "Open With has been rebuilt, Finder will relaunch"; }
+
 bindkey -v
-
-
-## TMUX
-# tmux automation alias
-alias t='mux'
-
-# Add autocompletion for Teamocil
-compctl -g '~/.teamocil/*(:t:r)' teamocil
-
-# Tmuxinator
-compctl -K _tmuxinator tmuxinator mux
-
-_tmuxinator() {
-  local words completions
-  read -cA words
-
-  if [ "${#words}" -eq 2 ]; then
-    completions="$(tmuxinator commands)"
-  else
-    completions="$(tmuxinator completions ${words[2,-2]})"
-  fi
-
-  reply=("${(ps:\n:)completions}")
-}
