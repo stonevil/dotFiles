@@ -1,0 +1,20 @@
+# ~/.tmuxinator/si.yml
+
+name: cookbooks
+root: ~/
+
+project_name: Chef Cookbooks
+project_root: ~/Documents/_development_/_cookbooks_
+windows:
+  - dev:
+      layout: 67d7,208x64,0,0{105x64,0,0,83,102x64,106,0[102x36,106,0,84,102x27,106,37,85]}
+      panes:
+        - cd ~/Documents/_development_/_cookbooks_; ls -lah
+        - cd ~/Documents/_development_/_cookbooks_; ls -lah
+        - cd ~/Documents/_development_/_cookbooks_; ls -lah
+  - test:
+      layout: 67d7,208x64,0,0{105x64,0,0,83,102x64,106,0[102x36,106,0,84,102x27,106,37,85]}
+      panes:
+        - cd ~/Documents/_development_/_cookbooks_; ls -lah
+        - cd ~/Documents/_development_/_cookbooks_; ls -lah
+        - cd ~/Documents/_development_/_cookbooks_; ls -lah
