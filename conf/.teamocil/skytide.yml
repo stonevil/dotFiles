@@ -1,9 +1,0 @@
-windows:
-  - name: "skytide"
-    clear: true
-    root: "~"
-    layout: even-horizontal
-    panes:
-      - cmd: ['ssh s.s']
-        focus: true
-      - cmd: ['ssh s.a']

@@ -1,6 +1,0 @@
-windows:
-  - name: "hour"
-    root: "~"
-    panes:
-      - cmd: ["ssh -t hour tmux"]
-        focus: true

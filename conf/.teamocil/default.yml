@@ -1,9 +1,0 @@
-windows:
-  - name: "default"
-    clear: true
-    root: "~"
-    layout: even-horizontal
-    panes:
-      - cmd: [""]
-      - cmd: ["sudo softwareupdate --install --all -v", "sudo brew update", "sudo brew upgrade", "sudo /opt/chef/embedded/bin/gem update"]
-        focus: true
