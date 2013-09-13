@@ -35,6 +35,7 @@ plugins=(attery brew colorize copydir copyfile git knife knife_ssh osx ruby term
 
 # Load oh-my-zsh
 if [[ -f $ZSH/oh-my-zsh.sh && -r $ZSH/oh-my-zsh.sh ]]; then
+  echo "Oh My ZSH detected and loaded!"
   source $ZSH/oh-my-zsh.sh
 fi
 
@@ -158,14 +159,15 @@ fi
 
 # Vagrant ######################################################################
 if command -v vagrant >/dev/null; then
-  if [[ -f '/Applications/VMware\ Fusion.app/Contents/Library/vmrun' ]]; then
+  if [[ -f '/Applications/VMware Fusion.app/Contents/Library/vmrun' ]]; then
+    echo "VMware Fusion detected. Vagrant now use VMware Fusion!"
     function vv() { vagrant up $@ --provider vmware_fusion; }
-    function vl() { vagrant reload $@ --provider vmware_fusion; }
   else
+    echo "Vagrant now use VirtualBox!"
     function vv() { vagrant up $@; }
-    function vl() { vagrant reload $@; }
   fi
 
+  function vl() { vagrant reload $@ --provision; }
   alias vh='vagrant halt'
   alias vd='vagrant destroy'
   alias vs='vagrant ssh'
