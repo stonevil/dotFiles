@@ -7,4 +7,4 @@ nmap <silent> <leader>s :set spell!<CR>
 " z= for correct
 
 " Set region to British English
-set spelllang=en_gb
+" set spelllang=en_gb

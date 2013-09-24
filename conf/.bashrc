@@ -32,3 +32,12 @@ alias vi=$EDITOR
 alias vim=$EDITOR
 alias ll='ls -lahG'
 alias l='ls -lahG'
+
+
+# Shared Config File ###########################################################
+# Load shared for bash and zsh config file
+if [ -f $DOTFILES/conf/.shellrc ]; then
+  source $DOTFILES/conf/.shellrc
+else
+  print "404: $DOTFILES/conf/.shellrc file not found"
+fi

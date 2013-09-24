@@ -69,6 +69,17 @@ if [[ -f $ZSHSYNTAXHIGHLIGHTING/zsh-syntax-highlighting.zsh ]]; then
   source $ZSHSYNTAXHIGHLIGHTING/zsh-syntax-highlighting.zsh
 fi
 
+
+# Shared Config File ###########################################################
+# Load shared for bash and zsh config file
+if [ -f $DOTFILES/conf/.shellrc ]; then
+  source $DOTFILES/conf/.shellrc
+else
+  print "404: $DOTFILES/conf/.shellrc file not found"
+fi
+
+
+# Aliases ######################################################################
 # Customise ls command
 alias ll='ls -lahG'
 alias l='ls -lahG'
