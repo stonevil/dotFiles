@@ -41,3 +41,5 @@ if [ -f $DOTFILES/conf/.shellrc ]; then
 else
   print "404: $DOTFILES/conf/.shellrc file not found"
 fi
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting

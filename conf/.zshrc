@@ -72,11 +72,11 @@ fi
 
 # Shared Config File ###########################################################
 # Load shared for bash and zsh config file
-if [ -f $DOTFILES/conf/.shellrc ]; then
-  source $DOTFILES/conf/.shellrc
-else
-  print "404: $DOTFILES/conf/.shellrc file not found"
-fi
+#if [ -f $DOTFILES/conf/.shellrc ]; then
+#  source $DOTFILES/conf/.shellrc
+#else
+#  print "404: $DOTFILES/conf/.shellrc file not found"
+#fi
 
 
 # Aliases ######################################################################
@@ -95,6 +95,16 @@ LC_ALL=en_US.UTF-8
 # Customize ENV variables
 PATH=/opt/bin:/opt/sbin:/usr/bin:/usr/sbin:/bin:/sbin:$DOTFILES/bin:$PATH
 MANPATH=/opt/share/man:/usr/local/share/man:$MANPATH
+
+
+# RVM #### #####################################################################
+# Add RVM to the PATH
+RVM=~/.rvm/
+if [[ -d $RVM ]]; then
+  PATH=$RVM/bin:$PATH
+  MANPATH=$RVM/man:$MANPATH
+  source $RVM/scripts/rvm
+fi
 
 
 # Homebrew #####################################################################
@@ -288,6 +298,7 @@ function speed-test() { wget -O /dev/null http://speedtest.wdc01.softlayer\.com/
 # Ruby Gems
 function gems-update-all() { gem update `gem list | cut -d ' ' -f 1`; echo "All gems in system path updated"; }
 function gems-remove-all() { for x in `gem list --no-versions`; do gem uninstall $x -a -x -I; done; echo "All gems in system path updated"; }
+function gems-list-local() { gem query --local; }
 
 ## OS X specific
 # Return OS X memory status
@@ -303,6 +314,9 @@ echo Inactive:   $INACTIVE MB
 echo Total free: $TOTAL MB }
 
 # Flush DNS cache
+function airport() { /System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport; }
+
+# Flush DNS cache
 function dns-cache-flush() { sudo killall -HUP mDNSResponder; }
 
 # Search in Internet with Safari from CLI
@@ -312,3 +326,5 @@ function search() { open /Applications/Safari.app/ "http://www.google.com/search
 function finder-context-menu-flush() { sudo /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain user; killall Finder; echo "Open With has been rebuilt, Finder will relaunch"; }
 
 bindkey -v
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
