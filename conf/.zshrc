@@ -113,15 +113,16 @@ HOMEBREW=/opt/homebrew
 if [[ -d $HOMEBREW ]]; then
   PATH=$HOMEBREW/bin:$HOMEBREW/gettext/bin:$PATH
   MANPATH=$HOMEBREW/share/man:$MANPATH
+  source $HOMEBREW/share/zsh/site-functions/*
 fi
 
 
 # Chef #########################################################################
 # Add OpScode Chef to the PATH
-CHEF=/opt/chef
+CHEF=/opt/chefdk
 if [[ -d $CHEF ]]; then
-  PATH=$CHEF/bin:$CHEF/embedded/bin:$PATH
-  MANPATH=$CHEF/share/man:$CHEF/embedded/share/man:$MANPATH
+  PATH=$CHEF/bin:$PATH
+  MANPATH=$CHEF/share/man:$MANPATH
 fi
 
 # Puppet #######################################################################
@@ -170,11 +171,14 @@ alias v=$EDITOR
 alias vi=$EDITOR
 alias vim=$EDITOR
 
+# Xcode 5.1 clang hot-fix for old software
+ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future
 
 # VMware #######################################################################
-if [[ -f '/Applications/VMware\ Fusion.app/Contents/Library/vmrun' ]]; then
+if [[ -d '/Applications/VMware\ Fusion.app' ]]; then
   alias vmrun='/Applications/VMware\ Fusion.app/Contents/Library/vmrun'
-  function ovftool() { /Applications/VMware\ Fusion.app/Contents/Library/VMware\ OVF\ Tool/ovftool $@; }
+  function ovftool() { /Applications/VMware\ Fusion.app/Contents/Library/VMware\ OVF\ Tool/ovftoo $@; }
+  function vmware-vdiskmanager() { /Applications/VMware Fusion.app/Contents/Library/vmware-vdiskmanager $@; }
 fi
 
 
@@ -300,6 +304,12 @@ function gems-update-all() { gem update `gem list | cut -d ' ' -f 1`; echo "All 
 function gems-remove-all() { for x in `gem list --no-versions`; do gem uninstall $x -a -x -I; done; echo "All gems in system path updated"; }
 function gems-list-local() { gem query --local; }
 
+# Chef Ruby Gems
+function chef-gems-update-all() { /opt/chefdk/embedded/bin/gem update `/opt/chefdk/embedded/bin/gem list | cut -d ' ' -f 1`; echo "All gems in system path updated"; }
+
+# Clean up whiteboard screen
+function whiteboard-clean() { convert $1 -morphology Convolve DoG:15,100,0 -negate -normalize -blur 0x1 -channel RBG -level 60%,91%,0.1 $2; }
+
 ## OS X specific
 # Return OS X memory status
 function memory-stats() {
@@ -313,11 +323,11 @@ echo Free:       $FREE MB
 echo Inactive:   $INACTIVE MB
 echo Total free: $TOTAL MB }
 
-# Flush DNS cache
+# AirPort OS X command line
 function airport() { /System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport; }
 
 # Flush DNS cache
-function dns-cache-flush() { sudo killall -HUP mDNSResponder; }
+function dns-cache-flush() { dscacheutil -flushcache; sudo killall -HUP mDNSResponder; }
 
 # Search in Internet with Safari from CLI
 function search() { open /Applications/Safari.app/ "http://www.google.com/search?q= $@"; }
@@ -326,5 +336,3 @@ function search() { open /Applications/Safari.app/ "http://www.google.com/search
 function finder-context-menu-flush() { sudo /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain user; killall Finder; echo "Open With has been rebuilt, Finder will relaunch"; }
 
 bindkey -v
-
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting

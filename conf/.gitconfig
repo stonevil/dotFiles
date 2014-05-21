@@ -7,12 +7,12 @@
     whitespace = fix, -indent-with-non-tab, space-before-tab, trailing-space, cr-at-eol
 
 [difftool "sourcetree"]
-  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-  path =
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
 
 [mergetool "sourcetree"]
-  cmd = /Applications/Apps/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-  trustExitCode = true
+	cmd = /Applications/Apps/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
 
 [user]
   name = Myroslav Rys
@@ -67,6 +67,47 @@
   sl = stash list
   sa = stash apply
   ss = stash save
+
+  # Log related
+  l  = log
+  lh = log --graph
+  la = !git lh --date-order --all 2> /dev/null
+  lb = log --graph --simplify-by-decoration
+  lba = !git lb --all
+  h  = !git --no-pager log --graph -n 15
+  a  = !git --no-pager la -n 15
+
+  # some resets without explanation
+  r  = reset
+  r1 = reset HEAD^
+  r2 = reset HEAD^^
+  rh = reset --hard
+  rh1 = reset HEAD^ --hard
+  rh2 = reset HEAD^^ --hard
+
+  # basic shortcuts
+  cp = cherry-pick
+  cl = clone
+  ci = commit
+  co = checkout
+  br = branch
+  diff = diff --word-diff
+  dc = diff --cached
+
+  # stash shortcuts
+  sl = stash list
+  sa = stash apply
+  ss = stash save
+
+  # Diff your staged changes == review before committing
+  ds = diff --staged
+  # Smarter status - include tag and branch info
+  st = status -sb
+
+  # Pretty one-line log with tags, branches and authors
+  #ls = log --pretty=format:"%C(yellow)%h %C(blue)%ad%C(red)%d %C(reset)%s%C(green) [%cn]" --decorate --date=short
+  # A verbose ls, shows changed files too
+  #lsv = log --pretty=format:"%C(yellow)%h %C(blue)%ad%C(red)%d %C(reset)%s%C(green) [%cn]" --decorate --date=short --numstat
 
   # Show all prfiles
   ls = !git rev-parse --abbrev-ref HEAD | xargs git ls-tree -r --full-tree --full-name --name-only
@@ -126,7 +167,12 @@
   #git branch -D `git for-each-ref --format=for-each-ref"%(refname:short)" refs/heads/...`
 
   go = !gitgo
+	springcleaning = for-each-ref --sort=-committerdate --format='%(refname:short) %(committerdate:short)'
 
   #revert = checkout --
+
 [push]
   default = matching
+
+[help]
+	autocorrect = 1
