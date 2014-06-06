@@ -109,11 +109,13 @@ fi
 
 # Homebrew #####################################################################
 # Add homebreb to the PATH
-HOMEBREW=/opt/homebrew
-if [[ -d $HOMEBREW ]]; then
-  PATH=$HOMEBREW/bin:$HOMEBREW/gettext/bin:$PATH
-  MANPATH=$HOMEBREW/share/man:$MANPATH
-  source $HOMEBREW/share/zsh/site-functions/*
+if command -v vagrant >/dev/null; then
+  HOMEBREW=`brew --prefix`
+  if [[ -d $HOMEBREW ]]; then
+    PATH=$HOMEBREW/bin:$HOMEBREW/gettext/bin:$PATH
+    MANPATH=$HOMEBREW/share/man:$MANPATH
+    source $HOMEBREW/share/zsh/site-functions/*
+  fi
 fi
 
 
@@ -308,7 +310,9 @@ function gems-list-local() { gem query --local; }
 function chef-gems-update-all() { /opt/chefdk/embedded/bin/gem update `/opt/chefdk/embedded/bin/gem list | cut -d ' ' -f 1`; echo "All gems in system path updated"; }
 
 # Clean up whiteboard screen
-function whiteboard-clean() { convert $1 -morphology Convolve DoG:15,100,0 -negate -normalize -blur 0x1 -channel RBG -level 60%,91%,0.1 $2; }
+if command -v convert >/dev/null; then
+  function whiteboard-clean() { convert $1 -morphology Convolve DoG:15,100,0 -negate -normalize -blur 0x1 -channel RBG -level 60%,91%,0.1 $2; }
+fi
 
 ## OS X specific
 # Return OS X memory status
