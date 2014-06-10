@@ -112,7 +112,7 @@ fi
 if command -v vagrant >/dev/null; then
   HOMEBREW=`brew --prefix`
   if [[ -d $HOMEBREW ]]; then
-    PATH=$HOMEBREW/bin:$HOMEBREW/gettext/bin:$PATH
+    PATH=$HOMEBREW/bin:$HOMEBREW/sbin:$HOMEBREW/gettext/bin:$PATH
     MANPATH=$HOMEBREW/share/man:$MANPATH
     source $HOMEBREW/share/zsh/site-functions/*
   fi
@@ -304,6 +304,7 @@ function speed-test() { wget -O /dev/null http://speedtest.wdc01.softlayer\.com/
 # Ruby Gems
 function gems-update-all() { gem update `gem list | cut -d ' ' -f 1`; echo "All gems in system path updated"; }
 function gems-remove-all() { for x in `gem list --no-versions`; do gem uninstall $x -a -x -I; done; echo "All gems in system path updated"; }
+function gems-remove-old() { gem cleanup; }
 function gems-list-local() { gem query --local; }
 
 # Chef Ruby Gems
