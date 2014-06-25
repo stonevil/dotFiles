@@ -109,22 +109,26 @@ fi
 
 # Homebrew #####################################################################
 # Add homebreb to the PATH
-if command -v vagrant >/dev/null; then
-  HOMEBREW=`brew --prefix`
-  if [[ -d $HOMEBREW ]]; then
-    PATH=$HOMEBREW/bin:$HOMEBREW/sbin:$HOMEBREW/gettext/bin:$PATH
-    MANPATH=$HOMEBREW/share/man:$MANPATH
-    source $HOMEBREW/share/zsh/site-functions/*
-  fi
+HOMEBREW="/opt/homebrew"
+if [[ -d $HOMEBREW ]]; then
+  PATH=$HOMEBREW/bin:$HOMEBREW/sbin:$HOMEBREW/gettext/bin:$PATH
+  MANPATH=$HOMEBREW/share/man:$MANPATH
+  source $HOMEBREW/share/zsh/site-functions/*
 fi
 
 
 # Chef #########################################################################
 # Add OpScode Chef to the PATH
-CHEF=/opt/chefdk
-if [[ -d $CHEF ]]; then
-  PATH=$CHEF/bin:$PATH
-  MANPATH=$CHEF/share/man:$MANPATH
+CHEFDK=/opt/chefdk
+if [[ -d $CHEFDK ]]; then
+  PATH=$CHEFDK/bin:$PATH
+  MANPATH=$CHEFDK/share/man:$MANPATH
+fi
+
+CHEFDKLOCAL=~/.chefdk/gem/ruby/2.1.0
+if [[ -d $CHEFDKLOCAL ]]; then
+  PATH=$CHEFDKLOCAL/bin:$PATH
+  MANPATH=$CHEFDKLOCAL/share/man:$MANPATH
 fi
 
 # Puppet #######################################################################
@@ -189,6 +193,7 @@ if command -v vagrant >/dev/null; then
   if [[ -f '/Applications/VMware Fusion.app/Contents/Library/vmrun' ]]; then
     echo "VMware Fusion detected. Vagrant now use VMware Fusion!"
     function vv() { vagrant up $@ --provider vmware_fusion; }
+    VAGRANT_DEFAULT_PROVIDER="vmware_fusion"
   else
     echo "Vagrant now use VirtualBox!"
     function vv() { vagrant up $@; }
@@ -287,6 +292,9 @@ fi
 if command -v vlock >/dev/null; then
   alias tl="tty-clock -s -r; vlock"
 fi
+
+# Speed ssh X session
+alias sshx="ssh -XC -c blowfish-cbc,arcfour"
 
 # Return my IP address
 function IP-all() {
