@@ -123,6 +123,11 @@ CHEFDK=/opt/chefdk
 if [[ -d $CHEFDK ]]; then
   PATH=$CHEFDK/bin:$PATH
   MANPATH=$CHEFDK/share/man:$MANPATH
+# Chef Ruby Gems
+  function chef-gem() { /opt/chefdk/embedded/bin/gem $@; }
+  function chef-gems-update-all() { /opt/chefdk/embedded/bin/gem update `/opt/chefdk/embedded/bin/gem list | cut -d ' ' -f 1`; echo "All gems in system path updated"; }
+  function chef-gems-remove-old() { /opt/chefdk/embedded/bin/gem cleanup; }
+  function chef-gems-list-local() { /opt/chefdk/embedded/bin/gem query --local; }
 fi
 
 CHEFDKLOCAL=~/.chefdk/gem/ruby/2.1.0
@@ -182,9 +187,18 @@ ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future
 
 # VMware #######################################################################
 if [[ -d '/Applications/VMware\ Fusion.app' ]]; then
-  alias vmrun='/Applications/VMware\ Fusion.app/Contents/Library/vmrun'
-  function ovftool() { /Applications/VMware\ Fusion.app/Contents/Library/VMware\ OVF\ Tool/ovftoo $@; }
-  function vmware-vdiskmanager() { /Applications/VMware Fusion.app/Contents/Library/vmware-vdiskmanager $@; }
+  function ovftool() {
+    cd /Applications/VMware\ Fusion.app/Contents/Library/
+    ./vmrun $@
+  }
+  function ovftool() {
+    cd /Applications/VMware\ Fusion.app/Contents/Library/VMware\ OVF\ Tool/
+    ./ovftool $@
+  }
+  function vmware-vdiskmanager() {
+    cd /Applications/VMware\ Fusion.app/Contents/Library/
+    ./vmware-vdiskmanager $@
+  }
 fi
 
 
@@ -254,6 +268,7 @@ fi
 if command -v mux >/dev/null; then
   # tmux automation alias
   alias t='mux'
+  alias tlist='tmux list-windows'
   # Tmuxinator
   compctl -K _tmuxinator tmuxinator mux
 
@@ -315,9 +330,6 @@ function gems-remove-all() { for x in `gem list --no-versions`; do gem uninstall
 function gems-remove-old() { gem cleanup; }
 function gems-list-local() { gem query --local; }
 
-# Chef Ruby Gems
-function chef-gems-update-all() { /opt/chefdk/embedded/bin/gem update `/opt/chefdk/embedded/bin/gem list | cut -d ' ' -f 1`; echo "All gems in system path updated"; }
-
 # Clean up whiteboard screen
 if command -v convert >/dev/null; then
   function whiteboard-clean() { convert $1 -morphology Convolve DoG:15,100,0 -negate -normalize -blur 0x1 -channel RBG -level 60%,91%,0.1 $2; }
@@ -326,15 +338,16 @@ fi
 ## OS X specific
 # Return OS X memory status
 function memory-stats() {
-FREE_BLOCKS=$(vm_stat | grep free | awk '{ print $3 }' | sed 's/\.//')
-INACTIVE_BLOCKS=$(vm_stat | grep inactive | awk '{ print $3 }' | sed 's/\.//')
-SPECULATIVE_BLOCKS=$(vm_stat | grep speculative | awk '{ print $3 }' | sed 's/\.//')
-FREE=$((($FREE_BLOCKS+SPECULATIVE_BLOCKS)*4096/1048576))
-INACTIVE=$(($INACTIVE_BLOCKS*4096/1048576))
-TOTAL=$((($FREE+$INACTIVE)))
-echo Free:       $FREE MB
-echo Inactive:   $INACTIVE MB
-echo Total free: $TOTAL MB }
+  FREE_BLOCKS=$(vm_stat | grep free | awk '{ print $3 }' | sed 's/\.//')
+  INACTIVE_BLOCKS=$(vm_stat | grep inactive | awk '{ print $3 }' | sed 's/\.//')
+  SPECULATIVE_BLOCKS=$(vm_stat | grep speculative | awk '{ print $3 }' | sed 's/\.//')
+  FREE=$((($FREE_BLOCKS+SPECULATIVE_BLOCKS)*4096/1048576))
+  INACTIVE=$(($INACTIVE_BLOCKS*4096/1048576))
+  TOTAL=$((($FREE+$INACTIVE)))
+  echo Free:       $FREE MB
+  echo Inactive:   $INACTIVE MB
+  echo Total free: $TOTAL MB
+}
 
 # AirPort OS X command line
 function airport() { /System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport; }
