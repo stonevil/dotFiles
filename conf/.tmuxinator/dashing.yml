@@ -1,0 +1,14 @@
+name: chef-dashing
+root: $DASHING
+pre_window: DASHING="$HOME/Documents/DataMart/_development_/chef-dashing"
+
+project_name: chef-dashing
+project_root: $DASHING
+windows:
+  - lf:
+      layout: 4a90,158x48,0,0{92x48,0,0[92x24,0,0,1,92x23,0,25,9],65x48,93,0[65x38,93,0,6,65x9,93,39,7]}
+      panes:
+        - cd $DASHING
+        - cd $DASHING
+        - cd $DASHING
+        - cd $DASHING; guard -i -g development

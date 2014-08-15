@@ -7,31 +7,44 @@ DOTFILES=$HOME/.Files
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-ZSH_THEME="steeef"
+# Optionally, if you set this to "random", it'll load a random theme each time that oh-my-zsh is loaded.
+# ZSH_THEME="steeef"
+# ZSH_THEME="arrow"
+# ZSH_THEME="bira" #! too long promtp
+# ZSH_THEME="kafeitu" # -
+# ZSH_THEME="miloshadzic" #!!!
+# ZSH_THEME="nebirhos" #!!!
+# ZSH_THEME="norm"
+ZSH_THEME="sorin"
+# ZSH_THEME="sporty_256" #!!!
 
-# Set to this to use case-sensitive completion
+# CASE_SENSITIVE="true"
 CASE_SENSITIVE="true"
-
-# Comment this out to disable weekly auto-update checks
 # DISABLE_AUTO_UPDATE="true"
-
-# Uncomment following line if you want to disable colors in ls
+export UPDATE_ZSH_DAYS=2
 # DISABLE_LS_COLORS="true"
-
-# Uncomment following line if you want to disable autosetting terminal title.
 DISABLE_AUTO_TITLE="true"
-
-# Uncomment following line if you want red dots to be displayed while waiting for completion
+ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+# HIST_STAMPS="mm/dd/yyyy"
+ZSH_CUSTOM=~/.Files/conf/.zsh_custom
+
+
+# Homebrew #####################################################################
+# Add homebrew to the PATH
+HOMEBREW="/opt/homebrew"
+if [[ -d $HOMEBREW ]]; then
+  PATH=$HOMEBREW/bin:$HOMEBREW/sbin:$HOMEBREW/gettext/bin:$PATH
+  MANPATH=$HOMEBREW/share/man:$MANPATH
+  source $HOMEBREW/share/zsh/site-functions/*
+fi
+
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(attery brew colorize copydir copyfile git knife knife_ssh osx ruby terminalapp thor tmuxinator vagrant vi-mode zsh-syntax-highlighting)
+plugins=(brew bundler colored-man colorize copyfile cp forklift rsync textmate tmux tmuxinator vi-mode)
+
 
 # Load oh-my-zsh
 if [[ -f $ZSH/oh-my-zsh.sh && -r $ZSH/oh-my-zsh.sh ]]; then
@@ -39,10 +52,6 @@ if [[ -f $ZSH/oh-my-zsh.sh && -r $ZSH/oh-my-zsh.sh ]]; then
   source $ZSH/oh-my-zsh.sh
 fi
 
-
-# ZSH ##########################################################################
-# Reload ZSH configuration
-alias zr='source ~/.zshrc'
 
 # Load zsh syntax highlighting
 ZSHCOMPLETIONS=$DOTFILES/modules/zsh-completions
@@ -107,13 +116,11 @@ if [[ -d $RVM ]]; then
 fi
 
 
-# Homebrew #####################################################################
-# Add homebreb to the PATH
-HOMEBREW="/opt/homebrew"
-if [[ -d $HOMEBREW ]]; then
-  PATH=$HOMEBREW/bin:$HOMEBREW/sbin:$HOMEBREW/gettext/bin:$PATH
-  MANPATH=$HOMEBREW/share/man:$MANPATH
-  source $HOMEBREW/share/zsh/site-functions/*
+# RVM #### #####################################################################
+# Add RVM to the PATH
+RBENV=~/.rbenv/
+if [[ -d $RBENV ]]; then
+  eval "$(rbenv init -)"
 fi
 
 
@@ -121,19 +128,20 @@ fi
 # Add OpScode Chef to the PATH
 CHEFDK=/opt/chefdk
 if [[ -d $CHEFDK ]]; then
-  PATH=$CHEFDK/bin:$PATH
+  PATH=$CHEFDK/bin:$CHEFDK/embedded/bin:$PATH
   MANPATH=$CHEFDK/share/man:$MANPATH
 # Chef Ruby Gems
-  function chef-gem() { /opt/chefdk/embedded/bin/gem $@; }
-  function chef-gems-update-all() { /opt/chefdk/embedded/bin/gem update `/opt/chefdk/embedded/bin/gem list | cut -d ' ' -f 1`; echo "All gems in system path updated"; }
-  function chef-gems-remove-old() { /opt/chefdk/embedded/bin/gem cleanup; }
-  function chef-gems-list-local() { /opt/chefdk/embedded/bin/gem query --local; }
+  function chef-gem() { $CHEFDK/embedded/bin/gem $@; }
+  function chef-bundle() { $CHEFDK/embedded/bin/bundle $@ --path ~/.chefdk/gem; }
+  function chef-gems-update-all() { $CHEFDK/embedded/bin/gem update `/opt/chefdk/embedded/bin/gem list | cut -d ' ' -f 1`; echo "All gems in system path updated"; }
+  function chef-gems-remove-old() { $CHEFDK/embedded/bin/gem cleanup; }
+  function chef-gems-list-local() { $CHEFDK/embedded/bin/gem query --local; }
 fi
 
 CHEFDKLOCAL=~/.chefdk/gem/ruby/2.1.0
 if [[ -d $CHEFDKLOCAL ]]; then
-  PATH=$CHEFDKLOCAL/bin:$PATH
-  MANPATH=$CHEFDKLOCAL/share/man:$MANPATH
+  PATH=$PATH:$CHEFDKLOCAL/bin
+  MANPATH=$MANPATH:$CHEFDKLOCAL/share/man
 fi
 
 # Puppet #######################################################################
@@ -265,26 +273,36 @@ fi
 
 
 # TMUX #########################################################################
-if command -v mux >/dev/null; then
-  # tmux automation alias
-  alias t='mux'
-  alias tlist='tmux list-windows'
-  # Tmuxinator
-  compctl -K _tmuxinator tmuxinator mux
-
-  _tmuxinator() {
-    local words completions
-    read -cA words
-
-    if [ "${#words}" -eq 2 ]; then
-      completions="$(tmuxinator commands)"
-    else
-      completions="$(tmuxinator completions ${words[2,-2]})"
-    fi
-
-    reply=("${(ps:\n:)completions}")
-  }
-fi
+# if command -v mux >/dev/null; then
+#   # tmux automation alias
+#   alias t='mux'
+#   alias tlist='tmux list-windows'
+#   # Tmuxinator
+#   compctl -K _tmuxinator tmuxinator mux
+#
+#   _tmuxinator() {
+#     local words completions
+#     read -cA words
+#
+#     if [ "${#words}" -eq 2 ]; then
+#       completions="$(tmuxinator commands)"
+#     else
+#       completions="$(tmuxinator completions ${words[2,-2]})"
+#     fi
+#
+#     reply=("${(ps:\n:)completions}")
+#   }
+#
+#   # Setup iTerm/Terminal window name
+#   set_terminal_tab_title() {
+#     print -Pn "\e]1;$1:q\a"
+#   }
+#   indicate_tmux_session_in_terminal() {
+#     set_terminal_tab_title "$(tmux display-message -p '#S')"
+#   }
+#   precmd_functions=($precmd_functions indicate_tmux_session_in_terminal)
+#
+# fi
 
 
 # Tools ########################################################################
@@ -356,9 +374,14 @@ function airport() { /System/Library/PrivateFrameworks/Apple80211.framework/Vers
 function dns-cache-flush() { dscacheutil -flushcache; sudo killall -HUP mDNSResponder; }
 
 # Search in Internet with Safari from CLI
-function search() { open /Applications/Safari.app/ "http://www.google.com/search?q= $@"; }
+function search() { open /Applications/Safari.app/ "http://duckduckgo.com/?q= $@"; }
 
 # Flush Finder Context Menu
 function finder-context-menu-flush() { sudo /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain user; killall Finder; echo "Open With has been rebuilt, Finder will relaunch"; }
+
+# Game on/off optimisation
+function game-on { sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist }
+function game-off { sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist }
+
 
 bindkey -v

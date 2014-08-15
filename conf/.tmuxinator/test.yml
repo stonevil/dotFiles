@@ -1,0 +1,11 @@
+name: elk
+root: $HOME
+pre_window: DEVF="$HOME/Documents/DataMart/_development_"; DEVLF="$DEVF/elk/chef-logstash-forwarder/"; DEVFK="$DEVF/elk/chef-logstash-forwarder-package"
+
+project_name: ELK
+project_root: $DEVF
+windows:
+  - lf:
+      panes:
+        - cd $DEVLF
+        - cd $DEVFK
