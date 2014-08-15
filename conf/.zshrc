@@ -79,15 +79,6 @@ if [[ -f $ZSHSYNTAXHIGHLIGHTING/zsh-syntax-highlighting.zsh ]]; then
 fi
 
 
-# Shared Config File ###########################################################
-# Load shared for bash and zsh config file
-#if [ -f $DOTFILES/conf/.shellrc ]; then
-#  source $DOTFILES/conf/.shellrc
-#else
-#  print "404: $DOTFILES/conf/.shellrc file not found"
-#fi
-
-
 # Aliases ######################################################################
 # Customise ls command
 alias ll='ls -lahG'
@@ -142,16 +133,6 @@ CHEFDKLOCAL=~/.chefdk/gem/ruby/2.1.0
 if [[ -d $CHEFDKLOCAL ]]; then
   PATH=$PATH:$CHEFDKLOCAL/bin
   MANPATH=$MANPATH:$CHEFDKLOCAL/share/man
-fi
-
-# Puppet #######################################################################
-PUPPET=/opt/puppet
-if command -v puppet >/dev/null; then
-  alias pval='puppet parser validate'
-fi
-
-if command -v puppet-lint >/dev/null; then
-  alias plint='puppet-lint --no-hard_tabs-check --no-2sp_soft_tabs-check'
 fi
 
 
@@ -270,39 +251,6 @@ rm -rf .git/modules/$1; }
 if command -v guard >/dev/null; then
   alias guard='guard --no-bundler-warning --latency 10'
 fi
-
-
-# TMUX #########################################################################
-# if command -v mux >/dev/null; then
-#   # tmux automation alias
-#   alias t='mux'
-#   alias tlist='tmux list-windows'
-#   # Tmuxinator
-#   compctl -K _tmuxinator tmuxinator mux
-#
-#   _tmuxinator() {
-#     local words completions
-#     read -cA words
-#
-#     if [ "${#words}" -eq 2 ]; then
-#       completions="$(tmuxinator commands)"
-#     else
-#       completions="$(tmuxinator completions ${words[2,-2]})"
-#     fi
-#
-#     reply=("${(ps:\n:)completions}")
-#   }
-#
-#   # Setup iTerm/Terminal window name
-#   set_terminal_tab_title() {
-#     print -Pn "\e]1;$1:q\a"
-#   }
-#   indicate_tmux_session_in_terminal() {
-#     set_terminal_tab_title "$(tmux display-message -p '#S')"
-#   }
-#   precmd_functions=($precmd_functions indicate_tmux_session_in_terminal)
-#
-# fi
 
 
 # Tools ########################################################################
