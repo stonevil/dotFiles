@@ -1,0 +1,14 @@
+name: chef-ghost
+root: $GHOST
+pre_window: GHOST="$HOME/Documents/_development_/chef-ghost"
+
+project_name: chef-ghost
+project_root: $GHOST
+windows:
+  - lf:
+      layout: 4a90,158x48,0,0{92x48,0,0[92x24,0,0,1,92x23,0,25,9],65x48,93,0[65x38,93,0,6,65x9,93,39,7]}
+      panes:
+        - cd $GHOST
+        - cd $GHOST
+        - cd $GHOST
+        - cd $GHOST; guard -i -g development
