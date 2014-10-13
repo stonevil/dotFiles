@@ -1,0 +1,7 @@
+# Ruby Gems
+if command -v gem >/dev/null; then
+  function gems-update-all() { gem update `gem list | cut -d ' ' -f 1`; echo "All gems for current ruby updated"; }
+  function gems-remove-all() { for x in `gem list --no-versions`; do gem uninstall $x -a -x -I; done; echo "All gems for current updated"; }
+  function gems-remove-old() { gem cleanup; }
+  function gems-list-local() { gem query --local; }
+fi

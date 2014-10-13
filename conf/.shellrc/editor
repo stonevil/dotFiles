@@ -1,0 +1,26 @@
+# Editors ######################################################################
+# Set EDITOR
+if [[ -f /opt/homebrew/bin/vim ]]; then
+  export EDITOR="/opt/homebrew/bin/vim"
+  export VIMRUNTIME="/opt/homebrew/share/vim/vim74"
+else
+  if [[ -f /Applications/MacVim.app/Contents/MacOS/Vim ]]; then
+    export EDITOR="/Applications/MacVim.app/Contents/MacOS/Vim"
+    export VIMRUNTIME="/Applications/MacVim.app/Contents/Resources/vim/runtime"
+  else
+    if [[ -f /usr/bin/vim ]]; then
+      export EDITOR="/usr/bin/vim"
+      export VIMRUNTIME="/usr/share/vim/vim"
+    fi
+  fi
+fi
+
+# ENV Variables
+export GIT_EDITOR=$EDITOR
+export VISUAL=$EDITOR
+export EDITOR=$EDITOR
+
+# Aliases
+alias v=$EDITOR
+alias vi=$EDITOR
+alias vim=$EDITOR

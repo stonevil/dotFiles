@@ -1,0 +1,35 @@
+# Git ##########################################################################
+if command -v git >/dev/null; then
+  alias ga='git add'
+  alias gA='git add -A'
+  alias gp='git push'
+  alias gl='git log'
+  alias gs='git status'
+  alias gd='git diff'
+  alias gm='git commit -v'
+  alias gma='git commit -a -v'
+  alias gb='git branch'
+  alias gc='git checkout'
+  alias gra='git remote add'
+  alias grr='git remote rm'
+  alias gpu='git pull'
+  alias gcl='git clone'
+  alias gta='git tag -a -m'
+  alias gf='git reflog'
+  # leverage an alias from the ~/.gitconfig
+  alias gh='git hist'
+  alias glg1='git lg1'
+  alias glg2='git lg2'
+  alias glg='git lg'
+  # review all files in a git-managed directory that are not yet added to git
+  alias gv='vim $(git ls-files -o -X .gitignore)'
+
+  function git-submodule-remove() {
+  git config -f .git/config --remove-section submodule.$1
+  git config -f .gitmodules --remove-section submodule.$1
+  git rm --cached $1
+  git commit -m "Remove $1 cookbook submodule"
+  rm -rf $1
+  rm -rf .git/modules/$1;
+  }
+fi

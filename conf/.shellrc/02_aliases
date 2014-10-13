@@ -1,0 +1,4 @@
+# Aliases ######################################################################
+# Customise ls command
+alias ll='ls -lahG'
+alias l='ls -lahG'

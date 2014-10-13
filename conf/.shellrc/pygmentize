@@ -1,0 +1,4 @@
+# More OR Less
+if command -v pygmentize >/dev/null; then
+  function more() { pygmentize -g $1 | less -R; }
+fi

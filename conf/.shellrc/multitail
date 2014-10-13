@@ -1,0 +1,4 @@
+# Replace tail with multitail
+if command -v multitail >/dev/null; then
+  alias tail='multitail -C'
+fi

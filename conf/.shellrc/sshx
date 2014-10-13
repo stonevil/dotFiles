@@ -1,0 +1,2 @@
+# Speed ssh X session
+alias sshx="ssh -XC -c blowfish-cbc,arcfour"

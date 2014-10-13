@@ -1,0 +1,8 @@
+# RVM #### #####################################################################
+# Add RVM to the PATH
+export RVM=~/.rvm/
+if [[ -d $RVM ]]; then
+  export PATH=$RVM/bin:$PATH
+  export MANPATH=$RVM/man:$MANPATH
+  source $RVM/scripts/rvm
+fi

@@ -1,0 +1,6 @@
+# AWS ##########################################################################
+# Load source for AWS CLI completion
+export AWSCLI=/usr/local
+if [[ -f $AWSCLI/bin/aws_zsh_completer.sh && -r $AWSCLI/bin/aws_zsh_completer.sh ]]; then
+  source $AWSCLI/bin/aws_zsh_completer.sh
+fi

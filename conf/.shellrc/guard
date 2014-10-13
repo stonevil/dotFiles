@@ -1,0 +1,4 @@
+# Guard ########################################################################
+if command -v guard >/dev/null; then
+  alias guard='guard --no-bundler-warning --latency 10'
+fi

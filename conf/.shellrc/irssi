@@ -1,0 +1,4 @@
+# Change this to your console based IRC client of choice.
+if command -v irssi >/dev/null; then
+  IRC_CLIENT='irssi'
+fi
