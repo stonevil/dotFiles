@@ -1,0 +1,5 @@
+# Docker #######################################################################
+export COREOS_HOST="core-01"
+export DOCKER_HOST="tcp://$COREOS_HOST:4243"
+export ETCDCTL_PEERS="http://$COREOS_HOST:4001"
+export FLEETCTL_TUNNEL="$COREOS_HOST:2222"

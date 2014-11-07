@@ -1,0 +1,14 @@
+name: dhack
+root: $DHACK
+pre_window: DHACK="$HOME/Documents/_development_/docker-hack/mon"
+
+project_name: dhack
+project_root: $DHACK
+windows:
+  - lf:
+      layout: 4a90,158x48,0,0{92x48,0,0[92x24,0,0,1,92x23,0,25,9],65x48,93,0[65x38,93,0,6,65x9,93,39,7]}
+      panes:
+        - cd $DHACK
+        - cd $DHACK
+        - cd $DHACK
+        - cd $DHACK
