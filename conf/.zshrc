@@ -88,4 +88,7 @@ else
   print "404: $DOTFILES/conf/.shellrc/ folder not found"
 fi
 
+alias reload=". ~/.zshrc && echo 'ZSH config reloaded from ~/.zshrc'"
+alias zshrc="vim ~/.zshrc && reload"
+
 bindkey -v
