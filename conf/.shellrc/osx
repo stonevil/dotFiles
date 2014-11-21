@@ -19,15 +19,15 @@ if command -v system_profiler >/dev/null; then
   function airport() { /System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport; }
 
   # Flush DNS cache
-  function dns-cache-flush() { dscacheutil -flushcache; sudo killall -HUP mDNSResponder; }
+  function dns-cache-flush() { sudo discoveryutil mdnsflushcache; sudo discoveryutil udnsflushcaches; say "DNS cache flushed"; }
 
   # Search in Internet with Safari from CLI
   function search() { open /Applications/Safari.app/ "http://duckduckgo.com/?q= $@"; }
 
   # Flush Finder Context Menu
-  function finder-context-menu-flush() { sudo /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain user; killall Finder; echo "Open With has been rebuilt, Finder will relaunch"; }
+  function finder-context-menu-flush() { sudo /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain user; killall Finder; say "Open With has been rebuilt, Finder will relaunch"; }
 
   # Game on/off optimisation
-  function game-on { sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist; }
-  function game-off { sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist; }
+  function game-on { sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist; say "Game mode on" }
+  function game-off { sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist; say "Game mode off" }
 fi
