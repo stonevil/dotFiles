@@ -1,0 +1,14 @@
+name: vagrant-chef-freeswitch
+root: $HOME
+pre_window: DASH="$HOME/Documents/_development_/vagrant-chef-freeswitch"
+
+project_name: vagrant-chef-freeswitch
+project_root: $DASH
+windows:
+  - lf:
+      layout: 4a90,158x48,0,0{92x48,0,0[92x24,0,0,1,92x23,0,25,9],65x48,93,0[65x38,93,0,6,65x9,93,39,7]}
+      panes:
+        - cd $DASH
+        - cd $DASH
+        - cd $DASH
+        - cd $DASH; guard -i -g development

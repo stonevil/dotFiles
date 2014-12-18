@@ -1,0 +1,3 @@
+function passgen() {
+  openssl rand -base64 $1
+}
