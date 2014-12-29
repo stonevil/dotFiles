@@ -1,6 +1,6 @@
 # Customize PATH
-PATH=$DOTFILES/bin:/opt/bin:/opt/sbin:$PATH
-MANPATH=/opt/share/man:/usr/local/share/man:$MANPATH
+export PATH=$DOTFILES/bin:/opt/bin:/opt/sbin:$PATH
+export MANPATH=/opt/share/man:/usr/local/share/man:$MANPATH
 
 # Homebrew #####################################################################
 # Add homebrew to the PATH
