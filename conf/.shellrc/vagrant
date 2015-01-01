@@ -5,8 +5,14 @@ if command -v vagrant >/dev/null; then
     function vv() { vagrant up $@ --provider vmware_fusion; }
     VAGRANT_DEFAULT_PROVIDER='vmware_fusion'
   else
-    echo "Vagrant now use VirtualBox!"
-    function vv() { vagrant up $@; }
+    if [[ -f '/usr/bin/vmware' && -f '/usr/share/applications/vmware-workstation.desktop' ]]; then
+      echo "VMware Workstation for Linux detected. Vagrant now use VMware Workstation!"
+      function vv() { vagrant up $@ --provider vmware_workstation; }
+      VAGRANT_DEFAULT_PROVIDER='vmware_workstation'
+    else
+      echo "Vagrant now use VirtualBox!"
+      function vv() { vagrant up $@; }
+    fi
   fi
 
   function vl() { vagrant reload $@ --provision; }
