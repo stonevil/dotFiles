@@ -10,7 +10,6 @@ else
   else
     if [[ -f /usr/bin/vim ]]; then
       export EDITOR="/usr/bin/vim"
-      export VIMRUNTIME="/usr/share/vim/vim"
     fi
   fi
 fi
