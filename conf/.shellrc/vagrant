@@ -15,7 +15,7 @@ if command -v vagrant >/dev/null; then
     fi
   fi
 
-  export VAGRANT_PROVIDER_GUI="true"
+  export VAGRANT_PROVIDER_GUI="false"
 
   function vl() { vagrant reload $@ --provision; }
   alias vh='vagrant halt'
