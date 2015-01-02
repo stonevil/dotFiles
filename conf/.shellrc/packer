@@ -2,4 +2,5 @@
 if command -v packer >/dev/null; then
   export PACKER_CACHE_DIR=~/.packer.d/cache
   export PACKER_ISO_DIR=~/.packer.d/iso
+  export PACKER_LOG_PATH=~/.packer.d/log
 fi
