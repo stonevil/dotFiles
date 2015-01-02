@@ -3,17 +3,19 @@ if command -v vagrant >/dev/null; then
   if [[ -f '/Applications/VMware Fusion.app/Contents/Library/vmrun' ]]; then
     echo "VMware Fusion detected. Vagrant now use VMware Fusion!"
     function vv() { vagrant up $@ --provider vmware_fusion; }
-    VAGRANT_DEFAULT_PROVIDER='vmware_fusion'
+    export VAGRANT_DEFAULT_PROVIDER='vmware_fusion'
   else
     if [[ -f '/usr/bin/vmware' && -f '/usr/share/applications/vmware-workstation.desktop' ]]; then
       echo "VMware Workstation for Linux detected. Vagrant now use VMware Workstation!"
       function vv() { vagrant up $@ --provider vmware_workstation; }
-      VAGRANT_DEFAULT_PROVIDER='vmware_workstation'
+      export VAGRANT_DEFAULT_PROVIDER='vmware_workstation'
     else
       echo "Vagrant now use VirtualBox!"
       function vv() { vagrant up $@; }
     fi
   fi
+
+  export VAGRANT_PROVIDER_GUI="true"
 
   function vl() { vagrant reload $@ --provision; }
   alias vh='vagrant halt'
