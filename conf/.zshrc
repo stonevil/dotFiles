@@ -42,7 +42,7 @@ ZSH_CUSTOM=~/.Files/conf/.zsh_custom
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # plugins=(brew bundler colored-man colorize copyfile cp forklift rsync textmate tmux tmuxinator vi-mode)
-plugins=(brew bundler colored-man colorize copyfile cp golang forklift rsync textmate tmux tmuxinator vagrant)
+plugins=(brew bundler colored-man colorize copyfile cp golang forklift rsync textmate tmux vagrant)
 
 # Load oh-my-zsh
 if [[ -f $ZSH/oh-my-zsh.sh && -r $ZSH/oh-my-zsh.sh ]]; then
