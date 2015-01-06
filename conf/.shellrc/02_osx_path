@@ -1,0 +1,7 @@
+# Homebrew #####################################################################
+# Add homebrew to the PATH
+export HOMEBREW=/opt/homebrew
+if [[ -d $HOMEBREW ]]; then
+  export PATH=$HOMEBREW/bin:$HOMEBREW/sbin:$HOMEBREW/gettext/bin:$PATH
+  export MANPATH=$HOMEBREW/share/man:$MANPATH
+fi
