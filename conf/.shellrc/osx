@@ -28,6 +28,6 @@ if command -v system_profiler >/dev/null; then
   function finder-context-menu-flush() { sudo /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain user; killall Finder; say "Open With has been rebuilt, Finder will relaunch"; }
 
   # Game on/off optimisation
-  function game-on { sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist; say "Game mode on" }
-  function game-off { sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist; say "Game mode off" }
+  function game-on { sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist; say "Game mode on"; }
+  function game-off { sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist; say "Game mode off"; }
 fi
