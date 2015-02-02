@@ -1,0 +1,8 @@
+# GO LANG ######################################################################
+if command -v go >/dev/null; then
+  export GOPATH=~/.golang
+  export PATH=$GOPATH/bin:$PATH
+  if [[ ! -d $GOPATH ]]; then
+    mkdir $GOPATH
+  fi
+fi
