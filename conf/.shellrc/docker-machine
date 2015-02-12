@@ -1,2 +1,4 @@
 # Docker Machine ###############################################################
 export MACHINE_STORAGE_PATH="~/.docker/storage"
+export FUSION_MEMORY_SIZE="512"
+export FUSION_DISK_SIZE="4096"
