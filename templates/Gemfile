@@ -39,10 +39,6 @@ end
 #   gem 'fpm'
 # end
 
-group :terminal do
-  gem 'tmuxinator'
-end
-
 # group :vagrant do
 #   gem 'vagrant', github: 'mitchellh/vagrant'
 #   gem 'vagrant-berkshelf', github: 'berkshelf/vagrant-berkshelf'
