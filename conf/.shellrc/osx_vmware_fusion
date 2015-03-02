@@ -1,5 +1,5 @@
 # VMware #######################################################################
-if [[ -d '/Applications/VMware\ Fusion.app' ]]; then
+if [[ -d '/Applications/VMware Fusion.app' ]]; then
   function ovftool() {
     cd /Applications/VMware\ Fusion.app/Contents/Library/
     ./vmrun $@
