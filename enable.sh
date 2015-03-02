@@ -13,9 +13,3 @@ fi
 cd ~ && git clone git://github.com/akitaonrails/vimfiles.git ~/.vim
 cd ~/.vim && git submodule update --init
 cd ~/.vim && git pull --recurse-submodules
-
-# Install tmux-powerline
-if [[ -d '~/.tmux-powerline' ]]; then
-  cd ~ && mv -f ~/.tmux-powerline ~/.tmux-powerline.previous
-fi
-cd ~ && git clone https://github.com/erikw/tmux-powerline.git ~/.tmux-powerline
