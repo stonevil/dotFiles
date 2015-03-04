@@ -12,9 +12,6 @@ test/tmp
 test/version_tmp
 tmp
 
-# TMUX plugins
-conf/.tmux
-
 # YARD artifacts
 .yardoc
 _yardoc
