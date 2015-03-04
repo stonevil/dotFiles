@@ -13,3 +13,10 @@ fi
 cd ~ && git clone git://github.com/akitaonrails/vimfiles.git ~/.vim
 cd ~/.vim && git submodule update --init
 cd ~/.vim && git pull --recurse-submodules
+
+# Install TMUX Plugin Manager
+if [[ -d '~/.tmux' ]]; then
+  cd ~ && mv -f ~/.tmux ~/.tmux.previous
+fi
+cd ~ && mkdir -p ~/.tmux/plugins
+cd ~ && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
