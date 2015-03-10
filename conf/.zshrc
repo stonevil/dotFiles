@@ -16,6 +16,7 @@ else
   print "404: $DOTFILES/conf/.shellrc/ folder not found"
 fi
 
+
 # Optionally, if you set this to "random", it'll load a random theme each time that oh-my-zsh is loaded.
 # ZSH_THEME="steeef"
 # ZSH_THEME="arrow"
@@ -87,6 +88,17 @@ if [ -d $DOTFILES/conf/.shellrc ]; then
 else
   print "404: $DOTFILES/conf/.shellrc/ folder not found"
 fi
+
+# Load local secret configurations just like GitHub tokens, etc
+if [ -d $HOME/.secretsrc ]; then
+  for file in $HOME/.secretsrc/.[0-9A-Za-z]*
+  do
+    source $file
+  done
+else
+  print "404: $HOME/.secretsrc/ folder not found"
+fi
+
 
 alias reload=". ~/.zshrc && echo 'ZSH config reloaded from ~/.zshrc'"
 alias zshrc="vim ~/.zshrc && reload"
