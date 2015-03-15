@@ -18,19 +18,6 @@ if [ -d $SHELLRC ]; then
 else
   print "404: $SHELLRC folder not found"
 fi
-# Load local secret configurations just like GitHub tokens, etc
-SECRC=$DOTFILES/.secrc
-if [ -d $SECRC ]; then
-  if [ "$(ls -A $SECRC)" ]; then
-    for file in $SECRC/[0-9]*
-    do
-      source $file
-    done
-  fi
-else
-  print "404: $SECRC folder not found"
-fi
-
 
 
 # Optionally, if you set this to "random", it'll load a random theme each time that oh-my-zsh is loaded.
@@ -108,9 +95,10 @@ else
 fi
 
 # Load local secret configurations just like GitHub tokens, etc
+SECRC=$DOTFILES/.secrc
 if [ -d $SECRC ]; then
   if [ "$(ls -A $SECRC)" ]; then
-    for file in $SECRC/[A-Za-z]*
+    for file in $SECRC/*
     do
       source $file
     done
