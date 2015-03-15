@@ -80,26 +80,33 @@ fi
 
 # Shared Config File ###########################################################
 # Load shared for bash and zsh config file
-if [ -d $DOTFILES/conf/.shellrc ]; then
-  for file in $DOTFILES/conf/.shellrc/[A-Za-z]*
-  do
-    source $file
-  done
+SHELLRC=$DOTFILES/conf/.shellrc
+if [ -d $SHELLRC ]; then
+  if [ "$(ls -A $SHELLRC)" ]; then
+    for file in $SHELLRC/[A-Za-z]*
+    do
+      source $file
+    done
+  fi
 else
-  print "404: $DOTFILES/conf/.shellrc/ folder not found"
+  print "404: $SHELLRC folder not found"
 fi
 
 # Load local secret configurations just like GitHub tokens, etc
-if [ -d $HOME/.secretsrc ]; then
-  for file in $HOME/.secretsrc/.[0-9A-Za-z]*
-  do
-    source $file
-  done
+SECRC=$DOTFILES/.secrc
+if [ -d $DOTFILES/sec ]; then
+  if [ "$(ls -A $DOTFILES/sec)" ]; then
+    for file in $DOTFILES/sec/.[0-9A-Za-z]*
+    do
+      source $file
+    done
+  fi
 else
-  print "404: $HOME/.secretsrc/ folder not found"
+  print "404: $SECRC folder not found"
 fi
 
 
+# Reload Config File ###########################################################
 alias reload=". ~/.zshrc && echo 'ZSH config reloaded from ~/.zshrc'"
 alias zshrc="vim ~/.zshrc && reload"
 
