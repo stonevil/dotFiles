@@ -12,6 +12,9 @@ test/tmp
 test/version_tmp
 tmp
 
+# Secrets
+.secrc
+
 # YARD artifacts
 .yardoc
 _yardoc
