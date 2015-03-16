@@ -1,12 +1,24 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+# Update oh-my-zsh and modules
+if [[ -d $HOME/.oh-my-zsh ]]; then
+  cd $HOME/.oh-my-zsh && git pull
+  cd $HOME/.oh-my-zsh && git pull --recurse-submodules
+fi
 
 # Update vim and vim modules
-cd ~/.oh-my-zsh && git pull
-cd ~/.oh-my-zsh && git pull --recurse-submodules
+if [[ -d $HOME/.vim ]]; then
+  cd $HOME/.vim && git pull
+  cd $HOME/.vim && git pull --recurse-submodules
+fi
 
-# Update vim and vim modules
-cd ~/.vim && git pull
-cd ~/.vim && git pull --recurse-submodules
-
-# Update tmux-powerline
-cd ~/.tmux-powerline && git pull
+# Update TMUX Plugin Manager
+if [[ -d $HOME/.tmux/plugins ]]; then
+  for file in $HOME/.tmux/plugins/*
+  do
+    cd $file
+    if [[ -d '.git' ]]; then
+      git pull
+    fi
+  done
+fi
