@@ -1,22 +1,22 @@
 #!/usr/bin/env bash
 
 # Install oh-my-zsh and modules
-if [[ -d '~/.oh-my-zsh' ]]; then
-  cd ~ && mv -f ~/.oh-my-zsh ~/.oh-my-zsh.previous
+if [[ -d $HOME/.oh-my-zsh ]]; then
+  cd $HOME && mv -f $HOME/.oh-my-zsh $HOME/.oh-my-zsh.previous
 fi
-cd ~ && git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+cd $HOME && git clone https://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh
 
 # Install vim and vim modules
-if [[ -d '~/.vim' ]]; then
-  cd ~ && mv -f ~/.vim ~/.vim.previous
+if [[ -d $HOME/.vim ]]; then
+  cd $HOME && mv -f $HOME/.vim $HOME/.vim.previous
 fi
-cd ~ && git clone git://github.com/akitaonrails/vimfiles.git ~/.vim
-cd ~/.vim && git submodule update --init
-cd ~/.vim && git pull --recurse-submodules
+cd $HOME && git clone git://github.com/akitaonrails/vimfiles.git $HOME/.vim
+cd $HOME/.vim && git submodule update --init
+cd $HOME/.vim && git pull --recurse-submodules
 
 # Install TMUX Plugin Manager
-if [[ -d '~/.tmux' ]]; then
-  cd ~ && mv -f ~/.tmux ~/.tmux.previous
+if [[ -d $HOME/.tmux ]]; then
+  cd $HOME && mv -f $HOME/.tmux $HOME/.tmux.previous
 fi
-cd ~ && mkdir -p ~/.tmux/plugins
-cd ~ && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+cd $HOME && mkdir -p $HOME/.tmux/plugins
+cd $HOME && git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
