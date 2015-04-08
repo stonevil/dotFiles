@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# Disable the debug menu in Disk Utility and enable advanced options
+defaults write com.apple.DiskUtility DUDebugMenuEnabled -bool false
+defaults write com.apple.DiskUtility advanced-image-options -bool true

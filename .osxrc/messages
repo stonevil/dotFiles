@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# Messages #####################################################################
+# Enable automatic emoji substitution
+defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticEmojiSubstitutionEnabledLegacy" -bool true
+defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticEmojiSubstitutionEnablediMessage" -bool true
+
+# Enable smart quotes
+defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticQuoteSubstitutionEnabled" -bool true
+# Enable dash quotes
+defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticDashSubstitutionEnabled" -bool true
+
+# Enable data and link detectors
+defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticDataDetectionEnabled" -bool true
+defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticLinkDetectionEnabled" -bool true
+
+
+# Enable continuous spell checking
+defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool true
+defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "grammarCheckingEnabled" -bool true
+defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticSpellingCorrectionEnabled" -bool true
+
+# Enable autoreplacement
+defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticTextReplacementEnabled" -bool true
+defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "smartInsertDeleteEnabled" -bool true

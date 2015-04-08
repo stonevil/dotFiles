@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# Screen #######################################################################
+# Require password immediately after sleep or screen saver begins
+defaults write com.apple.screensaver askForPassword -int 1
+defaults write com.apple.screensaver askForPasswordDelay -int 0
+
+# Setup screensaver
+defaults -currentHost write com.apple.screensaver showClock -int 1
+defaults -currentHost write com.apple.screensaver idleTime -int 600
+
+defaults -currentHost write com.apple.screensaver moduleDict -dict-add "moduleName" -string "Computer Name"
+defaults -currentHost write com.apple.screensaver moduleDict -dict-add "path" -string "/System/Library/Frameworks/ScreenSaver.framework/Resources/Computer Name.saver"
+
+defaults -currentHost write com.apple.screensaver.basic MESSAGE -string "Private property of Myroslav Rys. If found, please return to Myroslav Rys\\nUA cell: +380 (93) 016-8222 | US cell: +1 (415) 494-1307 | NL cell: +31 6 44 98 42 99"
+
+# Save screenshots to the desktop
+defaults write com.apple.screencapture location -string "${HOME}/Desktop"
+
+# Save screenshots in PNG format (other options: BMP, GIF, JPG, PDF, TIFF)
+defaults write com.apple.screencapture type -string "png"
+
+# Disable shadow in screenshots
+defaults write com.apple.screencapture disable-shadow -bool true
+
+# Enable subpixel font rendering on non-Apple LCDs
+defaults write NSGlobalDomain AppleFontSmoothing -int 2
