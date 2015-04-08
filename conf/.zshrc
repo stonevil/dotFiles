@@ -107,7 +107,6 @@ else
   print "404: $SECRC folder not found"
 fi
 
-
 # Reload Config File ###########################################################
 alias reload=". ~/.zshrc && echo 'ZSH config reloaded from ~/.zshrc'"
 alias zshrc="vim ~/.zshrc && reload"
