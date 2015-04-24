@@ -1,6 +1,5 @@
-# Homebrew #####################################################################
-# Add homebrew to the PATH
 if [ $(uname) = "Darwin" ]; then
+  # Add homebrew to the PATH
   export HOMEBREW=/opt/homebrew
   if [[ -d $HOMEBREW ]]; then
     export PATH=$HOMEBREW/bin:$HOMEBREW/sbin:$HOMEBREW/gettext/bin:$PATH
