@@ -13,6 +13,7 @@ group :development do
   gem 'rubocop'
   gem 'tailor'
   gem 'rspec'
+  gem 'rspec-command'
 
   gem 'minitest'
   gem 'minitest-chef-handler'
@@ -30,9 +31,16 @@ group :development do
   gem 'guard-bundler'
   gem 'terminal-notifier-guard'
 
+  gem 'hubrelease'
+
   gem 'stove'
   gem 'emeril'
 end
+
+group :travis do
+  gem 'travis'
+end
+
 
 # group :package do
 #   gem 'bento'
