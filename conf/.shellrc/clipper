@@ -1,0 +1,4 @@
+# Clipper ######################################################################
+if command -v clipper >/dev/null; then
+  alias clip="nc localhost 8377"
+fi
