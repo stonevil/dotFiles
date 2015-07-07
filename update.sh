@@ -6,12 +6,6 @@ if [[ -d $HOME/.oh-my-zsh ]]; then
   cd $HOME/.oh-my-zsh && git pull --recurse-submodules
 fi
 
-# Update vim and vim modules
-if [[ -d $HOME/.vim ]]; then
-  cd $HOME/.vim && git pull
-  cd $HOME/.vim && git pull --recurse-submodules
-fi
-
 # Update TMUX Plugin Manager
 if [[ -d $HOME/.tmux/plugins ]]; then
   for file in $HOME/.tmux/plugins/*
