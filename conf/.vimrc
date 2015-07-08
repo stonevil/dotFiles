@@ -1,7 +1,6 @@
 "NeoBundle Scripts-----------------------------
 " Install neobundle
-" curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh > install.sh
-" sh ./install.sh
+" curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | /bin/bash
 " Note: Skip initialization for vim-tiny or vim-small.
 if 0 | endif
 
@@ -36,6 +35,8 @@ NeoBundle 'plasticboy/vim-markdown'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'scrooloose/syntastic'
 
+NeoBundle 'airblade/vim-gitgutter'
+
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'Xuyuanp/nerdtree-git-plugin'
 
@@ -43,6 +44,8 @@ NeoBundle 'bling/vim-airline'
 
 NeoBundle 'rentalcustard/pbcopy.vim'
 NeoBundle 'Townk/vim-autoclose'
+
+NeoBundle 'dietsche/vim-lastplace'
 
 " You can specify revision/branch/tag.
 NeoBundle 'Shougo/vimshell', { 'rev' : '3787e5' }
@@ -55,15 +58,54 @@ NeoBundle 't9md/vim-chef'
 " Required:
 call neobundle#end()
 
-" Required:
-set nocompatible
-syntax on
-filetype plugin indent on
-
 " If there are uninstalled bundles found on startup,
 " this will conveniently prompt you to install them.
 NeoBundleCheck
 "End NeoBundle Scripts-------------------------
+
+
+""""""""""
+" Global
+let mapleader=","
+"colorscheme molokai
+"set gfn=terminus
+set go=
+
+" Required:
+set nocompatible
+syntax on
+filetype plugin indent on
+set encoding=utf-8
+set hidden
+set showcmd
+set wrap
+set backspace=indent,eol,start
+set autoindent
+set copyindent
+set number
+set shiftround
+set ignorecase
+set smartcase
+set hlsearch
+set incsearch
+set history=1000
+set undolevels=1000
+set title
+set visualbell
+set noerrorbells
+"set list
+"set listchars=tab:>.,trail:.,extends:#,nbsp:.
+set ttyfast
+set mouse=a
+set nocompatible
+set noswapfile
+set fileformats=unix,dos,mac
+set laststatus=2
+set expandtab
+set softtabstop=2 tabstop=2 shiftwidth=2
+set ruler
+set wildignore=*.swp,*.bak
+set wildmode=longest,list
 
 
 """"""""""
@@ -266,6 +308,10 @@ map <C-n> :NERDTreeToggle<CR>
 """"""""""
 " vim-airline
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#csv#enabled = 1
+let g:airline#extensions#tagbar#enabled = 1
+let g:airline#extensions#hunks#enabled = 1
+let g:airline#extensions#syntastic#enabled = 1
 
 
 """"""""""
@@ -276,3 +322,7 @@ let g:tmuxline_separators = {
     \ 'right' : '',
     \ 'right_alt' : '<',
     \ 'space' : ' '}
+
+""""""""""
+" vim-lastplace
+let g:lastplace_ignore = "gitcommit,svn"
