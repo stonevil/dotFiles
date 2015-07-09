@@ -27,7 +27,7 @@ NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'Shougo/neosnippet.vim'
 NeoBundle 'Shougo/neosnippet-snippets'
 
-NeoBundle 'tpope/vim-fugitive'
+" NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'ctrlpvim/ctrlp.vim'
 NeoBundle 'flazz/vim-colorschemes'
 NeoBundle 'godlygeek/tabular'
@@ -41,16 +41,15 @@ NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'Xuyuanp/nerdtree-git-plugin'
 
 NeoBundle 'bling/vim-airline'
+" NeoBundle 'edkolev/tmuxline.vim'
 
-NeoBundle 'rentalcustard/pbcopy.vim'
 NeoBundle 'Townk/vim-autoclose'
+NeoBundle 'wincent/vim-clipper'
 
 NeoBundle 'dietsche/vim-lastplace'
+NeoBundle 'Shougo/vimshell'
 
-" You can specify revision/branch/tag.
-NeoBundle 'Shougo/vimshell', { 'rev' : '3787e5' }
-
-" Plugins
+" Plugins language specific
 NeoBundle 'fatih/vim-go'
 NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 't9md/vim-chef'
@@ -76,12 +75,12 @@ set nocompatible
 syntax on
 filetype plugin indent on
 set encoding=utf-8
-set hidden
+" set hidden
 set showcmd
 set wrap
 set backspace=indent,eol,start
 set autoindent
-set copyindent
+" set copyindent
 set number
 set shiftround
 set ignorecase
@@ -101,41 +100,11 @@ set nocompatible
 set noswapfile
 set fileformats=unix,dos,mac
 set laststatus=2
-set expandtab
+" set expandtab
 set softtabstop=2 tabstop=2 shiftwidth=2
 set ruler
 set wildignore=*.swp,*.bak
 set wildmode=longest,list
-
-
-""""""""""
-" Integration with Clipper https://github.com/wincent/clipper
-let s:screen = &term =~ 'screen'
-let s:tmux = exists('$TMUX')
-let s:xterm = &term =~ 'xterm'
-nnoremap <leader>y :call system('nc localhost 8377', @0)<CR>
-" make use of Xterm "bracketed paste mode"
-" http://www.xfree86.org/current/ctlseqs.html#Bracketed%20Paste%20Mode
-" http://stackoverflow.com/questions/5585129
-if s:screen || s:xterm
-  function! s:BeginXTermPaste(ret)
-    set paste
-    return a:ret
-  endfunction
-
-  " enable bracketed paste mode on entering Vim
-  let &t_ti .= "\e[?2004h"
-
-  " disable bracketed paste mode on leaving Vim
-  let &t_te = "\e[?2004l" . &t_te
-
-  set pastetoggle=<Esc>[201~
-  inoremap <expr> <Esc>[200~ <SID>BeginXTermPaste("")
-  nnoremap <expr> <Esc>[200~ <SID>BeginXTermPaste("i")
-  vnoremap <expr> <Esc>[200~ <SID>BeginXTermPaste("c")
-  cnoremap <Esc>[200~ <nop>
-  cnoremap <Esc>[201~ <nop>
-endif
 
 
 """"""""""
@@ -326,3 +295,34 @@ let g:tmuxline_separators = {
 """"""""""
 " vim-lastplace
 let g:lastplace_ignore = "gitcommit,svn"
+
+
+""""""""""
+" Integration with Clipper https://github.com/wincent/clipper
+let s:screen = &term =~ 'screen'
+let s:tmux = exists('$TMUX')
+let s:xterm = &term =~ 'xterm'
+" nnoremap <leader>y :call system('nc localhost 8377', @0)<CR>
+set clipboard=unnamed
+" make use of Xterm "bracketed paste mode"
+" http://www.xfree86.org/current/ctlseqs.html#Bracketed%20Paste%20Mode
+" http://stackoverflow.com/questions/5585129
+if s:screen || s:xterm
+  function! s:BeginXTermPaste(ret)
+    set paste
+    return a:ret
+  endfunction
+
+  " enable bracketed paste mode on entering Vim
+  let &t_ti .= "\e[?2004h"
+
+  " disable bracketed paste mode on leaving Vim
+  let &t_te = "\e[?2004l" . &t_te
+
+  set pastetoggle=<Esc>[201~
+  inoremap <expr> <Esc>[200~ <SID>BeginXTermPaste("")
+  nnoremap <expr> <Esc>[200~ <SID>BeginXTermPaste("i")
+  vnoremap <expr> <Esc>[200~ <SID>BeginXTermPaste("c")
+  cnoremap <Esc>[200~ <nop>
+  cnoremap <Esc>[201~ <nop>
+endif
