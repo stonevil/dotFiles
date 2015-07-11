@@ -28,10 +28,9 @@ NeoBundle 'Shougo/neosnippet.vim'
 NeoBundle 'Shougo/neosnippet-snippets'
 
 " NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'ctrlpvim/ctrlp.vim'
+" NeoBundle 'ctrlpvim/ctrlp.vim'
 NeoBundle 'flazz/vim-colorschemes'
 NeoBundle 'godlygeek/tabular'
-NeoBundle 'plasticboy/vim-markdown'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'scrooloose/syntastic'
 
@@ -42,17 +41,19 @@ NeoBundle 'Xuyuanp/nerdtree-git-plugin'
 
 NeoBundle 'bling/vim-airline'
 " NeoBundle 'edkolev/tmuxline.vim'
+" NeoBundle 'edkolev/promptline.vim'
 
 NeoBundle 'Townk/vim-autoclose'
-NeoBundle 'wincent/vim-clipper'
-
 NeoBundle 'dietsche/vim-lastplace'
-NeoBundle 'Shougo/vimshell'
+
+" Enable clipboard over network connection. https://github.com/wincent/clipper is required
+NeoBundle 'wincent/vim-clipper'
 
 " Plugins language specific
 NeoBundle 'fatih/vim-go'
 NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 't9md/vim-chef'
+NeoBundle 'plasticboy/vim-markdown'
 
 " Required:
 call neobundle#end()
