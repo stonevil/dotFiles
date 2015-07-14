@@ -54,6 +54,7 @@ NeoBundle 'fatih/vim-go'
 NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 't9md/vim-chef'
 NeoBundle 'plasticboy/vim-markdown'
+NeoBundle 'docker/docker' , {'rtp': '/contrib/syntax/vim/'}
 
 " Required:
 call neobundle#end()
@@ -223,6 +224,11 @@ let g:go_highlight_build_constraints = 1
 
 """"""""""
 " vim-ruby
+
+
+""""""""""
+" vim-markdown
+let g:vim_markdown_folding_disabled=1
 
 
 """"""""""
