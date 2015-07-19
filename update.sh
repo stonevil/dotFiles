@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+
+# Update dotFiles
+cd $HOME/.Files && git pull && git pull --recurse-submodules
+
 # Update brew
 if command -v brew >/dev/null; then
 	brew update && brew upgrade --all
