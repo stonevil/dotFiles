@@ -1,8 +1,8 @@
 # Editors ######################################################################
 # Set EDITOR
-if [[ -f /opt/homebrew/bin/vim ]]; then
-  export EDITOR="/opt/homebrew/bin/vim"
-  export VIMRUNTIME="/opt/homebrew/share/vim/vim74"
+if [[ -f ~/.homebrew/bin/vim ]]; then
+  export EDITOR="~/.homebrew/bin/vim"
+  export VIMRUNTIME="~/.homebrew/share/vim/vim74"
 else
   if [[ -f /Applications/MacVim.app/Contents/MacOS/Vim ]]; then
     export EDITOR="/Applications/MacVim.app/Contents/MacOS/Vim"

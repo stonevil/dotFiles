@@ -36,14 +36,14 @@ NeoBundle 'scrooloose/syntastic'
 
 NeoBundle 'airblade/vim-gitgutter'
 
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'Xuyuanp/nerdtree-git-plugin'
+" NeoBundle 'scrooloose/nerdtree'
+" NeoBundle 'Xuyuanp/nerdtree-git-plugin'
 
 NeoBundle 'bling/vim-airline'
 " NeoBundle 'edkolev/tmuxline.vim'
 " NeoBundle 'edkolev/promptline.vim'
 
-NeoBundle 'Townk/vim-autoclose'
+" NeoBundle 'Townk/vim-autoclose'
 NeoBundle 'dietsche/vim-lastplace'
 
 " Enable clipboard over network connection. https://github.com/wincent/clipper is required
@@ -51,10 +51,11 @@ NeoBundle 'wincent/vim-clipper'
 
 " Plugins language specific
 NeoBundle 'fatih/vim-go'
-NeoBundle 'vim-ruby/vim-ruby'
-NeoBundle 't9md/vim-chef'
-NeoBundle 'plasticboy/vim-markdown'
-NeoBundle 'docker/docker' , {'rtp': '/contrib/syntax/vim/'}
+" NeoBundle 'vim-ruby/vim-ruby'
+" NeoBundle 't9md/vim-chef'
+" NeoBundle 'plasticboy/vim-markdown'
+" NeoBundle 'rhysd/vim-crystal'
+" NeoBundle 'docker/docker' , {'rtp': '/contrib/syntax/vim/'}
 
 " Required:
 call neobundle#end()
@@ -220,10 +221,18 @@ let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
+" go lint
+" install igolint: go get -u github.com/golang/lint/golint
+set rtp+=~/.golang/src/github.com/golang/lint/misc/vim
+" autocmd BufWritePost,FileWritePost *.go execute 'GoLint' | cwindow
 
 
 """"""""""
 " vim-ruby
+
+
+""""""""""
+" vim-crystal
 
 
 """"""""""
@@ -246,7 +255,7 @@ let g:syntastic_check_on_wq = 0
 """"""""""
 " tagbar
 nmap <F8> :TagbarToggle<CR>
-let g:tagbar_ctags_bin = '/opt/homebrew/bin/ctags'
+let g:tagbar_ctags_bin = '~/.homebrew/bin/ctags'
 let g:tagbar_type_go = {
     \ 'ctagstype' : 'go',
     \ 'kinds'     : [
@@ -278,7 +287,7 @@ let g:tagbar_type_go = {
 
 """"""""""
 " NERDTree
-map <C-n> :NERDTreeToggle<CR>
+" map <C-n> :NERDTreeToggle<CR>
 
 
 """"""""""
@@ -289,15 +298,6 @@ let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#hunks#enabled = 1
 let g:airline#extensions#syntastic#enabled = 1
 
-
-""""""""""
-" tmuxline
-let g:tmuxline_separators = {
-    \ 'left' : '',
-    \ 'left_alt': '>',
-    \ 'right' : '',
-    \ 'right_alt' : '<',
-    \ 'space' : ' '}
 
 """"""""""
 " vim-lastplace
