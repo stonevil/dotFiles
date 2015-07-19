@@ -6,7 +6,7 @@ cd $HOME/.Files && git pull && git pull --recurse-submodules
 
 # Update brew
 if command -v brew >/dev/null; then
-	brew update && brew upgrade --all
+	$HOME/.homebrew/bin/brew update && $HOME/.homebrew/bin/brew upgrade --all && $HOME/.homebrew/bin/brew cleanup && $HOME/.homebrew/bin/brew cask cleanup
 fi
 
 # Update oh-my-zsh and modules
