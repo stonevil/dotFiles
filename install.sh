@@ -7,12 +7,14 @@ else
 	cd $HOME && git clone https://github.com/stonevil/dotFiles.git $HOME/.Files && cd $HOME/.Files && git pull --recurse-submodules
 fi
 
-# Install homebrew
-if [[ -d $HOME/.homebrew ]]; then
-	cd $HOME && mv -f $HOME/.homebrew $HOME/.homebrew.previous
+# Install homebrew at OS X
+if [ $(uname) = "Darwin" ]; then
+	if [[ -d $HOME/.homebrew ]]; then
+		cd $HOME && mv -f $HOME/.homebrew $HOME/.homebrew.previous
+	fi
+	cd $HOME && git clone https://github.com/Homebrew/homebrew.git $HOME/.homebrew
+	$HOME/.homebrew/bin/brew update && $HOME/.homebrew/bin/brew upgrade --all && $HOME/.homebrew/bin/brew upgrade $HOME/.homebrew/bin/brew-cask && $HOME/.homebrew/bin/brew cleanup && $HOME/.homebrew/bin/brew cask cleanup
 fi
-cd $HOME && git clone https://github.com/Homebrew/homebrew.git $HOME/.homebrew
-$HOME/.homebrew/bin/brew update && $HOME/.homebrew/bin/brew upgrade --all && $HOME/.homebrew/bin/brew upgrade $HOME/.homebrew/bin/brew-cask && $HOME/.homebrew/bin/brew cleanup && $HOME/.homebrew/bin/brew cask cleanup
 
 # Install VIM neobundle.vim plugin
 curl -L https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | /bin/bash -s --
