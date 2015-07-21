@@ -53,8 +53,8 @@ NeoBundle 'wincent/vim-clipper'
 NeoBundle 'fatih/vim-go'
 " NeoBundle 'vim-ruby/vim-ruby'
 " NeoBundle 't9md/vim-chef'
-" NeoBundle 'plasticboy/vim-markdown'
-" NeoBundle 'rhysd/vim-crystal'
+NeoBundle 'rcmdnk/vim-markdown'
+NeoBundle 'rhysd/vim-crystal'
 " NeoBundle 'docker/docker' , {'rtp': '/contrib/syntax/vim/'}
 
 " Required:
@@ -212,6 +212,21 @@ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 if has('conceal')
   set conceallevel=2 concealcursor=niv
 endif
+
+
+""""""""""
+" checkspell
+map <F5> :set spell spelllang=en_gb<CR>
+" ]s - forward to misspelled/rare/wrong cap word
+" [s - backwards ]
+" S  - only stop at misspellings
+" [S - in other direction
+" zG - accept spelling for this session
+" zg - accept spelling and add to personal dictionary
+" zW - treat as misspelling for this session
+" zw - treat as misspelling and add to personal dictionary
+" z= - show spelling suggestions
+" :spellr - repeat last spell replacement for all words in window
 
 
 """"""""""
