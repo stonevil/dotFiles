@@ -1,0 +1,27 @@
+# Update All ###################################################################
+function dotfiles-update-all() {
+	# Update dotFiles
+	cd $HOME/.Files && git pull && git pull --recurse-submodules
+
+	# Update brew
+	if command -v brew >/dev/null; then
+		$HOME/.homebrew/bin/brew update && $HOME/.homebrew/bin/brew upgrade --all && $HOME/.homebrew/bin/brew cleanup && $HOME/.homebrew/bin/brew cask cleanup
+	fi
+
+	# Update oh-my-zsh and modules
+	if [[ -d $HOME/.oh-my-zsh ]]; then
+		cd $HOME/.oh-my-zsh && git pull
+		cd $HOME/.oh-my-zsh && git pull --recurse-submodules
+	fi
+
+	# Update TMUX Plugin Manager
+	if [[ -d $HOME/.tmux/plugins ]]; then
+		for file in $HOME/.tmux/plugins/*
+		do
+		cd $file
+			if [[ -d '.git' ]]; then
+				git pull
+			fi
+		done
+	fi
+}
