@@ -12,12 +12,10 @@ fi
 echo "Install everything releated"
 case "`echo $SHELL | awk -F"/" '{print $NF}'`" in
 	bash)	echo "BASH. Yikes!"
-				source $HOME/.Files/conf/.bashrc
-				dotfiles-install-all
+				source $HOME/.Files/conf/.bashrc && dotfiles-install-all
 				;;
 	zsh)	echo "ZSH. You cool!"
-				source $HOME/.Files/conf/.zshrc
-				dotfiles-install-all
+				source $HOME/.Files/conf/.zshrc && dotfiles-install-all
 				;;
 	*)		echo "Not supported shell"
 				;;
