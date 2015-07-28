@@ -9,17 +9,14 @@ else
 fi
 
 # Read shell config file
-echo "Detecting shell"
-CURRENT_SHELL=`echo $0`
-# Install everything
 echo "Install everything releated"
-case $CURRENT_SHELL in
+case "`echo $SHELL | awk -F"/" '{print $NF}'`" in
 	bash)	echo "BASH. Yikes!"
-				source $HOME/conf/.bashrc
+				source $HOME/.Files/conf/.bashrc
 				dotfiles-install-all
 				;;
 	zsh)	echo "ZSH. You cool!"
-				source $HOME/conf/.zshrc
+				source $HOME/.Files/conf/.zshrc
 				dotfiles-install-all
 				;;
 	*)		echo "Not supported shell"
