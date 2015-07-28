@@ -41,7 +41,7 @@ function dotfiles-update-all() {
 	wget -q --tries=10 --timeout=20 --spider https://github.com
 	if [[ $? -eq 0 ]]; then
 		# Update dotFiles
-		pushd $DOTFILES && git pull && git pull --recurse-submodules && popd && source $SHELLRC/.zshrc
+		pushd $DOTFILES && git pull && git pull --recurse-submodules && popd && source $DOTFILES/.zshrc
 
 		# Update brew
 		if [ $(uname) = "Darwin" ]; then
