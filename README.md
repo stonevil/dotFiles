@@ -4,6 +4,4 @@ My collection of dot and config files. Highly optimised for OS X 10.9 and higher
 
 ### TODO
 
-* Rewrite install/update procedure
-* Improve OS X and Linux GUI apps support
-* Re-implement VIM and VIM plugins support
+* Cleanup code
