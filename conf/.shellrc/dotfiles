@@ -1,8 +1,7 @@
 # Update All ###################################################################
 function dotfiles-install-all() {
 	# Check internet connection to github
-	wget -q --tries=10 --timeout=20 --spider https://github.com
-	if [[ $? -eq 0 ]]; then
+	if [[ `curl -sL -w "%{http_code}\\n" "http://www.google.com/" -o /dev/null` -eq 200 ]]; then
 		if command -v git >/dev/null; then
 			# Install homebrew at OS X
 			if [ $(uname) = "Darwin" ]; then
@@ -37,8 +36,7 @@ function dotfiles-install-all() {
 
 function dotfiles-update-all() {
 	# Check internet connection to github
-	wget -q --tries=10 --timeout=20 --spider https://github.com
-	if [[ $? -eq 0 ]]; then
+	if [[ `curl -sL -w "%{http_code}\\n" "http://www.google.com/" -o /dev/null` -eq 200 ]]; then
 		# Update dotFiles
 		pushd $DOTFILES && git pull && git pull --recurse-submodules && popd && source $DOTFILES/.zshrc
 

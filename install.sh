@@ -4,8 +4,10 @@
 if [[ -d $HOME/.Files ]]; then
 	echo "dotFiles already installed"
 else
-	# Clone dotFiles from git repository
-	pushd $HOME && git clone https://github.com/stonevil/dotFiles.git $HOME/.Files && pusdh $HOME/.Files && git pull --recurse-submodules && popd && popd
+	if [[ `curl -sL -w "%{http_code}\\n" "http://www.google.com/" -o /dev/null` -eq 200 ]]; then
+		# Clone dotFiles from git repository
+		pushd $HOME && git clone https://github.com/stonevil/dotFiles.git $HOME/.Files && pushd $HOME/.Files && git pull --recurse-submodules && popd && popd
+	fi
 fi
 
 # Read shell config file
