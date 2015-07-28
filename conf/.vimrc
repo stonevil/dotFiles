@@ -55,6 +55,7 @@ NeoBundle 'fatih/vim-go'
 " NeoBundle 't9md/vim-chef'
 NeoBundle 'rcmdnk/vim-markdown'
 NeoBundle 'rhysd/vim-crystal'
+NeoBundle 'markcornick/vim-terraform'
 " NeoBundle 'docker/docker' , {'rtp': '/contrib/syntax/vim/'}
 
 " Required:
