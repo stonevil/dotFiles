@@ -1,19 +1,58 @@
 # Update All ###################################################################
+function dotfiles-install-all() {
+	# Check internet connection to github
+	wget -q --tries=10 --timeout=20 --spider https://github.com
+	if [[ $? -eq 0 ]]; then
+		if command -v git >/dev/null; then
+			# Install homebrew at OS X
+			if [ $(uname) = "Darwin" ]; then
+				if [[ -d $HOME/.homebrew ]]; then
+					cd $HOME && mv -f $HOME/.homebrew $HOME/.homebrew.previous
+				fi
+				# Clone homebrew from git repo
+				git clone https://github.com/Homebrew/homebrew.git $HOME/.homebrew
+			$HOME/.homebrew/bin/brew update && $HOME/.homebrew/bin/brew upgrade --all && $HOME/.homebrew/bin/brew upgrade $HOME/.homebrew/bin/brew-cask && $HOME/.homebrew/bin/brew cleanup && $HOME/.homebrew/bin/brew cask cleanup
+			fi
+
+			# Install VIM neobundle.vim plugin
+			curl -L https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | /bin/bash -s --
+
+			# Install oh-my-zsh and modules
+			if [[ -d $HOME/.oh-my-zsh ]]; then
+				cd $HOME && mv -f $HOME/.oh-my-zsh $HOME/.oh-my-zsh.previous
+			fi
+			git clone https://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh
+
+			# Install TMUX Plugin Manager
+			if [[ -d $HOME/.tmux ]]; then
+				cd $HOME && mv -f $HOME/.tmux $HOME/.tmux.previous
+			fi
+			mkdir -p $HOME/.tmux/plugins && git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+			else
+				echo "Stop execution. Please install git"
+				break
+			fi
+		fi
+}
+
+
 function dotfiles-update-all() {
 	# Check internet connection to github
 	wget -q --tries=10 --timeout=20 --spider https://github.com
 	if [[ $? -eq 0 ]]; then
 		# Update dotFiles
-		pushd $HOME/.Files && git pull && git pull --recurse-submodules && popd
+		pushd $DOTFILES && git pull && git pull --recurse-submodules && popd && source $SHELLRC/.zshrc
 
 		# Update brew
-		if command -v brew >/dev/null; then
-			$HOMEBREW/bin/brew update && $HOMEBREW/bin/brew upgrade --all && $HOMEBREW/bin/brew cleanup && $HOMEBREW/bin/brew cask cleanup
+		if [ $(uname) = "Darwin" ]; then
+			if command -v brew >/dev/null; then
+				$HOMEBREW/bin/brew update && $HOMEBREW/bin/brew upgrade --all && $HOMEBREW/bin/brew cleanup && $HOMEBREW/bin/brew cask cleanup
+			fi
 		fi
 
 		# Update oh-my-zsh and modules
-		if [[ -d $HOME/.oh-my-zsh ]]; then
-			pushd $HOME/.oh-my-zsh && git pull && pushd $HOME/.oh-my-zsh && git pull --recurse-submodules && popd && popd
+		if [[ -d $ZSH ]]; then
+			pushd $ZSH && git pull && pushd $ZSH && git pull --recurse-submodules && popd && popd
 		fi
 
 		# Update TMUX Plugin Manager
