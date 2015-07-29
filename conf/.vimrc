@@ -259,7 +259,11 @@ let g:vim_markdown_folding_disabled=1
 """"""""""
 " syntastic
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
+" enable only after full installation
+if exists('g:syntastic#SyntasticStatuslineFlag')
+	set statusline+=%{SyntasticStatuslineFlag()}
+endif
+"
 set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
