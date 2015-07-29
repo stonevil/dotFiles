@@ -1,4 +1,4 @@
-# Update All ###################################################################
+# Install all ##################################################################
 function dotfiles-install-all() {
 	# Check internet connection to github
 	if [[ `curl -sL -w "%{http_code}\\n" "http://www.google.com/" -o /dev/null` -eq 200 ]]; then
@@ -33,7 +33,7 @@ function dotfiles-install-all() {
 		fi
 }
 
-
+# Update All ###################################################################
 function dotfiles-update-all() {
 	# Check internet connection to github
 	if [[ `curl -sL -w "%{http_code}\\n" "http://www.google.com/" -o /dev/null` -eq 200 ]]; then
@@ -65,5 +65,22 @@ function dotfiles-update-all() {
 		fi
 	else
 		echo "Offline. No connection to github"
+	fi
+}
+
+# Create aliases ###############################################################
+function dotfiles-aliases-all() {
+	# Create aliases
+	if [ -d $DOTFILES ]; then
+		for file in $DOTFILES/conf/.*
+			do
+				f=`echo $file | awk -F"/" '{print $NF}'`
+				if [ $f != . ] && [ $f != .. ]; then
+					mv -f $HOME/$f $HOME/$f.previous
+					ln -sf $file $HOME
+				fi
+			done
+	else
+		echo "404: $DOTFILES folder not found"
 	fi
 }
