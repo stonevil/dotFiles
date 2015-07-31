@@ -62,16 +62,16 @@ function dotfiles-update-all() {
 		if [ $(uname) = "Darwin" ]; then
 			if command -v brew >/dev/null; then
 				$HOMEBREW/bin/brew update \
-				&& $HOMEBREW/bin/brew upgrade --all
-				&& $HOMEBREW/bin/brew cleanup
+				&& $HOMEBREW/bin/brew upgrade --all \
+				&& $HOMEBREW/bin/brew cleanup \
 				&& $HOMEBREW/bin/brew cask cleanup
 			fi
 		fi
 		if [ $(uname) = "Linux" ]; then
 			if command -v brew >/dev/null; then
 				$HOMEBREW/bin/brew update \
-				&& $HOMEBREW/bin/brew upgrade --all
-				&& $HOMEBREW/bin/brew cleanup
+				&& $HOMEBREW/bin/brew upgrade --all \
+				&& $HOMEBREW/bin/brew cleanup \
 				&& $HOMEBREW/bin/brew cask cleanup
 			fi
 		fi
