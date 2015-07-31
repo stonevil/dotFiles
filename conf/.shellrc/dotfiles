@@ -56,7 +56,7 @@ function dotfiles-update-all() {
 	# Check internet connection to github
 	if [[ `curl -sL -w "%{http_code}\\n" "http://www.google.com/" -o /dev/null` -eq 200 ]]; then
 		# Update dotFiles
-		pushd $DOTFILES && git pull && git pull --recurse-submodules && popd && source $DOTFILES/.zshrc
+		pushd $DOTFILES && git pull && git pull --recurse-submodules && popd && source $DOTFILES/conf/.zshrc
 
 		# Update brew
 		if [ $(uname) = "Darwin" ]; then
