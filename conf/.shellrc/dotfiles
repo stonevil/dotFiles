@@ -10,7 +10,25 @@ function dotfiles-install-all() {
 				fi
 				# Clone homebrew from git repo
 				git clone https://github.com/Homebrew/homebrew.git $HOME/.homebrew
-			$HOME/.homebrew/bin/brew update && $HOME/.homebrew/bin/brew upgrade --all && $HOME/.homebrew/bin/brew upgrade $HOME/.homebrew/bin/brew-cask && $HOME/.homebrew/bin/brew cleanup && $HOME/.homebrew/bin/brew cask cleanup
+				$HOME/.homebrew/bin/brew update && $HOME/.homebrew/bin/brew upgrade --all \
+				&& $HOME/.homebrew/bin/brew upgrade $HOME/.homebrew/bin/brew-cask \
+				&& $HOME/.homebrew/bin/brew cleanup \
+				&& $HOME/.homebrew/bin/brew cask cleanup
+			fi
+
+			# Install homebrew at Linux
+			if [ $(uname) = "Linux" ]; then
+				# Install on Debian and Ubuntu
+				# sudo apt-get install build-essential curl git m4 ruby texinfo libbz2-dev libcurl4-openssl-dev libexpat-dev libncurses-dev zlib1g-dev
+				if [[ -d $HOME/.homebrew ]]; then
+					cd $HOME && mv -f $HOME/.homebrew $HOME/.homebrew.previous
+				fi
+				# Clone homebrew from git repo
+				git clone https://github.com/Homebrew/linuxbrew.git $HOME/.homebrew
+				$HOME/.homebrew/bin/brew update && $HOME/.homebrew/bin/brew upgrade --all \
+				&& $HOME/.homebrew/bin/brew upgrade $HOME/.homebrew/bin/brew-cask \
+				&& $HOME/.homebrew/bin/brew cleanup \
+				&& $HOME/.homebrew/bin/brew cask cleanup
 			fi
 
 			# Install VIM neobundle.vim plugin
@@ -43,7 +61,18 @@ function dotfiles-update-all() {
 		# Update brew
 		if [ $(uname) = "Darwin" ]; then
 			if command -v brew >/dev/null; then
-				$HOMEBREW/bin/brew update && $HOMEBREW/bin/brew upgrade --all && $HOMEBREW/bin/brew cleanup && $HOMEBREW/bin/brew cask cleanup
+				$HOMEBREW/bin/brew update \
+				&& $HOMEBREW/bin/brew upgrade --all
+				&& $HOMEBREW/bin/brew cleanup
+				&& $HOMEBREW/bin/brew cask cleanup
+			fi
+		fi
+		if [ $(uname) = "Linux" ]; then
+			if command -v brew >/dev/null; then
+				$HOMEBREW/bin/brew update \
+				&& $HOMEBREW/bin/brew upgrade --all
+				&& $HOMEBREW/bin/brew cleanup
+				&& $HOMEBREW/bin/brew cask cleanup
 			fi
 		fi
 
