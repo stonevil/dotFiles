@@ -353,3 +353,40 @@ if s:screen || s:xterm
   cnoremap <Esc>[200~ <nop>
   cnoremap <Esc>[201~ <nop>
 endif
+
+
+""""""""""
+" Default scheme
+colorscheme carvedwoodcool
+
+
+""""""""""
+" Cycle all vim-colorschemes plugin schemes for 5 sec
+" execute :call SchemesCycle()
+function! SchemesCycle()
+   let currDir = getcwd()
+   exec "cd ~/.vim/bundle/vim-colorschemes/colors"
+   for myCol in split(glob("*"), '\n')
+      if myCol =~ '\.vim'
+         let mycol = substitute(myCol, '\.vim', '', '')
+         exec "colorscheme " . mycol
+         exec "redraw!"
+         echo "colorscheme = ". myCol
+         sleep 5
+      endif
+   endfor
+   exec "cd " . currDir
+endfunction
+
+
+""""""""""
+" GUI
+if has("gui_vimr")
+	" VimR specific stuff
+	colorscheme carvedwoodcool
+endif
+
+if has("gui_macvim")
+	" MacVim specific stuff
+	colorscheme carvedwoodcool
+endif
