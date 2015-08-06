@@ -107,7 +107,7 @@ set laststatus=2
 " set expandtab
 set softtabstop=2 tabstop=2 shiftwidth=2
 set ruler
-set wildignore=*.swp,*.bak
+set wildignore=*.swp,*.bak,.DS_Store
 set wildmode=longest,list
 
 
