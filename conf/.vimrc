@@ -384,9 +384,11 @@ endfunction
 if has("gui_vimr")
 	" VimR specific stuff
 	colorscheme carvedwoodcool
+	set guifont=Menlo\ Regular:h12
 endif
 
 if has("gui_macvim")
 	" MacVim specific stuff
 	colorscheme carvedwoodcool
+	set guifont=Menlo\ Regular:h12
 endif
