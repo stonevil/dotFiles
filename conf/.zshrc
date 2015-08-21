@@ -16,7 +16,7 @@ if [ -d $SHELLRC ]; then
     done
   fi
 else
-  print "404: $SHELLRC folder not found"
+  echo "404: $SHELLRC folder not found"
 fi
 
 
@@ -91,7 +91,7 @@ if [ -d $SHELLRC ]; then
     done
   fi
 else
-  print "404: $SHELLRC folder not found"
+  echo "404: $SHELLRC folder not found"
 fi
 
 # Load local secret configurations just like GitHub tokens, etc
@@ -104,7 +104,7 @@ if [ -d $SECRC ]; then
     done
   fi
 else
-  print "404: $SECRC folder not found"
+  echo "404: $SECRC folder not found"
 fi
 
 # Reload Config File ###########################################################
