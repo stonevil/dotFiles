@@ -4,5 +4,5 @@ export RVM=~/.rvm/
 if [[ -d $RVM ]]; then
   export PATH=$RVM/bin:$PATH
   export MANPATH=$RVM/man:$MANPATH
-	[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+	[[ -s "$RVM/scripts/rvm" ]] && source "$RVM/scripts/rvm"
 fi
