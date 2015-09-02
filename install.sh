@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # Install dotFiles
 if [ -d $HOME/.Files ]; then
