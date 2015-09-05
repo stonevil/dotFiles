@@ -1,4 +1,4 @@
-## OS X specific
+# OS X #########################################################################
 # Return OS X memory status
 if [ $(uname) = "Darwin" ]; then
   function memory-stats() {
