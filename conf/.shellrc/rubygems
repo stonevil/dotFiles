@@ -1,9 +1,9 @@
-# Ruby Gems
+# RUBY Gems ####################################################################
 if command -v gem >/dev/null; then
 	RUBY_VERSION=`ruby -e "puts RUBY_VERSION"`
 	export GEM_HOME=$HOME/.gem/ruby/$RUBY_VERSION
 	export GEM_PATH=$GEM_HOME
-	export PATH=$GEM_PATH/bin:$PATH
+	export PATH=$PATH:$GEM_PATH/bin
   function gems-update-all() { gem update `gem list | cut -d ' ' -f 1`; echo "All gems for current ruby updated"; }
   function gems-remove-all() { for x in `gem list --no-versions`; do gem uninstall $x -a -x -I; done; echo "All gems for current updated"; }
   function gems-remove-old() { gem cleanup; }

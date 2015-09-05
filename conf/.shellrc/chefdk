@@ -2,18 +2,5 @@
 # Add OpScode Chef to the PATH
 export CHEFDK=/opt/chefdk
 if [[ -d $CHEFDK ]]; then
-  export PATH=$CHEFDK/bin:$CHEFDK/embedded/bin:$PATH
-  export MANPATH=$CHEFDK/share/man:$MANPATH
-# Chef Ruby Gems
-  function chef-gem() { $CHEFDK/embedded/bin/gem $@; }
-  function chef-bundle() { $CHEFDK/embedded/bin/bundle $@ --path ~/.chefdk/gem; }
-  function chef-gems-update-all() { $CHEFDK/embedded/bin/gem update `/opt/chefdk/embedded/bin/gem list | cut -d ' ' -f 1`; echo "All gems in system path updated"; }
-  function chef-gems-remove-old() { $CHEFDK/embedded/bin/gem cleanup; }
-  function chef-gems-list-local() { $CHEFDK/embedded/bin/gem query --local; }
-fi
-
-export CHEFDKLOCAL=~/.chefdk/gem/ruby/2.1.0
-if [[ -d $CHEFDKLOCAL ]]; then
-  export PATH=$PATH:$CHEFDKLOCAL/bin
-  export MANPATH=$MANPATH:$CHEFDKLOCAL/share/man
+  export PATH=$PATH:$CHEFDK/bin
 fi
