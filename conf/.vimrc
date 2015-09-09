@@ -51,6 +51,7 @@ NeoBundle 'wincent/vim-clipper'
 
 " Plugins language specific
 NeoBundle 'fatih/vim-go'
+" NeoBundle 'nsf/gocode', {'rtp': 'vim/'} " Install plugin from https://github.com/nsf/gocode
 " NeoBundle 'vim-ruby/vim-ruby'
 " NeoBundle 't9md/vim-chef'
 NeoBundle 'rcmdnk/vim-markdown'
@@ -70,7 +71,6 @@ NeoBundleCheck
 """"""""""
 " Global
 let mapleader=","
-"colorscheme molokai
 "set gfn=terminus
 set go=
 
@@ -357,7 +357,8 @@ endif
 
 """"""""""
 " Default scheme
-colorscheme carvedwoodcool
+" colorscheme carvedwoodcool
+colorscheme molokai
 
 
 """"""""""
