@@ -13,14 +13,5 @@ fi
 if [ `curl -sL -w "%{http_code}\\n" "http://www.google.com/" -o /dev/null` -eq 200 ]; then
 	# Read shell config file
 	echo "Install everything releated"
-	case "`echo $SHELL | awk -F"/" '{print $NF}'`" in
-		bash)	echo "BASH. Yikes!"
-					source $HOME/.Files/conf/.bashrc && dotfiles-install-all && dotfiles-aliases-all
-					;;
-		zsh)	echo "ZSH. You cool!"
-					source $HOME/.Files/conf/.zshrc && dotfiles-install-all && dotfiles-aliases-all
-					;;
-		*)		echo "Not supported shell"
-					;;
-	esac
+	/bin/bash -c "source $HOME/.Files/conf/.bashrc && dotfiles-install-all && dotfiles-aliases-all"
 fi
