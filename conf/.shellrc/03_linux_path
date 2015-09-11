@@ -5,4 +5,9 @@ if [ $(uname) = "Linux" ]; then
     export PATH=$HOMEBREW/bin:$HOMEBREW/sbin:$HOMEBREW/gettext/bin:$PATH
     export MANPATH=$HOMEBREW/share/man:$MANPATH
   fi
+  # Add Go lang to the PATH
+  export GOLANG=/opt/go
+  if [[ -d $GOLANG ]]; then
+    export PATH=$GOLANG/bin:$PATH
+  fi
 fi
