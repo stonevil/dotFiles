@@ -1,5 +1,7 @@
 # Vagrant ######################################################################
-if command -v vagrant >/dev/null; then
+export VAGRANT=/opt/vagrant
+if [[ -d $VAGRANT ]]; then
+	export PATH=$VAGRANT/bin:$PATH
   if [[ -f '/Applications/VMware Fusion.app/Contents/Library/vmrun' ]]; then
     echo "VMware Fusion detected. Vagrant now use VMware Fusion!"
     function vv() { vagrant up $@ --provider vmware_fusion; }
