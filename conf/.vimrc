@@ -49,6 +49,9 @@ NeoBundle 'dietsche/vim-lastplace'
 " Enable clipboard over network connection. https://github.com/wincent/clipper is required
 NeoBundle 'wincent/vim-clipper'
 
+" Enable write a file containing the current state of Vim
+" NeoBundle 'tpope/vim-obsession'
+
 " Plugins language specific
 NeoBundle 'fatih/vim-go'
 " NeoBundle 'nsf/gocode', {'rtp': 'vim/'} " Install plugin from https://github.com/nsf/gocode
