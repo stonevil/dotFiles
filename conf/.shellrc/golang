@@ -5,4 +5,5 @@ if command -v go >/dev/null; then
   if [[ ! -d $GOPATH ]]; then
     mkdir $GOPATH
   fi
+	export GO15VENDOREXPERIMENT=1
 fi
