@@ -43,7 +43,6 @@ NeoBundle 'bling/vim-airline'
 " NeoBundle 'edkolev/tmuxline.vim'
 " NeoBundle 'edkolev/promptline.vim'
 
-" NeoBundle 'Townk/vim-autoclose'
 NeoBundle 'dietsche/vim-lastplace'
 
 " Enable clipboard over network connection. https://github.com/wincent/clipper is required
@@ -241,7 +240,7 @@ let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 " go lint
-" install igolint: go get -u github.com/golang/lint/golint
+" install golint: go get -u github.com/golang/lint/golint
 set rtp+=~/.golang/src/github.com/golang/lint/misc/vim
 " autocmd BufWritePost,FileWritePost *.go execute 'GoLint' | cwindow
 
