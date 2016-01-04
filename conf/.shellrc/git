@@ -12,7 +12,7 @@ if command -v git >/dev/null; then
   alias gch='git checkout'
   alias gra='git remote add'
   alias grr='git remote rm'
-  alias gpu='git pull'
+  alias gpl='git pull'
   alias gcl='git clone'
   alias gta='git tag -a -m'
   alias gfl='git reflog'
