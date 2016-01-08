@@ -1,5 +1,11 @@
 # Docker #######################################################################
-export COREOS_HOST="127.0.0.1"
-export DOCKER_HOST="tcp://$COREOS_HOST:4243"
-export ETCDCTL_PEERS="http://$COREOS_HOST:4001"
-# export FLEETCTL_TUNNEL="$COREOS_HOST:2222"
+if command -v docker >/dev/null; then
+	alias docker-stop-all='docker stop $(docker ps -a -q)'
+	alias docker-rm-all='docker rm -f $(docker ps -a -q)'
+	alias docker-rmi-all='docker rmi -f $(docker images -a -q)'
+
+	export COREOS_HOST="127.0.0.1"
+	export DOCKER_HOST="tcp://$COREOS_HOST:4243"
+	export ETCDCTL_PEERS="http://$COREOS_HOST:4001"
+	# export FLEETCTL_TUNNEL="$COREOS_HOST:2222"
+fi
