@@ -61,8 +61,6 @@ NeoBundle 'Shougo/vimproc.vim', {
       \    },
       \ }
 
-NeoBundle 'majutsushi/tagbar'
-
 "" Go Lang Bundle
 NeoBundle 'fatih/vim-go'
 " NeoBundle 'nsf/gocode', {'rtp': 'vim/'} " Install plugin from https://github.com/nsf/gocode
