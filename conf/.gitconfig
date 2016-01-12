@@ -22,7 +22,7 @@
   keepBackup = true
 
 [credential]
-	helper = osxkeychain
+  helper = cache --timeout=600
 
 [color]
   ui = true
