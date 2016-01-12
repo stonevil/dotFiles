@@ -26,7 +26,6 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'Shougo/neosnippet.vim'
 NeoBundle 'Shougo/neosnippet-snippets'
-NeoBundle 'Shougo/vimshell.vim'
 
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'ctrlpvim/ctrlp.vim'
@@ -271,14 +270,6 @@ endif
 
 
 """"""""""
-" vimshell
-let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
-let g:vimshell_prompt = '$ '
-nnoremap <F12> :VimShell<CR>
-nnoremap <leader><F12> :VimShellBufferDir<CR>
-
-
-""""""""""
 " checkspell
 map <F5> :set spell spelllang=en_gb<CR>
 " ]s - forward to misspelled/rare/wrong cap word
@@ -370,6 +361,9 @@ let g:syntastic_aggregate_errors = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+
 
 """"""""""
 "" tagbar
@@ -416,8 +410,8 @@ let g:tagbar_type_ruby = {
 
 """"""""""
 "" NERDTree
-nnoremap <F11> :NERDTreeToggle<CR>
-noremap <leader><F11> :NERDTreeFind<CR>
+nnoremap <F12> :NERDTreeToggle<CR>
+noremap <leader><F12> :NERDTreeFind<CR>
 
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
