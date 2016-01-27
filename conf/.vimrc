@@ -90,6 +90,7 @@ NeoBundle 'kballard/vim-swift'
 "" Lua Bundle
 " NeoBundle 'xolox/vim-lua-ftplugin'
 " NeoBundle 'xolox/vim-lua-inspect'
+NeoBundle 'tbastos/vim-lua'
 
 "" Crystal Bundle
 NeoBundle 'rhysd/vim-crystal'
@@ -105,6 +106,9 @@ NeoBundle 'rcmdnk/vim-markdown'
 
 "" Docker/Kubernetes Bundle
 " NeoBundle 'docker/docker' , {'rtp': '/contrib/syntax/vim/'}
+
+" Nginx Bundle
+NeoBundle 'LeonB/vim-nginx'
 
 " Required:
 call neobundle#end()
