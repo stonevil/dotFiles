@@ -22,7 +22,7 @@
   keepBackup = true
 
 [credential]
-  helper = cache --timeout=600
+  helper = cache --timeout=900
 
 [color]
   ui = true
