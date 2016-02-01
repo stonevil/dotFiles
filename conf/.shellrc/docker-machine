@@ -2,3 +2,11 @@
 export MACHINE_STORAGE_PATH=$HOME/.docker/storage
 export FUSION_MEMORY_SIZE="512"
 export FUSION_DISK_SIZE="4096"
+
+if command -v docker-machine >/dev/null; then
+	alias docker-vmwarefusion-create-default='docker-machine create --driver vmwarefusion --vmwarefusion-cpu-count 1 --vmwarefusion-disk-size 4096 --vmwarefusion-memory-size 512 default'
+	alias docker-vmwarefusion-env-default='eval "$(docker-machine env default)"'
+	if [[ `docker-machine status default` == "Running" ]]; then
+		eval "$(docker-machine env default)"
+	fi
+fi
