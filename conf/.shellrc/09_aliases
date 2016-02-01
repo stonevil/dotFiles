@@ -4,3 +4,4 @@ alias ll='ls -lahG'
 alias l='ls -lahG'
 
 alias szsh='sudo /bin/zsh'
+alias fssh='ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
