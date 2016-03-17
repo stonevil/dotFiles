@@ -1,19 +1,24 @@
-"NeoBundle Scripts-----------------------------
-" Install neobundle
-" curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | /bin/bash
-" Note: Skip initialization for vim-tiny or vim-small.
-if 0 | endif
+ " Note: Skip initialization for vim-tiny or vim-small.
+ if 0 | endif
 
-if has('vim_starting')
-	set nocompatible
-	syntax on
-	filetype on
-	filetype indent on
-	filetype plugin on
-
-	" Required:
-	set runtimepath+=~/.vim/bundle/neobundle.vim/
+if &compatible
+    set nocompatible               " Be iMproved
 endif
+
+" NeoBundle check and auto install
+let iCanHazNeoBundle=1
+let NeoBundle_readme=expand('~/.vim/bundle/neobundle.vim/README.md')
+if !filereadable(NeoBundle_readme)
+    echo "Installing NeoBundle.."
+    echo ""
+    silent !mkdir -p ~/.vim/bundle
+    silent !git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
+    let iCanHazNeoBundle=0
+endif
+
+"if has('vim_starting')
+  set runtimepath^=~/.vim/bundle/neobundle.vim/
+"endif
 
 " Required:
 call neobundle#begin(expand('~/.vim/bundle'))
@@ -21,6 +26,11 @@ call neobundle#begin(expand('~/.vim/bundle'))
 " Let NeoBundle manage NeoBundle
 " Required:
 NeoBundleFetch 'Shougo/neobundle.vim'
+
+let g:make = 'gmake'
+if system('uname -o') =~ '^GNU/'
+        let g:make = 'make'
+endif
 
 " Add or remove your Bundles here:
 NeoBundle 'Shougo/neocomplete.vim'
@@ -36,14 +46,18 @@ NeoBundle 'scrooloose/syntastic'
 
 NeoBundle 'airblade/vim-gitgutter'
 
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'Xuyuanp/nerdtree-git-plugin'
+" NeoBundle 'scrooloose/nerdtree'
+" NeoBundle 'Xuyuanp/nerdtree-git-plugin'
+NeoBundle 'eiginn/netrw'
 
 NeoBundle 'christoomey/vim-tmux-navigator'
 
 NeoBundle 'bling/vim-airline'
 
 NeoBundle 'dietsche/vim-lastplace'
+
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'jiangmiao/auto-pairs'
 
 " Enable clipboard over network connection. https://github.com/wincent/clipper is required
 NeoBundle 'wincent/vim-clipper'
@@ -63,7 +77,16 @@ NeoBundle 'Shougo/vimproc.vim', {
 
 "" Go Lang Bundle
 NeoBundle 'fatih/vim-go'
-" NeoBundle 'nsf/gocode', {'rtp': 'vim/'} " Install plugin from https://github.com/nsf/gocode
+NeoBundle 'nsf/gocode', {'rtp': .vim/'} " Install plugin from https://github.com/nsf/gocode
+NeoBundle 'Shougo/deoplete.vim'
+NeoBundle 'zchee/deoplete-go', { 
+      \ 'build' : {
+      \     'windows' : 'tools\\update-dll-mingw2',
+      \     'cygwin' : 'make',
+      \     'mac' : 'make',
+      \     'unix' : 'make',
+      \    },
+      \ }
 
 "" C/C++ Bundle
 NeoBundle 'vim-scripts/c.vim'
@@ -90,10 +113,10 @@ NeoBundle 'kballard/vim-swift'
 "" Lua Bundle
 " NeoBundle 'xolox/vim-lua-ftplugin'
 " NeoBundle 'xolox/vim-lua-inspect'
-NeoBundle 'tbastos/vim-lua'
+" NeoBundle 'tbastos/vim-lua'
 
 "" Crystal Bundle
-NeoBundle 'rhysd/vim-crystal'
+" NeoBundle 'rhysd/vim-crystal'
 
 "" OpsCode Chef Bundle
 " NeoBundle 't9md/vim-chef'
@@ -107,29 +130,34 @@ NeoBundle 'rcmdnk/vim-markdown'
 "" Docker/Kubernetes Bundle
 " NeoBundle 'docker/docker' , {'rtp': '/contrib/syntax/vim/'}
 
-" Nginx Bundle
-NeoBundle 'LeonB/vim-nginx'
+"" Nginx Bundle
+" NeoBundle 'LeonB/vim-nginx'
 
 " Required:
 call neobundle#end()
 
-" If there are uninstalled bundles found on startup,
-" this will conveniently prompt you to install them.
+" Required:
+filetype plugin indent on
+
+" Installation check.
+if iCanHazNeoBundle == 0
+    echo "Installing Bundles, please ignore key map error messages"
+    echo ""
+    :NeoBundleInstall
+endif
+
 NeoBundleCheck
-"End NeoBundle Scripts-------------------------
-
-
 """"""""""
 " Global
-" let mapleader="\"
+let mapleader="/"
 set go=
 
 " Required:
-set nocompatible
+" set nocompatible
 syntax on
 filetype plugin indent on
 
-set encoding=utf-8
+"set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8
 
@@ -137,7 +165,7 @@ set fileencodings=utf-8
 set showcmd
 set wrap
 set backspace=indent,eol,start
-set autoindent
+set smartindent
 " set copyindent
 set number
 set cursorline
@@ -151,21 +179,25 @@ set undolevels=1000
 set title
 set visualbell
 set noerrorbells
-" set list
-" set listchars=tab:>.,trail:.,extends:#,nbsp:.
+set list
+set listchars=tab:▸\ ,trail:.,extends:#,nbsp:.
+" set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
 set ttyfast
 set mouse=a
-set nocompatible
+" set nocompatible
 set noswapfile
 set fileformats=unix,dos,mac
 set laststatus=2
 " set expandtab
-set softtabstop=2 tabstop=2 shiftwidth=2
+set softtabstop=4 tabstop=4 shiftwidth=4
 set ruler
 set wildignore=*.swp,*.bak,.DS_Store
 set wildmode=longest,list
 set shell=/bin/zsh
 
+"Invisible character colors 
+highlight NonText guifg=#4a4a59
+highlight SpecialKey guifg=#4a4a59
 
 """"""""""
 " neocomplete
@@ -178,20 +210,20 @@ let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_smart_case = 1
 " Set minimum syntax keyword length
 let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+" let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
 " Define dictionary
-let g:neocomplete#sources#dictionary#dictionaries = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-    \ }
+" let g:neocomplete#sources#dictionary#dictionaries = {
+"    \ 'default' : '',
+"    \ 'vimshell' : $HOME.'/.vimshell_hist',
+"    \ 'scheme' : $HOME.'/.gosh_completions'
+"    \ }
 
 " Define keyword
-if !exists('g:neocomplete#keyword_patterns')
-	let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+" if !exists('g:neocomplete#keyword_patterns')
+"     let g:neocomplete#keyword_patterns = {}
+" endif
+" let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
 " Plugin key-mappings
 inoremap <expr><C-g> neocomplete#undo_completion()
@@ -201,9 +233,9 @@ inoremap <expr><C-l> neocomplete#complete_common_string()
 " <CR>: close popup and save indent
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
-	return neocomplete#close_popup() . "\<CR>"
-	" For no inserting <CR> key
-	" return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+    return neocomplete#close_popup() . "\<CR>"
+    " For no inserting <CR> key
+    " return pumvisible() ? neocomplete#close_popup() : "\<CR>"
 endfunction
 " <TAB>: completion
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -235,23 +267,23 @@ inoremap <expr><C-e> neocomplete#cancel_popup()
 " inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
 
 " Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+" autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+" autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+" autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+" autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+" autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
-endif
+" if !exists('g:neocomplete#sources#omni#input_patterns')
+"  let g:neocomplete#sources#omni#input_patterns = {}
+" endif
 " let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 " let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
 " let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
 " For perlomni.vim setting.
 " https://github.com/c9s/perlomni.vim
-let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+" let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
 " neosnippet
 let g:neosnippet#enable_snipmate_compatibility = 1
@@ -267,13 +299,32 @@ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 \: "\<TAB>"
 " For conceal markers.
 if has('conceal')
-	set conceallevel=2 concealcursor=niv
+    set conceallevel=2 concealcursor=niv
 endif
+" neocomplete like
+" https://github.com/Shougo/deoplete.vim/blob/master/doc/deoplete.txt
+set completeopt+=noinsert
 
+" Set before than deoplete
+" deoplete#mappings#_set_completeopt() in
+" https://github.com/Shougo/deoplete.vim/blob/master/autoload/deoplete/mappings.vim
+" https://github.com/Shougo/deoplete.vim/blob/master/rplugin/python3/deoplete/deoplete.py
+set completeopt+=noselect
+
+" Path to python interpreter for neovim
+let g:python3_host_prog  = '/usr/local/bin/python3'
+let g:loaded_python_provider = 1
+" Skip the check of neovim module
+let g:python3_host_skip_check = 1
+let g:deoplete#sources#go#align_class = 1
+let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
 
 """"""""""
 " checkspell
-map <F5> :set spell spelllang=en_gb<CR>
+" map <F5> :set spell spelllang=en_gb<CR>
 " ]s - forward to misspelled/rare/wrong cap word
 " [s - backwards ]
 " S  - only stop at misspellings
@@ -291,8 +342,22 @@ map <F5> :set spell spelllang=en_gb<CR>
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
+let g:go_highlight_interfaces = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
+" Enable goimports to automatically insert import paths instead of gofmt:
+let g:go_fmt_command = "goimports"
+" By default vim-go shows errors for the fmt command, to disable it:
+let g:go_fmt_fail_silently = 1
+let g:go_imports_fail_silently = 1
+let g:go_play_open_browser = 0
+" By default new terminals are opened in a vertical split.
+let g:go_term_mode = "split"
+" By default the testing commands run asynchronously in the background and display results with go#jobcontrol#Statusline().
+let g:go_term_enabled = 1
+" Sometimes when using both vim-go and syntastic Vim will start lagging while saving and opening files. The following fixes this:
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 " go lint
 " install golint: go get -u github.com/golang/lint/golint
 set rtp+=~/.golang/src/github.com/golang/lint/misc/vim
@@ -309,32 +374,37 @@ augroup FileType go
   au FileType go nmap <leader>gr <Plug>(go-run)
   au FileType go nmap <leader>rb <Plug>(go-build)
   au FileType go nmap <leader>gt <Plug>(go-test)
+  " Run :GoRun in a new tab, horizontal split or vertical split terminal
+  au FileType go nmap <leader>rt <Plug>(go-run-tab)
+  au FileType go nmap <Leader>rs <Plug>(go-run-split)
+  au FileType go nmap <Leader>rv <Plug>(go-run-vertical)
 augroup END
 
 augroup myvimrc
-	au!
-	au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
+    au!
+    au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
 augroup END
 
-
+" go language
+let s:tlist_def_go_settings = 'go;g:enum;s:struct;u:union;t:type;' .
+                           \ 'v:variable;f:function'
 """"""""""
 "" ruby
 " rspec.vim mappings
-map <leader>t :call RunCurrentSpecFile()<CR>
-map <leader>s :call RunNearestSpec()<CR>
-map <leader>l :call RunLastSpec()<CR>
-map <leader>a :call RunAllSpecs()<CR>
+" map <leader>t :call RunCurrentSpecFile()<CR>
+" map <leader>s :call RunNearestSpec()<CR>
+" map <leader>l :call RunLastSpec()<CR>
+" map <leader>a :call RunAllSpecs()<CR>
 " ruby refactory
-nnoremap <leader>rap  :RAddParameter<cr>
-nnoremap <leader>rcpc :RConvertPostConditional<cr>
-nnoremap <leader>rel  :RExtractLet<cr>
-vnoremap <leader>rec  :RExtractConstant<cr>
-vnoremap <leader>relv :RExtractLocalVariable<cr>
-nnoremap <leader>rit  :RInlineTemp<cr>
-vnoremap <leader>rrlv :RRenameLocalVariable<cr>
-vnoremap <leader>rriv :RRenameInstanceVariable<cr>
-vnoremap <leader>rem  :RExtractMethod<cr>
-
+" nnoremap <leader>rap  :RAddParameter<cr>
+" nnoremap <leader>rcpc :RConvertPostConditional<cr>
+" nnoremap <leader>rel  :RExtractLet<cr>
+" vnoremap <leader>rec  :RExtractConstant<cr>
+" vnoremap <leader>relv :RExtractLocalVariable<cr>
+" nnoremap <leader>rit  :RInlineTemp<cr>
+" vnoremap <leader>rrlv :RRenameLocalVariable<cr>
+" vnoremap <leader>rriv :RRenameInstanceVariable<cr>
+" vnoremap <leader>rem  :RExtractMethod<cr>
 
 """"""""""
 "" crystal
@@ -412,27 +482,51 @@ let g:tagbar_type_ruby = {
 
 """"""""""
 "" NERDTree
-nnoremap <F12> :NERDTreeToggle<CR>
-noremap <leader><F12> :NERDTreeFind<CR>
+" nnoremap <F12> :NERDTreeToggle<CR>
+" noremap <leader><F12> :NERDTreeFind<CR>
 
-let g:NERDTreeDirArrowExpandable = '▸'
-let g:NERDTreeDirArrowCollapsible = '▾'
+" let g:NERDTreeDirArrowExpandable = '▸'
+" let g:NERDTreeDirArrowCollapsible = '▾'
 
-let NERDTreeWinSize = 35
+" let NERDTreeWinSize = 35
 
 " let NERDTreeChDirMode = 2
 " let NERDTreeAutoCenter = 1
-let NERDTreeQuitOnOpen = 1
-let NERDTreeShowHidden = 1 " toggle with I
+" let NERDTreeQuitOnOpen = 1
+" let NERDTreeShowHidden = 1 " toggle with I
 
 " Open NERDTree on startup, when no file has been specified
-autocmd VimEnter * if !argc() | NERDTree | endif
+" autocmd VimEnter * if !argc() | NERDTree | endif
 
 " NERDTree wide ignore files
-let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__', '\.o$', '\.php\~$']
+" let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__', '\.o$', '\.php\~$', '\.git$']
 " Vim wide ignore files
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite,.DS_Store
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite,.DS_Store,*/.git
 
+"""""""""""
+" netrw
+let g:netrw_altv          = 1
+let g:netrw_fastbrowse    = 2
+let g:netrw_keepdir       = 0
+let g:netrw_liststyle     = 2
+let g:netrw_retmap        = 1
+let g:netrw_silent        = 1
+let g:netrw_special_syntax= 1
+
+" Netrw Style Listing
+ let g:netrw_liststyle = 3
+
+ nnoremap <Leader><Leader> :Tlist<CR><C-W>h<C-W>s:e .<CR><C-W>l:let g:netrw_chgwin=winnr()<CR><C-W>h
+
+function! NumberToggle()
+  if(&relativenumber == 1)
+    set number
+  else
+    set relativenumber
+  endif
+endfunc
+
+nnoremap <C-n> :call NumberToggle()<cr>
 
 """"""""""
 "" vim-tmux-navigator
@@ -566,8 +660,8 @@ colorscheme carvedwoodcool
 "" GUI
 if has("gui_running")
   if has("gui_mac") || has("gui_macvim")
-		colorscheme carvedwoodcool
-		set guifont=Menlo\ Regular:h12
+        colorscheme carvedwoodcool
+        set guifont=Menlo\ Regular:h12
   endif
 
   if $COLORTERM == 'gnome-terminal'
@@ -588,7 +682,7 @@ endif
 " set statusline+=%#warningmsg#
 " enable only after full installation
 if exists('g:syntastic#SyntasticStatuslineFlag')
-	set statusline+=%{SyntasticStatuslineFlag()}
+    set statusline+=%{SyntasticStatuslineFlag()}
 endif
 
 
