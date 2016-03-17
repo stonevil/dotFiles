@@ -7,21 +7,21 @@ endif
 
 " NeoBundle check and auto install
 let iCanHazNeoBundle=1
-let NeoBundle_readme=expand('~/.nvim/bundle/neobundle.vim/README.md')
+let NeoBundle_readme=expand('~/.vim/bundle/neobundle.vim/README.md')
 if !filereadable(NeoBundle_readme)
     echo "Installing NeoBundle.."
     echo ""
-    silent !mkdir -p ~/.nvim/bundle
-    silent !git clone https://github.com/Shougo/neobundle.vim ~/.nvim/bundle/neobundle.vim
+    silent !mkdir -p ~/.vim/bundle
+    silent !git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
     let iCanHazNeoBundle=0
 endif
 
 "if has('vim_starting')
-  set runtimepath^=~/.nvim/bundle/neobundle.vim/
+  set runtimepath^=~/.vim/bundle/neobundle.vim/
 "endif
 
 " Required:
-call neobundle#begin(expand('~/.nvim/bundle/'))
+call neobundle#begin(expand('~/.vim/bundle'))
 
 " Let NeoBundle manage NeoBundle
 " Required:
@@ -77,8 +77,8 @@ NeoBundle 'Shougo/vimproc.vim', {
 
 "" Go Lang Bundle
 NeoBundle 'fatih/vim-go'
-NeoBundle 'nsf/gocode', {'rtp': 'nvim/'} " Install plugin from https://github.com/nsf/gocode
-NeoBundle 'Shougo/deoplete.nvim'
+NeoBundle 'nsf/gocode', {'rtp': .vim/'} " Install plugin from https://github.com/nsf/gocode
+NeoBundle 'Shougo/deoplete.vim'
 NeoBundle 'zchee/deoplete-go', { 
       \ 'build' : {
       \     'windows' : 'tools\\update-dll-mingw2',
@@ -302,13 +302,13 @@ if has('conceal')
     set conceallevel=2 concealcursor=niv
 endif
 " neocomplete like
-" https://github.com/Shougo/deoplete.nvim/blob/master/doc/deoplete.txt
+" https://github.com/Shougo/deoplete.vim/blob/master/doc/deoplete.txt
 set completeopt+=noinsert
 
 " Set before than deoplete
 " deoplete#mappings#_set_completeopt() in
-" https://github.com/Shougo/deoplete.nvim/blob/master/autoload/deoplete/mappings.vim
-" https://github.com/Shougo/deoplete.nvim/blob/master/rplugin/python3/deoplete/deoplete.py
+" https://github.com/Shougo/deoplete.vim/blob/master/autoload/deoplete/mappings.vim
+" https://github.com/Shougo/deoplete.vim/blob/master/rplugin/python3/deoplete/deoplete.py
 set completeopt+=noselect
 
 " Path to python interpreter for neovim
@@ -360,7 +360,7 @@ let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 " go lint
 " install golint: go get -u github.com/golang/lint/golint
-set rtp+=~/dev/go/src/github.com/golang/lint/misc/vim
+set rtp+=~/.golang/src/github.com/golang/lint/misc/vim
 augroup FileType go
   au!
   au FileType go nmap gd <Plug>(go-def)
@@ -440,7 +440,7 @@ let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 """"""""""
 "" tagbar
 nmap <silent> <F4> :TagbarToggle<CR>
-let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
+let g:tagbar_ctags_bin = '~/.homebrew/bin/ctags'
 let g:tagbar_type_go = {
     \ 'ctagstype' : 'go',
     \ 'kinds'     : [
@@ -637,10 +637,10 @@ endif
 " execute :call SchemesCycle()
 function! SchemesCycle()
    let currDir = getcwd()
-   exec "cd ~/.nvim/bundle/vim-colorschemes/colors"
+   exec "cd ~/.vim/bundle/vim-colorschemes/colors"
    for myCol in split(glob("*"), '\n')
-      if myCol =~ '\.nvim'
-         let mycol = substitute(myCol, '\.nvim', '', '')
+      if myCol =~ '\.vim'
+         let mycol = substitute(myCol, '\.vim', '', '')
          exec "colorscheme " . mycol
          exec "redraw!"
          echo "colorscheme = ". myCol
@@ -653,16 +653,14 @@ endfunction
 
 """"""""""
 " Default scheme
-syntax enable
-set background=dark
-colorscheme solarized
+colorscheme carvedwoodcool
 
 
 """"""""""
 "" GUI
 if has("gui_running")
   if has("gui_mac") || has("gui_macvim")
-        colorscheme solarized
+        colorscheme carvedwoodcool
         set guifont=Menlo\ Regular:h12
   endif
 
