@@ -86,11 +86,27 @@ function dotfiles-update-all() {
 		if [[ -d $HOME/.tmux/plugins ]]; then
 			for file in $HOME/.tmux/plugins/*
 			do
-				pushd $file
-					if [[ -d '.git' ]]; then
-						git pull
-					fi
-				popd
+				if [[ -d $file ]]; then
+					pushd $file
+						if [[ -d '.git' ]]; then
+							git pull
+						fi
+					popd
+				fi
+			done
+		fi
+
+		# Update Vim Plugins
+		if [[ -d $HOME/.vim/bundle ]]; then
+			for file in $HOME/.vim/bundle/*
+			do
+				if [[ -d $file ]]; then
+					pushd $file
+						if [[ -d '.git' ]]; then
+							git pull
+						fi
+					popd
+				fi
 			done
 		fi
 	else
