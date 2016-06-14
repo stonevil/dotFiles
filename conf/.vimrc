@@ -53,13 +53,13 @@ NeoBundle 'wincent/vim-clipper'
 
 " Asynchronous execution library
 NeoBundle 'Shougo/vimproc.vim', {
-      \ 'build' : {
-      \     'windows' : 'tools\\update-dll-mingw',
-      \     'cygwin' : 'make -f make_cygwin.mak',
-      \     'mac' : 'make -f make_mac.mak',
-      \     'unix' : 'make -f make_unix.mak',
-      \    },
-      \ }
+	\ 'build' : {
+		\ 'windows' : 'tools\\update-dll-mingw',
+		\ 'cygwin' : 'make -f make_cygwin.mak',
+		\ 'mac' : 'make -f make_mac.mak',
+		\ 'unix' : 'make -f make_unix.mak',
+	\ },
+\ }
 
 "" Go Lang Bundle
 NeoBundle 'fatih/vim-go'
@@ -109,6 +109,9 @@ NeoBundle 'rcmdnk/vim-markdown'
 
 " Nginx Bundle
 NeoBundle 'LeonB/vim-nginx'
+
+" The ultimate undo history visualizer for VIM
+NeoBundle 'mbbill/undotree'
 
 " Required:
 call neobundle#end()
@@ -169,7 +172,7 @@ set shell=/bin/zsh
 
 """"""""""
 " neocomplete
-"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+"Note: This option must set it in .vimrc(_vimrc).	NOT IN .gvimrc(_gvimrc)!
 " Disable AutoComplPop
 let g:acp_enableAtStartup = 0
 " Use neocomplete
@@ -182,10 +185,10 @@ let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
 " Define dictionary
 let g:neocomplete#sources#dictionary#dictionaries = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-    \ }
+	\ 'default' : '',
+	\ 'vimshell' : $HOME.'/.vimshell_hist',
+	\ 'scheme' : $HOME.'/.gosh_completions'
+\ }
 
 " Define keyword
 if !exists('g:neocomplete#keyword_patterns')
@@ -216,10 +219,10 @@ inoremap <expr><C-e> neocomplete#cancel_popup()
 " inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
 
 " For cursor moving in insert mode(Not recommended)
-" inoremap <expr><Left>  neocomplete#close_popup() . "\<Left>"
+" inoremap <expr><Left> neocomplete#close_popup() . "\<Left>"
 " inoremap <expr><Right> neocomplete#close_popup() . "\<Right>"
-" inoremap <expr><Up>    neocomplete#close_popup() . "\<Up>"
-" inoremap <expr><Down>  neocomplete#close_popup() . "\<Down>"
+" inoremap <expr><Up> neocomplete#close_popup() . "\<Up>"
+" inoremap <expr><Down> neocomplete#close_popup() . "\<Down>"
 " Or set this.
 " let g:neocomplete#enable_cursor_hold_i = 1
 " Or set this.
@@ -232,7 +235,7 @@ inoremap <expr><C-e> neocomplete#cancel_popup()
 " set completeopt+=longest
 " let g:neocomplete#enable_auto_select = 1
 " let g:neocomplete#disable_auto_complete = 1
-" inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+" inoremap <expr><TAB> pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -243,7 +246,7 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " Enable heavy omni completion.
 if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
+	let g:neocomplete#sources#omni#input_patterns = {}
 endif
 " let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 " let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
@@ -276,7 +279,7 @@ endif
 map <F5> :set spell spelllang=en_gb<CR>
 " ]s - forward to misspelled/rare/wrong cap word
 " [s - backwards ]
-" S  - only stop at misspellings
+" S - only stop at misspellings
 " [S - in other direction
 " zG - accept spelling for this session
 " zg - accept spelling and add to personal dictionary
@@ -297,18 +300,18 @@ let g:go_highlight_build_constraints = 1
 " install golint: go get -u github.com/golang/lint/golint
 set rtp+=~/.golang/src/github.com/golang/lint/misc/vim
 augroup FileType go
-  au!
-  au FileType go nmap gd <Plug>(go-def)
-  au FileType go nmap <Leader>dd <Plug>(go-def-vertical)
+	au!
+	au FileType go nmap gd <Plug>(go-def)
+	au FileType go nmap <Leader>dd <Plug>(go-def-vertical)
 
-  au FileType go nmap <Leader>dv <Plug>(go-doc-vertical)
-  au FileType go nmap <Leader>db <Plug>(go-doc-browser)
+	au FileType go nmap <Leader>dv <Plug>(go-doc-vertical)
+	au FileType go nmap <Leader>db <Plug>(go-doc-browser)
 
-  au FileType go nmap <Leader>gi <Plug>(go-info)
+	au FileType go nmap <Leader>gi <Plug>(go-info)
 
-  au FileType go nmap <leader>gr <Plug>(go-run)
-  au FileType go nmap <leader>rb <Plug>(go-build)
-  au FileType go nmap <leader>gt <Plug>(go-test)
+	au FileType go nmap <leader>gr <Plug>(go-run)
+	au FileType go nmap <leader>rb <Plug>(go-build)
+	au FileType go nmap <leader>gt <Plug>(go-test)
 augroup END
 
 augroup myvimrc
@@ -325,15 +328,15 @@ map <leader>s :call RunNearestSpec()<CR>
 map <leader>l :call RunLastSpec()<CR>
 map <leader>a :call RunAllSpecs()<CR>
 " ruby refactory
-nnoremap <leader>rap  :RAddParameter<cr>
+nnoremap <leader>rap :RAddParameter<cr>
 nnoremap <leader>rcpc :RConvertPostConditional<cr>
-nnoremap <leader>rel  :RExtractLet<cr>
-vnoremap <leader>rec  :RExtractConstant<cr>
+nnoremap <leader>rel :RExtractLet<cr>
+vnoremap <leader>rec :RExtractConstant<cr>
 vnoremap <leader>relv :RExtractLocalVariable<cr>
-nnoremap <leader>rit  :RInlineTemp<cr>
+nnoremap <leader>rit :RInlineTemp<cr>
 vnoremap <leader>rrlv :RRenameLocalVariable<cr>
 vnoremap <leader>rriv :RRenameInstanceVariable<cr>
-vnoremap <leader>rem  :RExtractMethod<cr>
+vnoremap <leader>rem :RExtractMethod<cr>
 
 
 """"""""""
@@ -372,41 +375,41 @@ let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 nmap <silent> <F4> :TagbarToggle<CR>
 let g:tagbar_ctags_bin = '~/.homebrew/bin/ctags'
 let g:tagbar_type_go = {
-    \ 'ctagstype' : 'go',
-    \ 'kinds'     : [
-        \ 'p:package',
-        \ 'i:imports:1',
-        \ 'c:constants',
-        \ 'v:variables',
-        \ 't:types',
-        \ 'n:interfaces',
-        \ 'w:fields',
-        \ 'e:embedded',
-        \ 'm:methods',
-        \ 'r:constructor',
-        \ 'f:functions'
-    \ ],
-    \ 'sro' : '.',
-    \ 'kind2scope' : {
-        \ 't' : 'ctype',
-        \ 'n' : 'ntype'
-    \ },
-    \ 'scope2kind' : {
-        \ 'ctype' : 't',
-        \ 'ntype' : 'n'
-    \ },
-    \ 'ctagsbin'  : 'gotags',
-    \ 'ctagsargs' : '-sort -silent'
+	\ 'ctagstype' : 'go',
+	\ 'kinds' : [
+		\ 'p:package',
+		\ 'i:imports:1',
+		\ 'c:constants',
+		\ 'v:variables',
+		\ 't:types',
+		\ 'n:interfaces',
+		\ 'w:fields',
+		\ 'e:embedded',
+		\ 'm:methods',
+		\ 'r:constructor',
+		\ 'f:functions'
+	\ ],
+	\ 'sro' : '.',
+	\ 'kind2scope' : {
+		\ 't' : 'ctype',
+		\ 'n' : 'ntype'
+	\ },
+	\ 'scope2kind' : {
+		\ 'ctype' : 't',
+		\ 'ntype' : 'n'
+	\ },
+	\ 'ctagsbin' : 'gotags',
+	\ 'ctagsargs' : '-sort -silent'
 \ }
 let g:tagbar_type_ruby = {
-    \ 'kinds' : [
-        \ 'm:modules',
-        \ 'c:classes',
-        \ 'd:describes',
-        \ 'C:contexts',
-        \ 'f:methods',
-        \ 'F:singleton methods'
-    \ ]
+	\ 'kinds' : [
+		\ 'm:modules',
+		\ 'c:classes',
+		\ 'd:describes',
+		\ 'C:contexts',
+		\ 'f:methods',
+		\ 'F:singleton methods'
+	\ ]
 \ }
 
 
@@ -453,38 +456,38 @@ let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#branch#enabled = 1
 
 if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
+	let g:airline_symbols = {}
 endif
 
 if !exists('g:airline_powerline_fonts')
-  let g:airline#extensions#tabline#left_sep = ' '
-  let g:airline#extensions#tabline#left_alt_sep = '|'
-  let g:airline_left_sep          = '▶'
-  let g:airline_left_alt_sep      = '»'
-  let g:airline_right_sep         = '◀'
-  let g:airline_right_alt_sep     = '«'
-  let g:airline#extensions#branch#prefix     = '⤴' "➔, ➥, ⎇
-  let g:airline#extensions#readonly#symbol   = '⊘'
-  let g:airline#extensions#linecolumn#prefix = '¶'
-  let g:airline#extensions#paste#symbol      = 'ρ'
-  let g:airline_symbols.linenr    = '␊'
-  let g:airline_symbols.branch    = '⎇'
-  let g:airline_symbols.paste     = 'ρ'
-  let g:airline_symbols.paste     = 'Þ'
-  let g:airline_symbols.paste     = '∥'
-  let g:airline_symbols.whitespace = 'Ξ'
+	let g:airline#extensions#tabline#left_sep = ' '
+	let g:airline#extensions#tabline#left_alt_sep = '|'
+	let g:airline_left_sep = '▶'
+	let g:airline_left_alt_sep = '»'
+	let g:airline_right_sep = '◀'
+	let g:airline_right_alt_sep = '«'
+	let g:airline#extensions#branch#prefix = '⤴' "➔, ➥, ⎇
+	let g:airline#extensions#readonly#symbol = '⊘'
+	let g:airline#extensions#linecolumn#prefix = '¶'
+	let g:airline#extensions#paste#symbol = 'ρ'
+	let g:airline_symbols.linenr = '␊'
+	let g:airline_symbols.branch = '⎇'
+	let g:airline_symbols.paste = 'ρ'
+	let g:airline_symbols.paste = 'Þ'
+	let g:airline_symbols.paste = '∥'
+	let g:airline_symbols.whitespace = 'Ξ'
 else
-  let g:airline#extensions#tabline#left_sep = '<U+E0B0>'
-  let g:airline#extensions#tabline#left_alt_sep = '<U+E0B1>'
+	let g:airline#extensions#tabline#left_sep = '<U+E0B0>'
+	let g:airline#extensions#tabline#left_alt_sep = '<U+E0B1>'
 
-  " powerline symbols
-  let g:airline_left_sep = '<U+E0B0>'
-  let g:airline_left_alt_sep = '<U+E0B1>'
-  let g:airline_right_sep = '<U+E0B2>'
-  let g:airline_right_alt_sep = '<U+E0B3>'
-  let g:airline_symbols.branch = '<U+E0A0>'
-  let g:airline_symbols.readonly = '<U+E0A2>'
-  let g:airline_symbols.linenr = '<U+E0A1>'
+	" powerline symbols
+	let g:airline_left_sep = '<U+E0B0>'
+	let g:airline_left_alt_sep = '<U+E0B1>'
+	let g:airline_right_sep = '<U+E0B2>'
+	let g:airline_right_alt_sep = '<U+E0B3>'
+	let g:airline_symbols.branch = '<U+E0A0>'
+	let g:airline_symbols.readonly = '<U+E0A2>'
+	let g:airline_symbols.linenr = '<U+E0A1>'
 endif
 
 
@@ -508,6 +511,15 @@ let g:ctrlp_open_new_file = 'r'
 
 
 """"""""""
+"" undotree
+nnoremap <F6> :UndotreeToggle<cr>
+if has("persistent_undo")
+	set undodir=~/.undodir/
+	set undofile
+endif
+
+
+""""""""""
 "" Integration with Clipper https://github.com/wincent/clipper
 let s:screen = &term =~ 'screen'
 let s:tmux = exists('$TMUX')
@@ -518,23 +530,23 @@ set clipboard=unnamed
 " http://www.xfree86.org/current/ctlseqs.html#Bracketed%20Paste%20Mode
 " http://stackoverflow.com/questions/5585129
 if s:screen || s:xterm
-  function! s:BeginXTermPaste(ret)
-    set paste
-    return a:ret
-  endfunction
+	function! s:BeginXTermPaste(ret)
+		set paste
+		return a:ret
+	endfunction
 
-  " enable bracketed paste mode on entering Vim
-  let &t_ti .= "\e[?2004h"
+	" enable bracketed paste mode on entering Vim
+	let &t_ti .= "\e[?2004h"
 
-  " disable bracketed paste mode on leaving Vim
-  let &t_te = "\e[?2004l" . &t_te
+	" disable bracketed paste mode on leaving Vim
+	let &t_te = "\e[?2004l" . &t_te
 
-  set pastetoggle=<Esc>[201~
-  inoremap <expr> <Esc>[200~ <SID>BeginXTermPaste("")
-  nnoremap <expr> <Esc>[200~ <SID>BeginXTermPaste("i")
-  vnoremap <expr> <Esc>[200~ <SID>BeginXTermPaste("c")
-  cnoremap <Esc>[200~ <nop>
-  cnoremap <Esc>[201~ <nop>
+	set pastetoggle=<Esc>[201~
+	inoremap <expr> <Esc>[200~ <SID>BeginXTermPaste("")
+	nnoremap <expr> <Esc>[200~ <SID>BeginXTermPaste("i")
+	vnoremap <expr> <Esc>[200~ <SID>BeginXTermPaste("c")
+	cnoremap <Esc>[200~ <nop>
+	cnoremap <Esc>[201~ <nop>
 endif
 
 
@@ -542,18 +554,18 @@ endif
 " Cycle all vim-colorschemes plugin schemes for 5 sec
 " execute :call SchemesCycle()
 function! SchemesCycle()
-   let currDir = getcwd()
-   exec "cd ~/.vim/bundle/vim-colorschemes/colors"
-   for myCol in split(glob("*"), '\n')
-      if myCol =~ '\.vim'
-         let mycol = substitute(myCol, '\.vim', '', '')
-         exec "colorscheme " . mycol
-         exec "redraw!"
-         echo "colorscheme = ". myCol
-         sleep 5
-      endif
-   endfor
-   exec "cd " . currDir
+	let currDir = getcwd()
+	exec "cd ~/.vim/bundle/vim-colorschemes/colors"
+	for myCol in split(glob("*"), '\n')
+		if myCol =~ '\.vim'
+			let mycol = substitute(myCol, '\.vim', '', '')
+			exec "colorscheme " . mycol
+			exec "redraw!"
+			echo "colorscheme = ". myCol
+			sleep 5
+		endif
+	endfor
+	exec "cd " . currDir
 endfunction
 
 
@@ -565,25 +577,25 @@ colorscheme carvedwoodcool
 """"""""""
 "" GUI
 if has("gui_running")
-  if has("gui_mac") || has("gui_macvim")
+	if has("gui_mac") || has("gui_macvim")
 		colorscheme carvedwoodcool
 		set guifont=Menlo\ Regular:h12
-  endif
+	endif
 
-  if $COLORTERM == 'gnome-terminal'
-    set term=gnome-256color
-  else
-    if $TERM == 'xterm'
-      set term=xterm-256color
-    endif
-  endif
+	if $COLORTERM == 'gnome-terminal'
+		set term=gnome-256color
+	else
+		if $TERM == 'xterm'
+			set term=xterm-256color
+		endif
+	endif
 endif
 
 
 """"""""""
 "" Status bar
 if exists("*fugitive#statusline")
-  set statusline+=%{fugitive#statusline()}
+	set statusline+=%{fugitive#statusline()}
 endif
 " set statusline+=%#warningmsg#
 " enable only after full installation
