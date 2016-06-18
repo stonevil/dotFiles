@@ -110,9 +110,6 @@ NeoBundle 'rcmdnk/vim-markdown'
 " Nginx Bundle
 NeoBundle 'LeonB/vim-nginx'
 
-" The ultimate undo history visualizer for VIM
-NeoBundle 'mbbill/undotree'
-
 " Required:
 call neobundle#end()
 
@@ -508,15 +505,6 @@ noremap <leader>b :CtrlPBuffer<CR>
 noremap <leader>r :CtrlPMRU<CR>
 let g:ctrlp_map = '<leader>e'
 let g:ctrlp_open_new_file = 'r'
-
-
-""""""""""
-"" undotree
-nnoremap <F6> :UndotreeToggle<cr>
-if has("persistent_undo")
-	set undodir=~/.undodir/
-	set undofile
-endif
 
 
 """"""""""
