@@ -412,8 +412,8 @@ let g:tagbar_type_ruby = {
 
 """"""""""
 "" NERDTree
-nnoremap <F12> :NERDTreeToggle<CR>
-noremap <leader><F12> :NERDTreeFind<CR>
+nnoremap <F11> :NERDTreeToggle<CR>
+noremap <leader><F11> :NERDTreeFind<CR>
 
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
