@@ -2,20 +2,26 @@
 export VAGRANT=/opt/vagrant
 if [[ -d $VAGRANT ]]; then
 	export PATH=$VAGRANT/bin:$PATH
-  if [[ -f '/Applications/VMware Fusion.app/Contents/Library/vmrun' ]]; then
-    echo "VMware Fusion detected. Vagrant now use VMware Fusion!"
-    function vv() { vagrant up $@ --provider vmware_fusion; }
-    export VAGRANT_DEFAULT_PROVIDER='vmware_fusion'
+  if [[ -d '/Applications/Veertu.app' ]]; then
+    echo "Veertu detected. Vagrant now use Veertu!"
+    function vv() { vagrant up $@ --provider veertu; }
+    export VAGRANT_DEFAULT_PROVIDER='veertu'
   else
-    if [[ -f '/usr/bin/vmware' && -f '/usr/share/applications/vmware-workstation.desktop' ]]; then
-      echo "VMware Workstation for Linux detected. Vagrant now use VMware Workstation!"
-      function vv() { vagrant up $@ --provider vmware_workstation; }
-      export VAGRANT_DEFAULT_PROVIDER='vmware_workstation'
-    else
-      echo "Vagrant now use VirtualBox!"
-      function vv() { vagrant up $@; }
-    fi
-  fi
+		if [[ -f '/Applications/VMware Fusion.app/Contents/Library/vmrun' ]]; then
+			echo "VMware Fusion detected. Vagrant now use VMware Fusion!"
+			function vv() { vagrant up $@ --provider vmware_fusion; }
+			export VAGRANT_DEFAULT_PROVIDER='vmware_fusion'
+		else
+			if [[ -f '/usr/bin/vmware' && -f '/usr/share/applications/vmware-workstation.desktop' ]]; then
+				echo "VMware Workstation for Linux detected. Vagrant now use VMware Workstation!"
+				function vv() { vagrant up $@ --provider vmware_workstation; }
+				export VAGRANT_DEFAULT_PROVIDER='vmware_workstation'
+			else
+				echo "Vagrant now use VirtualBox!"
+				function vv() { vagrant up $@; }
+			fi
+		fi
+	fi
 
   export VAGRANT_PROVIDER_GUI="false"
 
