@@ -1,11 +1,11 @@
 # Docker Machine ###############################################################
 export MACHINE_STORAGE_PATH=$HOME/.docker/storage
-export FUSION_MEMORY_SIZE="512"
-export FUSION_DISK_SIZE="4096"
+export MACHINE_MEMORY_SIZE=512
+export MACHINE_DISK_SIZE=6144
 
 if command -v docker-machine >/dev/null; then
-	alias docker-create-vmwarefusion-default='docker-machine create --driver vmwarefusion --vmwarefusion-cpu-count 1 --vmwarefusion-disk-size 4096 --vmwarefusion-memory-size 512 default'
-	alias docker-create-xhyve-default='docker-machine create --driver xhyve --xhyve-cpu-count 1 --xhyve-disk-size 4096 --xhyve-memory-size 512 --xhyve-experimental-nfs-share default'
+	alias docker-create-vmwarefusion-default='docker-machine create --driver vmwarefusion --vmwarefusion-cpu-count 1 --vmwarefusion-disk-size 6144 --vmwarefusion-memory-size 512 default'
+	alias docker-create-xhyve-default='docker-machine create --driver xhyve --xhyve-cpu-count 1 --xhyve-disk-size 6144 --xhyve-memory-size 512 --xhyve-experimental-nfs-share default'
 	alias docker-env-default='eval "$(docker-machine env default)"'
 	if [[ `docker-machine status default` == "Running" ]]; then
 		eval "$(docker-machine env default)"
