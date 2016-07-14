@@ -6,14 +6,6 @@
     safecrlf = true
     whitespace = fix, -indent-with-non-tab, space-before-tab, trailing-space, cr-at-eol
 
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-
-[mergetool "sourcetree"]
-	cmd = /Users/stone/Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
-
 [user]
   name = Myroslav Rys
   email = stonevil@gmail.com
