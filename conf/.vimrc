@@ -45,6 +45,8 @@ NeoBundle 'bling/vim-airline'
 
 NeoBundle 'dietsche/vim-lastplace'
 
+NeoBundle 'tpope/vim-dispatch'
+
 " Enable clipboard over network connection. https://github.com/wincent/clipper is required
 NeoBundle 'wincent/vim-clipper'
 
@@ -63,7 +65,6 @@ NeoBundle 'Shougo/vimproc.vim', {
 
 "" Go Lang Bundle
 NeoBundle 'fatih/vim-go'
-" NeoBundle 'nsf/gocode', {'rtp': 'vim/'} " Install plugin from https://github.com/nsf/gocode
 
 "" C/C++ Bundle
 NeoBundle 'vim-scripts/c.vim'
@@ -165,6 +166,7 @@ set ruler
 set wildignore=*.swp,*.bak,.DS_Store
 set wildmode=longest,list
 set shell=/bin/zsh
+set autowrite
 
 
 """"""""""
@@ -288,13 +290,8 @@ map <F5> :set spell spelllang=en_gb<CR>
 
 """"""""""
 " vim-go
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-" go lint
-" install golint: go get -u github.com/golang/lint/golint
+" install metalinter: go get -u github.com/alecthomas/gometalinter
+" Install all known linters: gometalinter --install --update
 set rtp+=~/.golang/src/github.com/golang/lint/misc/vim
 augroup FileType go
 	au!
@@ -306,9 +303,30 @@ augroup FileType go
 
 	au FileType go nmap <Leader>gi <Plug>(go-info)
 
-	au FileType go nmap <leader>gr <Plug>(go-run)
-	au FileType go nmap <leader>rb <Plug>(go-build)
-	au FileType go nmap <leader>gt <Plug>(go-test)
+	au FileType go nmap <leader>r <Plug>(go-run)
+	au FileType go nmap <leader>b <Plug>(go-build)
+	au FileType go nmap <leader>t <Plug>(go-test)
+
+	au FileType go nmap <leader>ml <Plug>(go-metalinter)
+	let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+	let go_metalinter_autosave = 1
+	let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck']
+	let g:go_metalinter_deadline = "5s"
+
+	map <C-n> :cn<CR>
+	map <C-m> :cp<CR>
+	nnoremap <leader>a :cclose<CR>
+
+	let g:go_snippet_case_type = "camelcase"
+
+	let g:go_highlight_types = 1
+	let g:go_highlight_fields = 1
+	let g:go_highlight_structs = 1
+	let g:go_highlight_functions = 1
+	let g:go_highlight_methods = 1
+	" let g:go_highlight_operators = 1
+	" let g:go_highlight_extra_types = 1
+	let g:go_highlight_build_constraints = 1
 augroup END
 
 augroup myvimrc
@@ -320,20 +338,22 @@ augroup END
 """"""""""
 "" ruby
 " rspec.vim mappings
-map <leader>t :call RunCurrentSpecFile()<CR>
-map <leader>s :call RunNearestSpec()<CR>
-map <leader>l :call RunLastSpec()<CR>
-map <leader>a :call RunAllSpecs()<CR>
-" ruby refactory
-nnoremap <leader>rap :RAddParameter<cr>
-nnoremap <leader>rcpc :RConvertPostConditional<cr>
-nnoremap <leader>rel :RExtractLet<cr>
-vnoremap <leader>rec :RExtractConstant<cr>
-vnoremap <leader>relv :RExtractLocalVariable<cr>
-nnoremap <leader>rit :RInlineTemp<cr>
-vnoremap <leader>rrlv :RRenameLocalVariable<cr>
-vnoremap <leader>rriv :RRenameInstanceVariable<cr>
-vnoremap <leader>rem :RExtractMethod<cr>
+augroup FileType ruby
+	map <leader>t :call RunCurrentSpecFile()<CR>
+	map <leader>s :call RunNearestSpec()<CR>
+	map <leader>l :call RunLastSpec()<CR>
+	map <leader>a :call RunAllSpecs()<CR>
+	" ruby refactory
+	nnoremap <leader>rap :RAddParameter<cr>
+	nnoremap <leader>rcpc :RConvertPostConditional<cr>
+	nnoremap <leader>rel :RExtractLet<cr>
+	vnoremap <leader>rec :RExtractConstant<cr>
+	vnoremap <leader>relv :RExtractLocalVariable<cr>
+	nnoremap <leader>rit :RInlineTemp<cr>
+	vnoremap <leader>rrlv :RRenameLocalVariable<cr>
+	vnoremap <leader>rriv :RRenameInstanceVariable<cr>
+	vnoremap <leader>rem :RExtractMethod<cr>
+augroup END
 
 
 """"""""""
@@ -363,8 +383,10 @@ let g:syntastic_aggregate_errors = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
-let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+augroup FileType go
+	let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+	let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+augroup END
 
 
 """"""""""
