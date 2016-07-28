@@ -96,6 +96,9 @@ NeoBundle 'tbastos/vim-lua'
 "" Crystal Bundle
 NeoBundle 'rhysd/vim-crystal'
 
+"" Elm Bundle
+"NeoBundle 'lambdatoast/elm.vim'
+
 "" OpsCode Chef Bundle
 " NeoBundle 't9md/vim-chef'
 
