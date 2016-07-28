@@ -97,7 +97,7 @@ NeoBundle 'tbastos/vim-lua'
 NeoBundle 'rhysd/vim-crystal'
 
 "" Elm Bundle
-"NeoBundle 'lambdatoast/elm.vim'
+" NeoBundle 'lambdatoast/elm.vim'
 
 "" OpsCode Chef Bundle
 " NeoBundle 't9md/vim-chef'
@@ -105,10 +105,16 @@ NeoBundle 'rhysd/vim-crystal'
 "" Markdown Bundle
 NeoBundle 'rcmdnk/vim-markdown'
 
-"" HashiCorp Bundle
-" NeoBundle 'markcornick/vim-terraform'
+"" HashiVim
+NeoBundle 'hashivim/vim-consul'
+NeoBundle 'hashivim/vim-nomadproject'
+NeoBundle 'hashivim/vim-ottoproject'
+NeoBundle 'hashivim/vim-packer'
+NeoBundle 'hashivim/vim-terraform'
+NeoBundle 'hashivim/vim-vagrant'
+NeoBundle 'hashivim/vim-vaultproject'
 
-"" Docker/Kubernetes Bundle
+" Docker/Kubernetes Bundle
 " NeoBundle 'docker/docker' , {'rtp': '/contrib/syntax/vim/'}
 
 " Nginx Bundle
