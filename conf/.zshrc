@@ -28,10 +28,9 @@ fi
 # ZSH_THEME="miloshadzic" #!!!
 # ZSH_THEME="nebirhos" #!!!
 # ZSH_THEME="norm"
-ZSH_THEME="sorin"
-# ZSH_THEME="sporty_256" #!!!
+# ZSH_THEME="sorin"
+ZSH_THEME="sporty_256" #!!!
 
-# CASE_SENSITIVE="true"
 CASE_SENSITIVE="true"
 # DISABLE_AUTO_UPDATE="true"
 export UPDATE_ZSH_DAYS=2
@@ -46,7 +45,7 @@ ZSH_CUSTOM=~/.Files/conf/.zsh_custom
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # plugins=(brew bundler colored-man colorize copyfile cp forklift rsync textmate tmux tmuxinator vi-mode)
-plugins=(brew bundler colored-man colorize copyfile cp golang forklift rsync textmate tmux vagrant)
+plugins=(brew colored-man colorize copyfile cp golang rsync terraform textmate tmux vagrant)
 
 # Load oh-my-zsh
 if [[ -f $ZSH/oh-my-zsh.sh && -r $ZSH/oh-my-zsh.sh ]]; then
