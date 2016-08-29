@@ -21,15 +21,7 @@ fi
 
 
 # Optionally, if you set this to "random", it'll load a random theme each time that oh-my-zsh is loaded.
-# ZSH_THEME="steeef"
-# ZSH_THEME="arrow"
-# ZSH_THEME="bira" #! too long promtp
-# ZSH_THEME="kafeitu" # -
-# ZSH_THEME="miloshadzic" #!!!
-# ZSH_THEME="nebirhos" #!!!
-# ZSH_THEME="norm"
-# ZSH_THEME="sorin"
-ZSH_THEME="sporty_256" #!!!
+ZSH_THEME="stoned"
 
 CASE_SENSITIVE="true"
 # DISABLE_AUTO_UPDATE="true"
