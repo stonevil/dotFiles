@@ -11,9 +11,7 @@ function dotfiles-install-all() {
 				# Clone homebrew from git repo
 				git clone https://github.com/Homebrew/homebrew.git $HOME/.homebrew
 				$HOME/.homebrew/bin/brew update && $HOME/.homebrew/bin/brew upgrade --all \
-				&& $HOME/.homebrew/bin/brew upgrade $HOME/.homebrew/bin/brew-cask \
-				&& $HOME/.homebrew/bin/brew cleanup \
-				&& $HOME/.homebrew/bin/brew cask cleanup
+				&& $HOME/.homebrew/bin/brew cleanup
 			fi
 
 			# Install homebrew at Linux
@@ -26,9 +24,7 @@ function dotfiles-install-all() {
 				# Clone homebrew from git repo
 				git clone https://github.com/Homebrew/linuxbrew.git $HOME/.homebrew
 				$HOME/.homebrew/bin/brew update && $HOME/.homebrew/bin/brew upgrade --all \
-				&& $HOME/.homebrew/bin/brew upgrade $HOME/.homebrew/bin/brew-cask \
-				&& $HOME/.homebrew/bin/brew cleanup \
-				&& $HOME/.homebrew/bin/brew cask cleanup
+				&& $HOME/.homebrew/bin/brew cleanup
 			fi
 
 			# Install VIM neobundle.vim plugin
@@ -59,21 +55,18 @@ function dotfiles-update-all() {
 		pushd $DOTFILES && git pull && git pull --recurse-submodules && popd && source $DOTFILES/conf/.zshrc
 
 		# Update brew
-		# TODO: add cask check and install if missing. brew install caskroom/cask/brew-cask
 		if [ $(uname) = "Darwin" ]; then
 			if command -v brew >/dev/null; then
 				$HOMEBREW/bin/brew update \
 				&& $HOMEBREW/bin/brew upgrade --all \
-				&& $HOMEBREW/bin/brew cleanup \
-				&& $HOMEBREW/bin/brew cask cleanup
+				&& $HOMEBREW/bin/brew cleanup
 			fi
 		fi
 		if [ $(uname) = "Linux" ]; then
 			if command -v brew >/dev/null; then
 				$HOMEBREW/bin/brew update \
 				&& $HOMEBREW/bin/brew upgrade --all \
-				&& $HOMEBREW/bin/brew cleanup \
-				&& $HOMEBREW/bin/brew cask cleanup
+				&& $HOMEBREW/bin/brew cleanup
 			fi
 		fi
 
