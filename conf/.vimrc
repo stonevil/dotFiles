@@ -73,6 +73,9 @@ NeoBundle 'vim-scripts/c.vim'
 NeoBundle 'kballard/vim-swift'
 " NeoBundle 'keith/swift.vim'
 
+"" GraphQL Bundle
+NeoBundle 'jparise/vim-graphql'
+
 "" HTML Bundle
 " NeoBundle 'amirh/HTML-AutoCloseTag'
 " NeoBundle 'hail2u/vim-css3-syntax'
