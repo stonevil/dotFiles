@@ -2,6 +2,8 @@
 if command -v go >/dev/null; then
   export GOPATH=~/.golang
   export PATH=$GOPATH/bin:$PATH
+	alias go-update='go get -u'
+	alias go-update-all='go get -u all'
   if [[ ! -d $GOPATH ]]; then
     mkdir $GOPATH
   fi
