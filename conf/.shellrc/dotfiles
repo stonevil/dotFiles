@@ -4,7 +4,7 @@ function dotfiles-install-all() {
 	if [[ `curl -sL -w "%{http_code}\\n" "http://www.google.com/" -o /dev/null` -eq 200 ]]; then
 		if command -v git >/dev/null; then
 			# Install homebrew at OS X
-			if [ $(uname) = "Darwin" ]; then
+			if [[ $(uname) = "Darwin" ]]; then
 				if [[ -d $HOME/.homebrew ]]; then
 					cd $HOME && mv -f $HOME/.homebrew $HOME/.homebrew.previous
 				fi
@@ -15,7 +15,7 @@ function dotfiles-install-all() {
 			fi
 
 			# Install homebrew at Linux
-			if [ $(uname) = "Linux" ]; then
+			if [[ $(uname) = "Linux" ]]; then
 				# Install on Debian and Ubuntu
 				# sudo apt-get install build-essential curl git m4 ruby texinfo libbz2-dev libcurl4-openssl-dev libexpat-dev libncurses-dev zlib1g-dev
 				if [[ -d $HOME/.homebrew ]]; then
@@ -55,14 +55,14 @@ function dotfiles-update-all() {
 		pushd $DOTFILES && git pull && git pull --recurse-submodules && popd && source $DOTFILES/conf/.zshrc
 
 		# Update brew
-		if [ $(uname) = "Darwin" ]; then
+		if [[ $(uname) = "Darwin" ]]; then
 			if command -v brew >/dev/null; then
 				$HOMEBREW/bin/brew update \
 				&& $HOMEBREW/bin/brew upgrade \
 				&& $HOMEBREW/bin/brew cleanup
 			fi
 		fi
-		if [ $(uname) = "Linux" ]; then
+		if [[ $(uname) = "Linux" ]]; then
 			if command -v brew >/dev/null; then
 				$HOMEBREW/bin/brew update \
 				&& $HOMEBREW/bin/brew upgrade \
@@ -110,11 +110,11 @@ function dotfiles-update-all() {
 # Create aliases ###############################################################
 function dotfiles-aliases-all() {
 	# Create aliases
-	if [ -d $DOTFILES ]; then
+	if [[ -d $DOTFILES ]]; then
 		for file in $DOTFILES/conf/.*
 			do
 				f=`echo $file | awk -F"/" '{print $NF}'`
-				if [ $f != . ] && [ $f != .. ]; then
+				if [[ $f != . ]] && [[ $f != .. ]]; then
 					mv -f $HOME/$f $HOME/$f.previous
 					ln -sf $file $HOME
 				fi

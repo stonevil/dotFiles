@@ -1,6 +1,6 @@
 # OS X #########################################################################
 # Return OS X memory status
-if [ $(uname) = "Darwin" ]; then
+if [[ $(uname) = "Darwin" ]]; then
   function memory-stats() {
     FREE_BLOCKS=$(vm_stat | grep free | awk '{ print $3 }' | sed 's/\.//')
     INACTIVE_BLOCKS=$(vm_stat | grep inactive | awk '{ print $3 }' | sed 's/\.//')
