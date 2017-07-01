@@ -25,3 +25,9 @@ if [ -d $SHELLRC ]; then
 else
   echo "404: $SHELLRC folder not found"
 fi
+
+ITERMINTEGRATIONRC=$DOTFILES/conf/.iterm2_shell_integration.bash
+if [[ $(uname) == "Darwin" ]] && [[ -f $ITERMINTEGRATIONRC ]]; then
+  source $ITERMINTEGRATIONRC
+fi
+

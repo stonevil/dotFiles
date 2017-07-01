@@ -98,6 +98,11 @@ else
   echo "404: $SECRC folder not found"
 fi
 
+ITERMINTEGRATIONRC=$DOTFILES/conf/.iterm2_shell_integration.zsh
+if [[ $(uname) == "Darwin" ]] && [[ -f $ITERMINTEGRATIONRC ]]; then
+  source $ITERMINTEGRATIONRC
+fi
+
 # Reload Config File ###########################################################
 alias reload=". ~/.zshrc && echo 'ZSH config reloaded from ~/.zshrc'"
 alias zshrc="vim ~/.zshrc && reload"
