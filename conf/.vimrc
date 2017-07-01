@@ -287,7 +287,7 @@ endif
 
 """"""""""
 " checkspell
-map <F5> :set spell spelllang=en_gb<CR>
+" map <F5> :set spell spelllang=en_gb<CR>
 " ]s - forward to misspelled/rare/wrong cap word
 " [s - backwards ]
 " S - only stop at misspellings
