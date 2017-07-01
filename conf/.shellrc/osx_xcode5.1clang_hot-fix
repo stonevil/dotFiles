@@ -1,4 +1,0 @@
-# Xcode 5.1 clang hot-fix for old software
-if command -v xcodebuild >/dev/null; then
-  export ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future
-fi
