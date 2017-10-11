@@ -76,6 +76,10 @@ NeoBundle 'kballard/vim-swift'
 "" GraphQL Bundle
 NeoBundle 'jparise/vim-graphql'
 
+"" ReactJS Bundle
+NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'mxw/vim-jsx'
+
 "" HTML Bundle
 " NeoBundle 'amirh/HTML-AutoCloseTag'
 " NeoBundle 'hail2u/vim-css3-syntax'
@@ -345,6 +349,11 @@ augroup myvimrc
 	au!
 	au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
 augroup END
+
+
+""""""""""
+"" ReactJS
+let g:jsx_ext_required = 0
 
 
 """"""""""
