@@ -318,12 +318,22 @@ command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-h
 
 """"""""""
 "" tpope/vim-fugitive
-noremap <leader>gma :Gwrite<CR>
-noremap <leader>gmv :Gcommit<CR>
+" https://github.com/tpope/vim-fugitive/blob/master/doc/fugitive.txt
+noremap <leader>gad :Gwrite<CR> "Write to the current file's path and stage the results. When run in a work tree file, it is effectively git add. Elsewhere, it is effectively git-checkout. A great deal of effort is expended to behave sensibly when the work tree or index version of the file is open in another buffer.
+
 noremap <leader>gpu :Gpush<CR>
 noremap <leader>gpl :Gpull<CR>
-noremap <leader>gst :Gstatus<CR>
+
 noremap <leader>gdf :Gvdiff<CR>
+noremap <leader>ggr :Ggrep<CR>
+
+noremap <leader>gst :Gstatus<CR> "Press - to add/reset a file's changes, or p to add/reset --patch.
+noremap <leader>gco :Gcommit<CR>
+
+noremap <leader>gbl :Gblame<CR>
+
+noremap <leader>gmv :Gmove<CR>
+noremap <leader>grm :Gdelete<CR>
 
 
 """"""""""
