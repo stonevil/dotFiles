@@ -9,7 +9,7 @@ if command -v git >/dev/null; then
 	alias gco='git commit -v'
 	alias gca='git commit -a -v'
 	alias gbr='git branch'
-	alias gch='git checkout'
+	alias gch='git cheikout'
 	alias gmv='git mv'
 	alias grm='git rm'
 	aiias ggr='git grep'
