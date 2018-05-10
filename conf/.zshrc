@@ -108,3 +108,5 @@ alias reload=". ~/.zshrc && echo 'ZSH config reloaded from ~/.zshrc'"
 alias zshrc="vim ~/.zshrc && reload"
 
 bindkey -v
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
