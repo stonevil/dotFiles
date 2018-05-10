@@ -62,7 +62,6 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'junegunn/fzf.vim'
 	Plug 'ctrlpvim/ctrlp.vim'
 	Plug 'thaerkh/vim-workspace'
-	Plug 'bling/vim-bufferline'
 
 	Plug 'flazz/vim-colorschemes'
 	Plug 'christoomey/vim-tmux-navigator'
@@ -336,7 +335,6 @@ set t_Co=256
 
 colorscheme onedark
 set background=dark
-do ColorScheme
 " alduin, onedark, sierra
 let g:airline_theme='onedark'
 
