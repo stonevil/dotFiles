@@ -335,6 +335,7 @@ set t_Co=256
 
 colorscheme onedark
 set background=dark
+silent do ColorScheme
 " alduin, onedark, sierra
 let g:airline_theme='onedark'
 
