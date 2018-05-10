@@ -62,6 +62,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'junegunn/fzf.vim'
 	Plug 'ctrlpvim/ctrlp.vim'
 	Plug 'thaerkh/vim-workspace'
+	Plug 'bling/vim-bufferline'
 
 	Plug 'flazz/vim-colorschemes'
 	Plug 'christoomey/vim-tmux-navigator'
@@ -124,7 +125,7 @@ set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8
 set hidden
-set showtabline=2
+set showtabline=0
 set showcmd
 set wrap
 set backspace=indent,eol,start
