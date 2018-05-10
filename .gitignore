@@ -19,3 +19,7 @@ tmp
 .yardoc
 _yardoc
 doc/
+
+# Vim artifacts
+.session.vim
+.undodir
