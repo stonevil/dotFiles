@@ -37,9 +37,13 @@ call InstallPlug(vimplug_exists)
 let g:vim_bootstrap_langs = "go,html,javascript,php,python,ruby"
 let g:vim_bootstrap_editor = "nvim"
 
+
 "" Install vim-plug if required
 "" Required:
 call plug#begin(expand('~/.config/nvim/plugged'))
+	Plug 'flazz/vim-colorschemes'
+	Plug 'bling/vim-airline'
+	Plug 'vim-airline/vim-airline-themes'
 
 	"" Autocomplition and debug
 	if has('nvim')
@@ -61,16 +65,11 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 	Plug 'junegunn/fzf.vim'
 	Plug 'ctrlpvim/ctrlp.vim'
-	Plug 'thaerkh/vim-workspace'
-
-	Plug 'flazz/vim-colorschemes'
 	Plug 'christoomey/vim-tmux-navigator'
-	Plug 'bling/vim-airline'
-	Plug 'vim-airline/vim-airline-themes'
-	Plug 'tpope/vim-dispatch'
-	Plug 'majutsushi/tagbar'
+	Plug 'thaerkh/vim-workspace'
+"	Plug 'majutsushi/tagbar'
 
-	" Git Bundle
+ " Git Bundle
 	Plug 'tpope/vim-fugitive'
 	Plug 'mhinz/vim-signify'
 
@@ -85,9 +84,6 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 
 	"" Crystal Bundle
 	"Plug 'rhysd/vim-crystal'
-
-	"" Elm Bundle
-	"Plug 'lambdatoast/elm.vim'
 
 	"" OpsCode Chef Bundle
 	" Plug 't9md/vim-chef'
@@ -124,7 +120,7 @@ set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8
 set hidden
-set showtabline=0
+set showtabline=2
 set showcmd
 set wrap
 set backspace=indent,eol,start
@@ -297,6 +293,7 @@ let g:workspace_session_disable_on_args = 1
 let g:workspace_persist_undo_history = 1
 let g:workspace_undodir='.undodir'
 let g:workspace_autosave_always = 1
+let g:workspace_autosave_untrailspaces = 0
 
 
 """"""""""
