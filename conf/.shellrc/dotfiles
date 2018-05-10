@@ -27,9 +27,6 @@ function dotfiles-install-all() {
 				&& $HOME/.homebrew/bin/brew cleanup
 			fi
 
-			# Install VIM neobundle.vim plugin
-			curl -L https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | /bin/bash -s --
-
 			# Install oh-my-zsh and modules
 			if [[ -d $HOME/.oh-my-zsh ]]; then
 				cd $HOME && mv -f $HOME/.oh-my-zsh $HOME/.oh-my-zsh.previous
@@ -102,6 +99,21 @@ function dotfiles-update-all() {
 				fi
 			done
 		fi
+
+		# Update NVim Plugins
+		if [[ -d $HOME/.config/nvim/plugged ]]; then
+			for file in $HOME/.config/nvim/plugged/*
+			do
+				if [[ -d $file ]]; then
+					pushd $file
+						if [[ -d '.git' ]]; then
+							git pull
+						fi
+					popd
+				fi
+			done
+		fi
+
 	else
 		echo "Offline. No connection to github"
 	fi
