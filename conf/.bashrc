@@ -31,3 +31,4 @@ if [[ $(uname) == "Darwin" ]] && [[ -f $ITERMINTEGRATIONRC ]]; then
   source $ITERMINTEGRATIONRC
 fi
 
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
