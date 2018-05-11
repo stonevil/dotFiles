@@ -1,7 +1,0 @@
-go crystal lua
-tmux tmux-mem-cpu-load reattach-to-user-namespace clipper
-terminal-notifier gawk git mercurial spark ssh-copy-id tree unrar watch youtube-dl jq wget dos2unix ctags cpulimit ccat gettext
-docker
-fleetctl packer terraform
-macvim --with-features=huge --with-lua --enable-rubyinterp=yes --enable-cscope --enable-multibyte
-xhyve
