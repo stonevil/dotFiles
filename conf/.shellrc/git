@@ -12,7 +12,7 @@ if command -v git >/dev/null; then
 	alias gch='git cheikout'
 	alias gmv='git mv'
 	alias grm='git rm'
-	aiias ggr='git grep'
+	alias ggr='git grep'
 	alias grad='git remote add'
 	alias grrm='git remote rm'
 	alias gpl='git pull'
