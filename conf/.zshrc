@@ -1,8 +1,8 @@
-# dotFiles #####################################################################
+## dotFiles
 # Path to your dotFiles configuration.
 DOTFILES=$HOME/.Files
 
-# Oh My ZSH ####################################################################
+## Oh My ZSH
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
@@ -18,7 +18,6 @@ if [ -d $SHELLRC ]; then
 else
   echo "404: $SHELLRC folder not found"
 fi
-
 
 # Optionally, if you set this to "random", it'll load a random theme each time that oh-my-zsh is loaded.
 ZSH_THEME="stoned"
@@ -44,7 +43,6 @@ if [[ -f $ZSH/oh-my-zsh.sh && -r $ZSH/oh-my-zsh.sh ]]; then
   echo "Oh My ZSH detected and loaded!"
   source $ZSH/oh-my-zsh.sh
 fi
-
 
 # Load zsh syntax highlighting
 ZSHCOMPLETIONS=$DOTFILES/modules/zsh-completions
@@ -72,7 +70,7 @@ if [[ -f $ZSHSYNTAXHIGHLIGHTING/zsh-syntax-highlighting.zsh ]]; then
 fi
 
 
-# Shared Config File ###########################################################
+## Shared Config File
 # Load shared for bash and zsh config file
 if [ -d $SHELLRC ]; then
   if [ "$(ls -A $SHELLRC)" ]; then
@@ -103,7 +101,7 @@ if [[ $(uname) == "Darwin" ]] && [[ -f $ITERMINTEGRATIONRC ]]; then
   source $ITERMINTEGRATIONRC
 fi
 
-# Reload Config File ###########################################################
+# Reload Config File
 alias reload=". ~/.zshrc && echo 'ZSH config reloaded from ~/.zshrc'"
 alias zshrc="vim ~/.zshrc && reload"
 
