@@ -62,6 +62,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
 	Plug 'godoctor/godoctor.vim'
 
+	" UI/UX
 	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 	Plug 'junegunn/fzf.vim'
 	Plug 'ctrlpvim/ctrlp.vim'
@@ -201,7 +202,7 @@ augroup END
 
 augroup myvimrc
 	au!
-	au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
+	au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc,init.vim so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
 augroup END
 
 "" ruby
@@ -299,8 +300,7 @@ let g:workspace_autosave_untrailspaces = 0
 """"""""""
 "" vim-ctrlp
 set wildmode=list:longest,list:full
-set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
-let g:ctrlp_use_caching = 0
+set wildignore+=*.o,*.obj,.git,.hg,.svn,*.rbc,*.pyc,__pycache__,.DS_Store
 cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
 noremap <leader>b :CtrlPBuffer<CR>
 noremap <leader>r :CtrlPMRU<CR>
@@ -308,14 +308,56 @@ let g:ctrlp_map = '<leader>e'
 let g:ctrlp_open_new_file = 'r'
 let g:ctrlp_show_hidden = 1
 
-let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden --ignore .git --ignore .svn --ignore .hg --ignore .DS_Store --ignore "**/*.pyc" -g ""'
+if executable('ag')
+	set grepprg=ag\ -i\ --nogroup\ --nocolor\ --hidden\ --ignore\ .git\ --ignore\ .svn\ --ignore\ .hg\ --ignore\ .DS_Store
+	" Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+	let g:ctrlp_user_command = 'ag %s -l --hidden --nocolor --ignore .git --ignore .svn --ignore .hg --ignore .DS_Store -g ""'
+	" ag is fast enough that CtrlP doesn't need to cache
+	let g:ctrlp_use_caching = 0
+endif
 
 
 """"""""""
 "" vim-fzf
-command! -bang -nargs=* Ag call fzf#vim#grep('ag -i --color --nogroup --hidden --ignore .git --ignore .svn --ignore .hg --ignore .DS_Store --ignore "**/*.pyc" '.shellescape(<q-args>), 1, <bang>0)
+" Default fzf layout
+let g:fzf_layout = { 'up': '~60%' }
 
-"command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+let g:fzf_history_dir = '~/.local/share/fzf-history'
+
+" [Buffers] Jump to the existing window if possible
+let g:fzf_buffers_jump = 1
+" [[B]Commits] Customize the options used by 'git log':
+let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+" [Tags] Command to generate tags file
+let g:fzf_tags_command = 'ctags -R'
+" [Commands] --expect expression for directly executing the command
+let g:fzf_commands_expect = 'alt-enter,ctrl-x'
+
+" Command for git grep
+if executable('git')
+	command! -bang -nargs=* GGrep call fzf#vim#grep('git grep --line-number '.shellescape(<q-args>), 0, { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
+endif
+
+" Command for string search
+if executable('ag')
+	command! -bang -nargs=* Find call fzf#vim#grep('ag --column --color-line-number --no-heading --fixed-strings --ignore-case --hidden --follow --color --ignore .git --ignore .svn --ignore .hg --ignore .DS_Store --ignore .o --ignore .obj --ignore .rbc --ignore .pyc --ignore __pycache__ '.shellescape(<q-args>), 1, <bang>0 ? fzf#vim#with_preview('up:60%') : fzf#vim#with_preview('right:50%:hidden', '?'), <bang>0)
+endif
 
 
 """"""""""
