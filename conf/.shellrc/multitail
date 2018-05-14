@@ -1,4 +1,7 @@
-# Replace tail with multitail
-if command -v multitail >/dev/null; then
-  alias tail='multitail -C'
+# Install multitail
+if ! command -v multitail >/dev/null; then
+	if command -v brew >/dev/null; then
+		brew install multitail
+		alias mtail='multitail -C'
+	fi
 fi
