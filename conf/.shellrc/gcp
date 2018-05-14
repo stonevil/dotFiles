@@ -1,0 +1,6 @@
+# Install Google Cloud SDK
+if ! command -v gcloud >/dev/null; then
+	if command -v brew >/dev/null; then
+		brew install caskroom/cask/google-cloud-sdk
+	fi
+fi
