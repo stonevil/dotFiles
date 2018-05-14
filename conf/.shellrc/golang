@@ -1,4 +1,11 @@
-# GO LANG ######################################################################
+# Install Go
+if ! command -v go >/dev/null; then
+	if command -v brew >/dev/null; then
+		brew install golang
+	fi
+fi
+
+# Configure Go ENV
 if command -v go >/dev/null; then
 	export GOPATH=~/Development/golang
 	export PATH=$GOPATH/bin:$PATH
@@ -8,4 +15,11 @@ if command -v go >/dev/null; then
 		mkdir $GOPATH
 	fi
 	export GO15VENDOREXPERIMENT=1
+	# gometalinter
+	if ! command -v gometalinter >/dev/null; then
+		go get -u gopkg.in/alecthomas/gometalinter.v2
+	fi
+	if ! command -v dlv >/dev/null; then
+		go get -u github.com/derekparker/delve/cmd/dlv
+	fi
 fi
