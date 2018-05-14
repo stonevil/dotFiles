@@ -1,7 +1,15 @@
-# Editors ######################################################################
-# Set EDITOR
-if [[ -f ~/.homebrew/bin/nvim ]]; then
-  export EDITOR="~/.homebrew/bin/nvim"
+# Install EDITOR
+if ! command -v nvim >/dev/null; then
+	if command -v brew >/dev/null; then
+		brew install python2 python3 ruby ctags fzf ag clipper neovim
+		pip3 install --upgrade pip
+		pip3 install neovim
+	fi
+fi
+
+# Setup EDITOR
+if [[ -f $HOMEBREW/bin/nvim ]]; then
+  export EDITOR="$HOMEBREW/bin/nvim"
 else
   if [[ -f /Applications/MacVim.app/Contents/MacOS/Vim ]]; then
     export EDITOR="/Applications/MacVim.app/Contents/MacOS/Vim"
