@@ -21,6 +21,9 @@ else
   fi
 fi
 
+# VIM/NVIM session file
+export VIM_SESSION_FILENAME=".session.vim"
+
 # ENV Variables
 export GIT_EDITOR=$EDITOR
 export VISUAL=$EDITOR

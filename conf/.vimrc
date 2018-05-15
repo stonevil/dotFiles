@@ -289,7 +289,11 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 """"""""""
 "" vim-workspace
 nnoremap <leader>s :ToggleWorkspace<CR>
-let g:workspace_session_name = '.session.vim'
+if empty($VIM_SESSION_FILENAME)
+	let g:workspace_session_name = 'Session.vim'
+else
+	let g:workspace_session_name = $VIM_SESSION_FILENAME
+endif
 let g:workspace_session_disable_on_args = 1
 let g:workspace_persist_undo_history = 1
 let g:workspace_undodir='.undodir'
