@@ -1,4 +1,11 @@
-# Packer #######################################################################
+# Install HashiCorp Terraform
+if ! command -v terraform >/dev/null; then
+	if command -v brew >/dev/null; then
+		brew install terraform
+	fi
+fi
+
+# Configure Vix lib for terraform
 if command -v terraform-provider-vix >/dev/null; then
   export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:${GOPATH}/src/github.com/hooklift/govix/vendor/libvix
 fi
