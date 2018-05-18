@@ -1,13 +1,5 @@
 if 0 | endif
 
-if has('vim_starting')
-	set nocompatible
-	syntax on
-	filetype off
-	filetype indent on
-	filetype plugin on
-endif
-
 if has('nvim')
 	let vimplug_exists=expand('~/.config/nvim/autoload/plug.vim')
 else
@@ -69,6 +61,8 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'christoomey/vim-tmux-navigator'
 	Plug 'thaerkh/vim-workspace'
 "	Plug 'majutsushi/tagbar'
+	Plug 'benmills/vimux'
+	Plug 'benmills/vimux-golang'
 
  " Git Bundle
 	Plug 'tpope/vim-fugitive'
@@ -89,14 +83,8 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	"" OpsCode Chef Bundle
 	" Plug 't9md/vim-chef'
 
-	"" HashiVim
-	"Plug 'hashivim/vim-consul'
-	"Plug 'hashivim/vim-nomadproject'
-	"Plug 'hashivim/vim-ottoproject'
-	"Plug 'hashivim/vim-packer'
-	"Plug 'hashivim/vim-terraform'
-	"Plug 'hashivim/vim-vagrant'
-	"Plug 'hashivim/vim-vaultproject'
+	" HCL
+	Plug 'fatih/vim-hclfmt'
 
 	" Docker/Kubernetes Bundle
 	"Plug 'docker/docker' , {'rtp': '/contrib/syntax/vim/'}
@@ -117,111 +105,172 @@ set go=
 set clipboard^=unnamed
 set clipboard^=unnamedplus
 
-set encoding=utf-8
-set fileencoding=utf-8
-set fileencodings=utf-8
-set hidden
-set showtabline=2
-set showcmd
-set wrap
-set backspace=indent,eol,start
-set autoindent
-"set copyindent
-set number
-set cursorline
-set shiftround
-set ignorecase
-set smartcase
-set hlsearch
-set incsearch
+set nocompatible								" Enables us Vim specific features
+syntax on												" Enable syntax highlighting
+filetype off										" Reset filetype detection first ...
+filetype plugin indent on				" ... and enable filetype detection
+
+set ttyfast											" Indicate fast terminal conn for faster redraw
+set mouse=a											" Enable proper mouse selection
+
 set history=1000
 set undolevels=1000
-set title
-set visualbell
-set noerrorbells
-"set list
-"set listchars=tab:>.,trail:.,extends:#,nbsp:.
-set ttyfast
-set mouse=a
-set nocompatible
-set noswapfile
-set fileformats=unix,dos,mac
-set laststatus=2
-"set expandtab
-set softtabstop=2 tabstop=2 shiftwidth=2
-set ruler
-set wildignore=*.swp,*.bak,.DS_Store
-set wildmode=longest,list
+
 set shell=/bin/zsh
-set autowrite
 
-syntax on
+set encoding=utf-8							" Set default encoding to UTF-8
+set fileencoding=utf-8
+set fileencodings=utf-8
+set autoread										" Automatically read changed files
+set autowrite										" Automatically save before :next, :make etc.
+set noswapfile									" Don't use swapfile
+set nobackup										" Don't create annoying backup files
+set fileformats=unix,dos,mac		" Prefer Unix over Windows over OS 9 formats
+set wildignore+=*.bak,*.o,*.obj,.git,.hg,.svn,*.rbc,*.pyc,__pycache__,*.swp,.DS_Store
 
-set wildmenu
-set wildmode=list:longest,full
+set autoindent									" Enabile Autoindent
+set shiftround									" Round indent to multiple of 'shiftwidth'. Applies to > and < commands.
+set noet ci pi sts=2 ts=2 sw=2	" noexpandtab, copyindent, preserveindent, softtabstop=2, shiftwidth=2, tabstop=2
+set wrap linebreak nolist				" Word wrap without line breaks
+set backspace=indent,eol,start	" Makes backspace key more powerful.
+
+set showtabline=2								" Always show tabline
+set laststatus=2								" Show status line always
+
+set incsearch										" Shows the match while typing
+set hlsearch										" Highlight found searches
+set ignorecase									" Search case insensitive...
+set smartcase										" ... but not it begins with upper case
+
+set noerrorbells								" No beeps
+set visualbell									" At times when a beep would have occurred, the screen will flash instead
+set number											" Show line numbers
+set showcmd											" Show me what I'm typing
+set splitright									" Vertical windows should be split to right
+set splitbelow									" Horizontal windows should split to bottom
+
+set hidden											" Buffer should still exist if window is closed
+set showmatch										" Show matching brackets by flickering
+set noshowmode									" We show the mode with airline or lightline
+set completeopt=menu,menuone		" Show popup menu, even if there is one entry
+set pumheight=10								" Completion window max size
+set nocursorcolumn							" Do not highlight column (speeds up highlighting)
+set cursorline									" Highlight current line
+set lazyredraw									" Wait to redraw
+
+"set wildmenu										" Visual autocomplete for command menu. Done by airline
+"set wildmode=list:longest,full
+
+" Turn off search highlight
+nnoremap <leader><space> :nohlsearch<CR>
+
+"" Functions
+" toggle between number and relativenumber
+function! ToggleNumber()
+	if(&relativenumber == 1)
+		set norelativenumber
+		set number
+	else
+		set relativenumber
+	endif
+endfunc
+
+
+"" Vimux global settings
+if exists('$TMUX')
+	map <leader>vx :VimuxInterruptRunner<CR>
+	map <leader>vl :VimuxRunLastCommand<CR>
+	map <Leader>vi :VimuxInspectRunner<CR>
+	map <Leader>vq :VimuxCloseRunner<CR>
+	map <leader>vz :call VimuxZoomRunner()<CR>
+	map <leader>vp :VimuxPromptCommand<CR>
+endif
+
 
 "" vim-go
 "" install metalinter: go get -u github.com/alecthomas/gometalinter
 "" Install all known linters: gometalinter --install --update
 set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
-augroup FileType go
+"augroup FileType go
+"	au!
+"	au FileType go nmap gd <Plug>(go-def)
+"	au FileType go nmap <leader>dd <Plug>(go-def-vertical)
+"
+"	au FileType go nmap <leader>dv <Plug>(go-doc-vertical)
+"	au FileType go nmap <leader>db <Plug>(go-doc-browser)
+"
+"	au FileType go nmap <leader>gi <Plug>(go-info)
+"
+"	au FileType go nmap <leader>r <Plug>(go-run)
+"	au FileType go nmap <leader>b <Plug>(go-build)
+"	au FileType go nmap <leader>t <Plug>(go-test)
+"
+"	au FileType go nmap <leader>ml <Plug>(go-metalinter)
+"	let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+"	let go_metalinter_autosave = 1
+"	let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck']
+"	let g:go_metalinter_deadline = "5s"
+"
+"	map <C-n> :cn<CR>
+"	map <C-m> :cp<CR>
+"	nnoremap <leader>a :cclose<CR>
+"
+"	let g:go_snippet_case_type = "camelcase"
+"
+"	let g:go_highlight_types = 1
+"	let g:go_highlight_fields = 1
+"	let g:go_highlight_structs = 1
+"	let g:go_highlight_functions = 1
+"	let g:go_highlight_methods = 1
+"	" let g:go_highlight_operators = 1
+"	" let g:go_highlight_extra_types = 1
+"	let g:go_highlight_build_constraints = 1
+"augroup END
+
+
+"" vim-hclfmt
+"if ! executable('hclfmt')
+"	if executable('go')
+"		let output=system('go get github.com/fatih/hclfmt')
+"			if !v:shell_error
+"				return 0
+"			endif
+"	endif
+"endif
+
+" vagrant
+augroup vagrant
 	au!
-	au FileType go nmap gd <Plug>(go-def)
-	au FileType go nmap <Leader>dd <Plug>(go-def-vertical)
-
-	au FileType go nmap <Leader>dv <Plug>(go-doc-vertical)
-	au FileType go nmap <Leader>db <Plug>(go-doc-browser)
-
-	au FileType go nmap <Leader>gi <Plug>(go-info)
-
-	au FileType go nmap <leader>r <Plug>(go-run)
-	au FileType go nmap <leader>b <Plug>(go-build)
-	au FileType go nmap <leader>t <Plug>(go-test)
-
-	au FileType go nmap <leader>ml <Plug>(go-metalinter)
-	let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
-	let go_metalinter_autosave = 1
-	let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck']
-	let g:go_metalinter_deadline = "5s"
-
-	map <C-n> :cn<CR>
-	map <C-m> :cp<CR>
-	nnoremap <leader>a :cclose<CR>
-
-	let g:go_snippet_case_type = "camelcase"
-
-	let g:go_highlight_types = 1
-	let g:go_highlight_fields = 1
-	let g:go_highlight_structs = 1
-	let g:go_highlight_functions = 1
-	let g:go_highlight_methods = 1
-	" let g:go_highlight_operators = 1
-	" let g:go_highlight_extra_types = 1
-	let g:go_highlight_build_constraints = 1
+	au BufRead,BufNewFile Vagrantfile set filetype=ruby
+	if exists('$TMUX')
+		au FileType ruby nmap <F12> :call VimuxRunCommand("vagrant validate")<CR>
+	endif
 augroup END
 
+" vim/gVim
 augroup myvimrc
 	au!
 	au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc,init.vim so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
 augroup END
 
 "" ruby
-augroup FileType ruby
-	map <leader>t :call RunCurrentSpecFile()<CR>
-	map <leader>s :call RunNearestSpec()<CR>
-	map <leader>l :call RunLastSpec()<CR>
-	map <leader>a :call RunAllSpecs()<CR>
-	" ruby refactory
-	nnoremap <leader>rap :RAddParameter<CR>
-	nnoremap <leader>rcpc :RConvertPostConditional<CR>
-	nnoremap <leader>rel :RExtractLet<CR>
-	vnoremap <leader>rec :RExtractConstant<CR>
-	vnoremap <leader>relv :RExtractLocalVariable<CR>
-	nnoremap <leader>rit :RInlineTemp<CR>
-	vnoremap <leader>rrlv :RRenameLocalVariable<CR>
-	vnoremap <leader>rriv :RRenameInstanceVariable<CR>
-	vnoremap <leader>rem :RExtractMethod<CR>
-augroup END
+"augroup FileType ruby
+"	au!
+"	map <leader>t :call RunCurrentSpecFile()<CR>
+"	map <leader>s :call RunNearestSpec()<CR>
+"	map <leader>l :call RunLastSpec()<CR>
+"	map <leader>a :call RunAllSpecs()<CR>
+"	" ruby refactory
+"	nnoremap <leader>rap :RAddParameter<CR>
+"	nnoremap <leader>rcpc :RConvertPostConditional<CR>
+"	nnoremap <leader>rel :RExtractLet<CR>
+"	vnoremap <leader>rec :RExtractConstant<CR>
+"	vnoremap <leader>relv :RExtractLocalVariable<CR>
+"	nnoremap <leader>rit :RInlineTemp<CR>
+"	vnoremap <leader>rrlv :RRenameLocalVariable<CR>
+"	vnoremap <leader>rriv :RRenameInstanceVariable<CR>
+"	vnoremap <leader>rem :RExtractMethod<CR>
+"augroup END
 
 
 """"""""""
@@ -303,8 +352,6 @@ let g:workspace_autosave_untrailspaces = 0
 
 """"""""""
 "" vim-ctrlp
-set wildmode=list:longest,list:full
-set wildignore+=*.o,*.obj,.git,.hg,.svn,*.rbc,*.pyc,__pycache__,.DS_Store
 cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
 noremap <leader>b :CtrlPBuffer<CR>
 noremap <leader>r :CtrlPMRU<CR>
@@ -328,19 +375,19 @@ let g:fzf_layout = { 'up': '~60%' }
 
 " Customize fzf colors to match your color scheme
 let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'Ignore'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
+\ { 'fg':				['fg', 'Normal'],
+	\ 'bg':				['bg', 'Normal'],
+	\ 'hl':				['fg', 'Comment'],
+	\ 'fg+':			['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+	\ 'bg+':			['bg', 'CursorLine', 'CursorColumn'],
+	\ 'hl+':			['fg', 'Statement'],
+	\ 'info':			['fg', 'PreProc'],
+	\ 'border':		['fg', 'Ignore'],
+	\ 'prompt':		['fg', 'Conditional'],
+	\ 'pointer':	['fg', 'Exception'],
+	\ 'marker':		['fg', 'Keyword'],
+	\ 'spinner':	['fg', 'Label'],
+	\ 'header':		['fg', 'Comment'] }
 
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
