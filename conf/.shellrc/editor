@@ -1,7 +1,7 @@
 # Install EDITOR
 if ! command -v nvim >/dev/null; then
 	if command -v brew >/dev/null; then
-		brew install python2 python3 ruby lua ctags gotags fzf ag clipper neovim
+		brew install python2 python3 ruby lua ctags gotags fzf ag clipper neovim swiftlint
 		pip3 install --upgrade pip
 		pip3 install neovim
 	fi
