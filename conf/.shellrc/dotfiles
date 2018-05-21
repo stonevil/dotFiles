@@ -101,17 +101,9 @@ function dotfiles-update-all() {
 		fi
 
 		# Update NVim Plugins
-		if [[ -d $HOME/.config/nvim/plugged ]]; then
-			for file in $HOME/.config/nvim/plugged/*
-			do
-				if [[ -d $file ]]; then
-					pushd $file
-						if [[ -d '.git' ]]; then
-							git pull
-						fi
-					popd
-				fi
-			done
+		if command -v nvim >/dev/null; then
+			nvim +PlugUpdate +qall
+			nvim +UpdateRemotePlugins +qall
 		fi
 
 	else
