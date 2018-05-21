@@ -6,6 +6,10 @@
     safecrlf = true
     whitespace = fix, -indent-with-non-tab, space-before-tab, trailing-space, cr-at-eol
 
+[user]
+  name = Myroslav Rys
+  email = stonevil@gmail.com
+
 [mergetool]
   keepBackup = true
 
