@@ -1,14 +1,10 @@
 [core]
   excludesfile = ~/.gitignore_global
-  editor = "/Applications/MacVim.app/Contents/MacOS/Vim"
+	editor = $EDITOR
     pager = less -R
     autocrlf = input
     safecrlf = true
     whitespace = fix, -indent-with-non-tab, space-before-tab, trailing-space, cr-at-eol
-
-[user]
-  name = Myroslav Rys
-  email = stonevil@gmail.com
 
 [mergetool]
   keepBackup = true
