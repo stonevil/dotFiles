@@ -1,7 +1,11 @@
-# Aliases ######################################################################
-# Customise ls command
+# Aliases
 alias ll='ls -lahG'
 alias l='ls -lahG'
 
 alias szsh='sudo /bin/zsh'
 alias fssh='ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
+
+if [[ $(uname) = "Linux" ]]; then
+	alias pbcopy="xclip -selection clipboard"
+	alias pbpaste="xclip -selection clipboard -o"
+fi
