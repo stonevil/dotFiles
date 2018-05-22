@@ -1,6 +1,6 @@
 [core]
   excludesfile = ~/.gitignore_global
-	editor = $EDITOR
+  editor = $EDITOR
     pager = less -R
     autocrlf = input
     safecrlf = true
@@ -61,16 +61,16 @@
   ss = stash save
 
   # Log related
-  l  = log
+  l = log
   lh = log --graph
   la = !git lh --date-order --all 2> /dev/null
   lb = log --graph --simplify-by-decoration
   lba = !git lb --all
-  h  = !git --no-pager log --graph -n 15
-  a  = !git --no-pager la -n 15
+  h = !git --no-pager log --graph -n 15
+  a = !git --no-pager la -n 15
 
   # some resets without explanation
-  r  = reset
+  r = reset
   r1 = reset HEAD^
   r2 = reset HEAD^^
   rh = reset --hard
@@ -159,7 +159,7 @@
   #git branch -D `git for-each-ref --format=for-each-ref"%(refname:short)" refs/heads/...`
 
   go = !gitgo
-	springcleaning = for-each-ref --sort=-committerdate --format='%(refname:short) %(committerdate:short)'
+  springcleaning = for-each-ref --sort=-committerdate --format='%(refname:short) %(committerdate:short)'
 
   #revert = checkout --
 
@@ -167,16 +167,16 @@
   default = matching
 
 [help]
-	autocorrect = 1
+  autocorrect = 1
 [filter "media"]
-	required = true
-	clean = git media clean %f
-	smudge = git media smudge %f
+  required = true
+  clean = git media clean %f
+  smudge = git media smudge %f
 [filter "hawser"]
-	clean = git hawser clean %f
-	smudge = git hawser smudge %f
-	required = true
+  clean = git hawser clean %f
+  smudge = git hawser smudge %f
+  required = true
 [filter "lfs"]
-	clean = git-lfs clean %f
-	smudge = git-lfs smudge %f
-	required = true
+  clean = git-lfs clean %f
+  smudge = git-lfs smudge %f
+  required = true
