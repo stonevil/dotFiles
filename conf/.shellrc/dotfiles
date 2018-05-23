@@ -108,7 +108,7 @@ function dotfiles-update-all() {
 
 		# Update gcloud components
 		if command -v gcloud >/dev/null; then
-			gcloud components update
+			yes Y | gcloud components update
 		fi
 
 	else
