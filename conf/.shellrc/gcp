@@ -4,3 +4,10 @@ if ! command -v gcloud >/dev/null; then
 		brew install caskroom/cask/google-cloud-sdk
 	fi
 fi
+
+# Install validator for kubernetes yaml files
+if ! command -v kubeval >/dev/null; then
+	if command -v brew >/dev/null; then
+		brew tap garethr/kubeval && brew install kubeval
+	fi
+fi
