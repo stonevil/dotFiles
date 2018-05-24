@@ -37,7 +37,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'bling/vim-airline'
 	Plug 'vim-airline/vim-airline-themes'
 
-	"" Autocomplition and debug
+	" Autocomplition and debug
 	if has('nvim')
 		Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 	else
@@ -47,8 +47,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	endif
 	let g:deoplete#enable_at_startup = 1
 
-	"" Plugins
-	"" Go Bundle
+	" Go Bundle
 	Plug 'zchee/deoplete-go', {'build': {'unix': 'make'}}
 	Plug 'jodosha/vim-godebug'
 	Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
@@ -60,7 +59,8 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'ctrlpvim/ctrlp.vim'
 	Plug 'christoomey/vim-tmux-navigator'
 	Plug 'thaerkh/vim-workspace'
-"	Plug 'majutsushi/tagbar'
+	Plug 'simnalamburt/vim-mundo'
+	Plug 'majutsushi/tagbar'
 	Plug 'benmills/vimux'
 	Plug 'benmills/vimux-golang'
 
@@ -68,20 +68,20 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'tpope/vim-fugitive'
 	Plug 'mhinz/vim-signify'
 
-	"" C/C++ Bundle
+	" C/C++ Bundle
 	"Plug 'vim-scripts/c.vim'
 
-	"" Swift Bundle
+	" Swift Bundle
 	"Plug 'keith/swift'
 
-	"" Lua Bundle
+	" Lua Bundle
 	"Plug 'tbastos/vim-lua'
 
-	"" Crystal Bundle
+	" Crystal Bundle
 	"Plug 'rhysd/vim-crystal'
 
-	"" OpsCode Chef Bundle
-	" Plug 't9md/vim-chef'
+	" OpsCode Chef Bundle
+	"Plug 't9md/vim-chef'
 
 	" HCL
 	Plug 'fatih/vim-hclfmt'
@@ -92,7 +92,11 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	" Nginx Bundle
 	"Plug 'LeonB/vim-nginx'
 
-	"" Enable clipboard over network connection. https://github.com/wincent/clipper is required
+	" Arduino Bundle
+	Plug 'sudar/vim-arduino-syntax'
+	Plug 'stevearc/vim-arduino'
+
+	" Enable clipboard over network connection. https://github.com/wincent/clipper is required
 	"Plug 'wincent/vim-clipper'
 call plug#end()
 
@@ -163,6 +167,8 @@ set lazyredraw									" Wait to redraw
 
 " Turn off search highlight
 nnoremap <leader><space> :nohlsearch<CR>
+" Toggle line numbering
+nnoremap <leader>N :exec &nu==&rnu? "se nu!" : "se rnu!"<CR>
 
 "" Functions
 " toggle between number and relativenumber
@@ -175,11 +181,20 @@ function! ToggleNumber()
 	endif
 endfunc
 
+function! ArduinoStatusLine()
+  let port = arduino#GetPort()
+  let line = '%f [' . g:arduino_board . '] [' . g:arduino_programmer . ']'
+  if !empty(port)
+    let line = line . ' (' . port . ':' . g:arduino_serial_baud . ')'
+  endif
+  return line
+endfunction
+
 
 "" Vimux global settings
 if exists('$TMUX')
 	map <leader>vx :VimuxInterruptRunner<CR>
-	map <leader>vl :VimuxRunLastCommand<CR>
+	map <leader><F12> :VimuxRunLastCommand<CR>
 	map <Leader>vi :VimuxInspectRunner<CR>
 	map <Leader>vq :VimuxCloseRunner<CR>
 	map <leader>vz :call VimuxZoomRunner()<CR>
@@ -187,96 +202,88 @@ if exists('$TMUX')
 endif
 
 
-"" vim-go
-"" install metalinter: go get -u github.com/alecthomas/gometalinter
-"" Install all known linters: gometalinter --install --update
-set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
-"augroup FileType go
-"	au!
-"	au FileType go nmap gd <Plug>(go-def)
-"	au FileType go nmap <leader>dd <Plug>(go-def-vertical)
-"
-"	au FileType go nmap <leader>dv <Plug>(go-doc-vertical)
-"	au FileType go nmap <leader>db <Plug>(go-doc-browser)
-"
-"	au FileType go nmap <leader>gi <Plug>(go-info)
-"
-"	au FileType go nmap <leader>r <Plug>(go-run)
-"	au FileType go nmap <leader>b <Plug>(go-build)
-"	au FileType go nmap <leader>t <Plug>(go-test)
-"
-"	au FileType go nmap <leader>ml <Plug>(go-metalinter)
-"	let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
-"	let go_metalinter_autosave = 1
-"	let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck']
-"	let g:go_metalinter_deadline = "5s"
-"
-"	map <C-n> :cn<CR>
-"	map <C-m> :cp<CR>
-"	nnoremap <leader>a :cclose<CR>
-"
-"	let g:go_snippet_case_type = "camelcase"
-"
-"	let g:go_highlight_types = 1
-"	let g:go_highlight_fields = 1
-"	let g:go_highlight_structs = 1
-"	let g:go_highlight_functions = 1
-"	let g:go_highlight_methods = 1
-"	" let g:go_highlight_operators = 1
-"	" let g:go_highlight_extra_types = 1
-"	let g:go_highlight_build_constraints = 1
-"augroup END
+"" Configuration groups
+augroup FileType go
+	au!
+	set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
+	au FileType go nmap gd <Plug>(go-def)
+	au FileType go nmap <leader>dd <Plug>(go-def-vertical)
 
+	au FileType go nmap <leader>dv <Plug>(go-doc-vertical)
+	au FileType go nmap <leader>db <Plug>(go-doc-browser)
 
-"" vim-hclfmt
-"if ! executable('hclfmt')
-"	if executable('go')
-"		let output=system('go get github.com/fatih/hclfmt')
-"			if !v:shell_error
-"				return 0
-"			endif
-"	endif
-"endif
+	au FileType go nmap <leader>gi <Plug>(go-info)
 
-" vagrant
+	au FileType go nmap <leader>r <Plug>(go-run)
+	au FileType go nmap <leader>b <Plug>(go-build)
+	au FileType go nmap <leader>t <Plug>(go-test)
+
+	au FileType go nmap <F12> <Plug>(go-metalinter)
+	let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+	let go_metalinter_autosave = 1
+	let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck']
+	let g:go_metalinter_deadline = "5s"
+
+	map <C-n> :cn<CR>
+	map <C-m> :cp<CR>
+	nnoremap <leader>a :cclose<CR>
+
+	let g:go_snippet_case_type = "camelcase"
+
+	let g:go_highlight_types = 1
+	let g:go_highlight_fields = 1
+	let g:go_highlight_structs = 1
+	let g:go_highlight_functions = 1
+	let g:go_highlight_methods = 1
+	" let g:go_highlight_operators = 1
+	" let g:go_highlight_extra_types = 1
+	let g:go_highlight_build_constraints = 1
+augroup END
+
 augroup vagrant
 	au!
 	au BufRead,BufNewFile Vagrantfile set filetype=ruby
 	if exists('$TMUX')
-		au FileType ruby nmap <F12> :call VimuxRunCommand("vagrant validate")<CR>
+		au FileType ruby nmap <F12> :call VimuxRunCommandInDir("vagrant validate")<CR>
 	endif
 augroup END
 
-" vim/gVim
+augroup docker
+	au!
+	au BufRead,BufNewFile Dockerfile set filetype=Dockerfile
+	if exists('$TMUX')
+		au FileType Dockerfile nmap <F12> :call VimuxRunCommandInDir("CONTAINERNAME=`basename $PWD \| tr '[:upper:]' '[:lower:]'`; docker build -t $CONTAINERNAME .", 0)<CR><CR>
+	endif
+augroup END
+
 augroup myvimrc
 	au!
 	au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc,init.vim so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
 augroup END
 
-"" ruby
-"augroup FileType ruby
-"	au!
-"	map <leader>t :call RunCurrentSpecFile()<CR>
-"	map <leader>s :call RunNearestSpec()<CR>
-"	map <leader>l :call RunLastSpec()<CR>
-"	map <leader>a :call RunAllSpecs()<CR>
-"	" ruby refactory
-"	nnoremap <leader>rap :RAddParameter<CR>
-"	nnoremap <leader>rcpc :RConvertPostConditional<CR>
-"	nnoremap <leader>rel :RExtractLet<CR>
-"	vnoremap <leader>rec :RExtractConstant<CR>
-"	vnoremap <leader>relv :RExtractLocalVariable<CR>
-"	nnoremap <leader>rit :RInlineTemp<CR>
-"	vnoremap <leader>rrlv :RRenameLocalVariable<CR>
-"	vnoremap <leader>rriv :RRenameInstanceVariable<CR>
-"	vnoremap <leader>rem :RExtractMethod<CR>
-"augroup END
+augroup arduino
+	au!
+	au BufRead,BufNewFile *.ino,*.pde,*ide set filetype=c++
+	setl statusline=%!ArduinoStatusLine()
+augroup END
+
+augroup kubernetes
+	au!
+	au BufRead,BufNewFile */.kube/config set filetype=yaml
+	au BufRead,BufNewFile */templates/*.yaml,*/deployment/*.yaml,*/templates/*.tpl,*/deployment/*.tpl set filetype=yaml.gotexttmpl
+	au FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+	if exists('$TMUX')
+		au FileType yaml nmap <F7> :call VimuxRunCommand("clear; kubectl apply -f ". bufname("%"))<CR>
+		au FileType yaml nmap <F8> :call VimuxRunCommand("clear; kubectl delete -f ". bufname("%"))<CR>
+		au FileType yaml nmap <F3> :call VimuxRunCommand("clear; kubectl get -f ". bufname("%"))<CR>
+		au FileType yaml nmap <F12> :call VimuxRunCommand("clear; kubeval ". bufname("%"))<CR>
+	endif
+augroup END
 
 
 """"""""""
 "" tagbar
 nmap <silent> <F4> :TagbarToggle<CR>
-let g:tagbar_ctags_bin = '~/.homebrew/bin/ctags'
 let g:tagbar_type_go = {
 	\ 'ctagstype' : 'go',
 	\ 'kinds' : [
@@ -312,6 +319,30 @@ let g:tagbar_type_ruby = {
 		\ 'C:contexts',
 		\ 'f:methods',
 		\ 'F:singleton methods'
+	\ ]
+\ }
+let g:tagbar_type_ansible = {
+	\ 'ctagstype' : 'ansible',
+	\ 'kinds' : [
+		\ 't:tasks'
+	\ ],
+	\ 'sort' : 0
+\ }
+let g:tagbar_type_puppet = {
+	\ 'ctagstype': 'puppet',
+	\ 'kinds': [
+		\'c:class',
+		\'s:site',
+		\'n:node',
+		\'d:definition'
+ \]
+\}
+let g:tagbar_type_markdown = {
+	\ 'ctagstype' : 'markdown',
+	\ 'kinds' : [
+		\ 'h:Heading_L1',
+		\ 'i:Heading_L2',
+		\ 'k:Heading_L3'
 	\ ]
 \ }
 
@@ -359,6 +390,9 @@ let g:ctrlp_map = '<leader>e'
 let g:ctrlp_open_new_file = 'r'
 let g:ctrlp_show_hidden = 1
 
+let g:ctrlp_tabpage_position = 'ac'
+let g:ctrlp_match_window = 'top,order:ttb,min:1,max:20,results:20'
+
 if executable('ag')
 	set grepprg=ag\ -i\ --nogroup\ --nocolor\ --hidden\ --ignore\ .git\ --ignore\ .svn\ --ignore\ .hg\ --ignore\ .DS_Store
 	" Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
@@ -367,6 +401,11 @@ if executable('ag')
 	let g:ctrlp_use_caching = 0
 endif
 
+
+""""""""""
+"" vim-mundo
+nnoremap <F5> :MundoToggle<CR>
+let g:mundo_close_on_revert = 1
 
 """"""""""
 "" vim-fzf
@@ -429,6 +468,17 @@ noremap <leader>gbl :Gblame<CR>
 
 noremap <leader>gmv :Gmove<CR>
 noremap <leader>grm :Gdelete<CR>
+
+
+""""""""""
+"" stevearc/vim-arduino
+" :ArduinoChooseBoard - Select the type of board from a list.
+" :ArduinoChooseProgrammer - Select the programmer from a list.
+" :ArduinoChoosePort - Select the serial port from a list.
+" :ArduinoVerify - Build the sketch.
+" :ArduinoUpload - Build and upload the sketch.
+" :ArduinoSerial - Connect to the board for debugging over a serial port.
+" :ArduinoUploadAndSerial - Build, upload, and connect for debugging.
 
 
 """"""""""
