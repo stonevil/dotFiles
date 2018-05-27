@@ -47,12 +47,6 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	endif
 	let g:deoplete#enable_at_startup = 1
 
-	" Go Bundle
-	Plug 'zchee/deoplete-go', {'build': {'unix': 'make'}}
-	Plug 'jodosha/vim-godebug'
-	Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
-	Plug 'godoctor/godoctor.vim'
-
 	" UI/UX
 	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 	Plug 'junegunn/fzf.vim'
@@ -60,9 +54,15 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'christoomey/vim-tmux-navigator'
 	Plug 'thaerkh/vim-workspace'
 	Plug 'simnalamburt/vim-mundo'
-	Plug 'majutsushi/tagbar'
+	Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle'}
 	Plug 'benmills/vimux'
-	Plug 'benmills/vimux-golang'
+
+	" Go Bundle
+	Plug 'zchee/deoplete-go', { 'build': {'unix': 'make'}, 'for': 'golang' }
+	Plug 'jodosha/vim-godebug',  { 'for': 'golang' }
+	Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'golang' }
+	Plug 'godoctor/godoctor.vim', { 'for': 'golang' }
+	Plug 'benmills/vimux-golang', { 'for': 'golang' }
 
  " Git Bundle
 	Plug 'tpope/vim-fugitive'
@@ -78,7 +78,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	"Plug 'tbastos/vim-lua'
 
 	" Crystal Bundle
-	"Plug 'rhysd/vim-crystal'
+	"Plug 'rhysd/vim-crystal', { 'for': 'ruby' }
 
 	" OpsCode Chef Bundle
 	"Plug 't9md/vim-chef'
@@ -87,14 +87,14 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'fatih/vim-hclfmt'
 
 	" Docker/Kubernetes Bundle
-	"Plug 'docker/docker' , {'rtp': '/contrib/syntax/vim/'}
+	"Plug 'docker/docker' , { 'rtp': '/contrib/syntax/vim/' }
 
 	" Nginx Bundle
 	"Plug 'LeonB/vim-nginx'
 
 	" Arduino Bundle
-	Plug 'sudar/vim-arduino-syntax'
-	Plug 'stevearc/vim-arduino'
+	Plug 'sudar/vim-arduino-syntax', { 'for': 'arduino' }
+	Plug 'stevearc/vim-arduino', { 'for': 'arduino' }
 
 	" Enable clipboard over network connection. https://github.com/wincent/clipper is required
 	"Plug 'wincent/vim-clipper'
