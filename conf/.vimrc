@@ -16,13 +16,13 @@ function! InstallPlug(plugpath)
 	endif
 endfunction
 
-" PlugInstall [name ...] [#threads] - Install plugins
-" PlugUpdate [name ...] [#threads] - Install or update plugins
-" PlugClean[!] - Remove unused directories (bang version will clean without prompt)
-" PlugUpgrade	- Upgrade vim-plug itself
-" PlugStatus - Check the status of plugins
-" PlugDiff - Examine changes from the previous update and the pending changes
-" PlugSnapshot[!] [output path] - Generate script for restoring the current snapshot of the plugins
+" :PlugInstall [name ...] [#threads] - Install plugins
+" :PlugUpdate [name ...] [#threads] - Install or update plugins
+" :PlugClean[!] - Remove unused directories (bang version will clean without prompt)
+" :PlugUpgrade	- Upgrade vim-plug itself
+" :PlugStatus - Check the status of plugins
+" :PlugDiff - Examine changes from the previous update and the pending changes
+" :PlugSnapshot[!] [output path] - Generate script for restoring the current snapshot of the plugins
 call InstallPlug(vimplug_exists)
 
 
@@ -162,6 +162,8 @@ set nocursorcolumn							" Do not highlight column (speeds up highlighting)
 set cursorline									" Highlight current line
 set lazyredraw									" Wait to redraw
 
+set confirm											" Confirm changes (Yes, No, Cancel) instead of error
+
 "set wildmenu										" Visual autocomplete for command menu. Done by airline
 "set wildmode=list:longest,full
 
@@ -195,8 +197,8 @@ endfunction
 if exists('$TMUX')
 	map <leader>vx :VimuxInterruptRunner<CR>
 	map <leader><F12> :VimuxRunLastCommand<CR>
-	map <Leader>vi :VimuxInspectRunner<CR>
-	map <Leader>vq :VimuxCloseRunner<CR>
+	map <leader>vi :VimuxInspectRunner<CR>
+	map <leader>vq :VimuxCloseRunner<CR>
 	map <leader>vz :call VimuxZoomRunner()<CR>
 	map <leader>vp :VimuxPromptCommand<CR>
 endif
@@ -527,13 +529,36 @@ noremap XX "+x<CR>
 " Close every window in the current tabview but the current one
 " ctrl+w o
 
-"" Buffer nav
+"" Manage buffers
+" Buffer nav
 noremap <leader>q :bp<CR>
 noremap <leader>w :bn<CR>
+" New buffer
+noremap <leader>N :enew<CR>
 " Close buffer
 noremap <leader>c :bd<CR>
+noremap <leader>c! :bd!<CR>
 " Switch to last-active buffer
 nnoremap <leader><leader> <C-^>
+
+" :bd          - deletes the current buffer, error if there are unwritten changes
+" :bd!         - deletes the current buffer, no error if unwritten changes
+" :bufdo bd    - deletes all buffers, stops at first error (unwritten changes)
+" :bufdo! bd   - deletes all buffers except those with unwritten changes
+" :bufdo! bd!  - deletes all buffers, no error on any unwritten changes
+ 
+" :bw          - completely deletes the current buffer, error if there are unwritten changes
+" :bw!         - completely deletes the current buffer, no error if unwritten changes
+" :bufdo bw    - completely deletes all buffers, stops at first error (unwritten changes)
+" :bufdo! bw   - completely deletes all buffers except those with unwritten changes
+" :bufdo! bw!  - completely deletes all buffers, no error on any unwritten changes
+
+" :ls          - list open buffers
+" :b N         - open buffer number N (as shown in ls)
+" :tabe +Nbuf  - open buffer number N in new tab
+" :bnext       - go to the next buffer (:bn also)
+" :bprevious   - go to the previous buffer (:bp also)
+
 
 "" Clean search (highlight)
 nnoremap <silent> <leader><space> :noh<cr>
