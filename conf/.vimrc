@@ -512,6 +512,21 @@ noremap YY "+y<CR>
 noremap <leader>p "+gP<CR>
 noremap XX "+x<CR>
 
+"" Manage splits
+" Create a vertical split using :vsp and horizontal with :sp
+" Max out the height of the current split
+" ctrl+w _
+" Max out the width of the current split
+" ctrl+w |
+" Normalize all split sizes, which is very handy when resizing terminal
+" ctrl+w =
+" Swap top/bottom or left/right split
+" ctrl+w R
+" Break out current window into a new tabview
+" ctrl+w T
+" Close every window in the current tabview but the current one
+" ctrl+w o
+
 "" Buffer nav
 noremap <leader>q :bp<CR>
 noremap <leader>w :bn<CR>
