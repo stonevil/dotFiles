@@ -1,5 +1,0 @@
-# Docker #######################################################################
-# export K8S_HOST="127.0.0.1"
-# export K8S_DOCKER_PORT="tcp://$K8S_HOST:4243"
-# export ETCDCTL_PEERS="http://$K8S_HOST:4001"
-# export FLEETCTL_TUNNEL="$K8S_HOST:2222"
