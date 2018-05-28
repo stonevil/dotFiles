@@ -1,0 +1,6 @@
+# Install gettext and envsubst
+if ! command -v gettext >/dev/null; then
+	if command -v brew >/dev/null; then
+		brew install gettext && brew link --force gettext
+	fi
+fi

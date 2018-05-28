@@ -2,7 +2,7 @@ if [[ $(uname) = "Darwin" ]]; then
   # Add homebrew to the PATH
   export HOMEBREW=~/.homebrew
   if [[ -d $HOMEBREW ]]; then
-    export PATH=$HOMEBREW/bin:$HOMEBREW/sbin:$HOMEBREW/gettext/bin:$PATH
+    export PATH=$HOMEBREW/bin:$HOMEBREW/sbin:$PATH
     export MANPATH=$HOMEBREW/share/man:$MANPATH
   fi
 fi
