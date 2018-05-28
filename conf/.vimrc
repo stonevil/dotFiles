@@ -354,6 +354,7 @@ let g:tagbar_type_markdown = {
 "<ctrl-k> Up
 "<ctrl-l> Right
 "<ctrl-\> Previous split
+let g:tmux_navigator_disable_when_zoomed = 1
 
 
 """"""""""
@@ -406,6 +407,7 @@ endif
 "" vim-mundo
 nnoremap <F5> :MundoToggle<CR>
 let g:mundo_close_on_revert = 1
+
 
 """"""""""
 "" vim-fzf
