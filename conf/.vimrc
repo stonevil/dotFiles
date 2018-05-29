@@ -39,7 +39,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 
 	" Autocomplition and debug
 	if has('nvim')
-		Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+		Plug 'Shougo/deoplete.nvim',        { 'do': ':UpdateRemotePlugins' }
 	else
 		Plug 'Shougo/deoplete.nvim'
 		Plug 'roxma/nvim-yarp'
@@ -48,21 +48,24 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	let g:deoplete#enable_at_startup = 1
 
 	" UI/UX
-	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+	Plug 'junegunn/fzf',                  { 'dir': '~/.fzf', 'do': './install --all' }
 	Plug 'junegunn/fzf.vim'
 	Plug 'ctrlpvim/ctrlp.vim'
 	Plug 'christoomey/vim-tmux-navigator'
 	Plug 'thaerkh/vim-workspace'
 	Plug 'simnalamburt/vim-mundo'
-	Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle'}
+	Plug 'majutsushi/tagbar',             { 'on': 'TagbarToggle'}
 	Plug 'benmills/vimux'
 
+	" Tabulation
+	Plug 'godlygeek/tabular'
+
 	" Go Bundle
-	Plug 'zchee/deoplete-go', { 'build': {'unix': 'make'}, 'for': 'golang' }
-	Plug 'jodosha/vim-godebug',  { 'for': 'golang' }
-	Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'golang' }
-	Plug 'godoctor/godoctor.vim', { 'for': 'golang' }
-	Plug 'benmills/vimux-golang', { 'for': 'golang' }
+	Plug 'zchee/deoplete-go',             { 'build': {'unix': 'make'}, 'for': 'golang' }
+	Plug 'jodosha/vim-godebug',           { 'for': 'golang' }
+	Plug 'fatih/vim-go',                  { 'do': ':GoInstallBinaries', 'for': 'golang' }
+	Plug 'godoctor/godoctor.vim',         { 'for': 'golang' }
+	Plug 'benmills/vimux-golang',         { 'for': 'golang' }
 
  " Git Bundle
 	Plug 'tpope/vim-fugitive'
@@ -78,7 +81,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	"Plug 'tbastos/vim-lua'
 
 	" Crystal Bundle
-	"Plug 'rhysd/vim-crystal', { 'for': 'ruby' }
+	"Plug 'rhysd/vim-crystal',            { 'for': 'ruby' }
 
 	" OpsCode Chef Bundle
 	"Plug 't9md/vim-chef'
@@ -87,14 +90,14 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'fatih/vim-hclfmt'
 
 	" Docker/Kubernetes Bundle
-	"Plug 'docker/docker' , { 'rtp': '/contrib/syntax/vim/' }
+	"Plug 'docker/docker',                { 'rtp': '/contrib/syntax/vim/' }
 
 	" Nginx Bundle
 	"Plug 'LeonB/vim-nginx'
 
 	" Arduino Bundle
-	Plug 'sudar/vim-arduino-syntax', { 'for': 'arduino' }
-	Plug 'stevearc/vim-arduino', { 'for': 'arduino' }
+	Plug 'sudar/vim-arduino-syntax',      { 'for': 'arduino' }
+	Plug 'stevearc/vim-arduino',          { 'for': 'arduino' }
 
 	" Enable clipboard over network connection. https://github.com/wincent/clipper is required
 	"Plug 'wincent/vim-clipper'
@@ -488,6 +491,12 @@ noremap <leader>grm :Gdelete<CR>
 " :ArduinoUpload - Build and upload the sketch.
 " :ArduinoSerial - Connect to the board for debugging over a serial port.
 " :ArduinoUploadAndSerial - Build, upload, and connect for debugging.
+
+
+""""""""""
+"" godlygeek/tabular
+" :Tabularize /^[^=]*\zs=
+command! -nargs=1 -range TabFirst exec <line1> . ',' . <line2> . 'Tabularize /^[^' . escape(<q-args>, '\^$.[?*~') . ']*\zs' . escape(<q-args>, '\^$.[?*~')
 
 
 """"""""""
