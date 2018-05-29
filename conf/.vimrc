@@ -282,6 +282,11 @@ augroup kubernetes
 	endif
 augroup END
 
+augroup markdown
+	au!
+	au BufRead,BufNewFile *.markdown,*.mdown,*.mkdn,*.mkd,*.md,*.mdwn set filetype=markdown
+augroup END
+
 
 """"""""""
 "" tagbar
