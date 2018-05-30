@@ -12,4 +12,5 @@ curl -L https://raw.githubusercontent.com/stonevil/dotFiles/master/install.sh | 
 
 ### TODO
 
-* Cleanup code
+* rebuild update procedure to become not depended on dotfiles-update-all (idea with aray)
+* rebuild install procedure to be self-deployed

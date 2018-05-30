@@ -36,6 +36,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'flazz/vim-colorschemes'
 	Plug 'bling/vim-airline'
 	Plug 'vim-airline/vim-airline-themes'
+"	Plug 'edkolev/tmuxline.vim'
 
 	" Autocomplition and debug
 	if has('nvim')
@@ -375,6 +376,11 @@ let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#branch#enabled = 1
 
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+
+let g:airline#extensions#tmuxline#enabled = 0
+let g:tmuxline_powerline_separators = 0
+let g:airline#extensions#tmuxline#enabled = 1
+let airline#extensions#tmuxline#snapshot_file = "~/.tmux.theme"
 
 
 """"""""""
