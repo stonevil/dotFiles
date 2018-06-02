@@ -58,8 +58,42 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'majutsushi/tagbar',             { 'on': 'TagbarToggle'}
 	Plug 'benmills/vimux'
 
+	Plug 'scrooloose/nerdtree'
+	Plug 'Xuyuanp/nerdtree-git-plugin'
+
+	" Land on window you chose like tmux's 'display-pane'
+	Plug 't9md/vim-choosewin'
+
+	" Comment stuff out. Use gcc to comment out a line (takes a count), gc to comment out the target of a motion
+	Plug 'tpope/vim-commentary'
+
+	" Vim sugar for the UNIX shell commands
+	Plug 'tpope/vim-eunuch'
+	" :Delete: Delete a buffer and the file on disk simultaneously
+	" :Unlink: Like :Delete, but keeps the now empty buffer
+	" :Move: Rename a buffer and the file on disk simultaneously
+	" :Rename: Like :Move, but relative to the current file's containing directory
+	" :Chmod: Change the permissions of the current file
+	" :Mkdir: Create a directory, defaulting to the parent of the current file
+	" :Find: Run find and load the results into the quickfix list
+	" :Locate: Run locate and load the results into the quickfix list
+	" :Wall: Write every open window. Handy for kicking off tools like guard
+	" :SudoWrite: Write a privileged file with sudo.
+	" :SudoEdit: Edit a privileged file with sudo
+
 	" Tabulation
 	Plug 'godlygeek/tabular'
+
+	" Simplifies the transition between multiline and single-line cod
+	Plug 'AndrewRadev/splitjoin.vim'
+	" gS to split a one-liner into multiple lines
+	" gJ (with the cursor on the first line of a block) to join a block into a single-line statement.
+
+	" Provides insert mode auto-completion for quotes, parens, brackets
+	Plug 'Raimondi/delimitMate'
+
+	" Snippets
+	Plug 'SirVer/ultisnips'
 
 	" Go Bundle
 	Plug 'zchee/deoplete-go',             { 'build': {'unix': 'make'}, 'for': 'golang' }
@@ -90,15 +124,35 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	" HCL
 	Plug 'fatih/vim-hclfmt'
 
-	" Docker/Kubernetes Bundle
-	"Plug 'docker/docker',                { 'rtp': '/contrib/syntax/vim/' }
-
 	" Nginx Bundle
-	"Plug 'LeonB/vim-nginx'
+	Plug 'LeonB/vim-nginx',              {'for' : 'nginx'}
+
+	" TOML Bundle
+	Plug 'cespare/vim-toml'
+
+	" Docker Bundle
+	Plug 'ekalinin/Dockerfile.vim',       {'for' : 'Dockerfile'}
+
+	" HashiCorp Bundle
+	Plug 'hashivim/vim-hashicorp-tools'
+
+	" JSON Bundle
+	Plug 'elzr/vim-json',                 {'for' : 'json'}
+
+	" Markdown Bundle
+	Plug 'plasticboy/vim-markdown'
 
 	" Arduino Bundle
 	Plug 'sudar/vim-arduino-syntax',      { 'for': 'arduino' }
 	Plug 'stevearc/vim-arduino',          { 'for': 'arduino' }
+	" :ArduinoChooseBoard - Select the type of board from a list.
+	" :ArduinoChooseProgrammer - Select the programmer from a list.
+	" :ArduinoChoosePort - Select the serial port from a list.
+	" :ArduinoVerify - Build the sketch.
+	" :ArduinoUpload - Build and upload the sketch.
+	" :ArduinoSerial - Connect to the board for debugging over a serial port.
+	" :ArduinoUploadAndSerial - Build, upload, and connect for debugging.
+
 
 	" Enable clipboard over network connection. https://github.com/wincent/clipper is required
 	"Plug 'wincent/vim-clipper'
@@ -229,6 +283,7 @@ augroup FileType go
 	let go_metalinter_autosave = 1
 	let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck']
 	let g:go_metalinter_deadline = "5s"
+	let g:go_fmt_command = "goimports"
 
 	map <C-n> :cn<CR>
 	map <C-m> :cp<CR>
@@ -360,11 +415,11 @@ let g:tagbar_type_markdown = {
 
 """"""""""
 "" vim-tmux-navigator
-"<ctrl-h> Left
-"<ctrl-j> Down
-"<ctrl-k> Up
-"<ctrl-l> Right
-"<ctrl-\> Previous split
+"	<ctrl-h> Left
+"	<ctrl-j> Down
+"	<ctrl-k> Up
+"	<ctrl-l> Right
+"	<ctrl-\> Previous split
 let g:tmux_navigator_disable_when_zoomed = 1
 
 
@@ -420,9 +475,46 @@ endif
 
 
 """"""""""
+"" delimitMate
+let g:delimitMate_expand_cr = 1   
+let g:delimitMate_expand_space = 1    
+let g:delimitMate_smart_quotes = 1    
+let g:delimitMate_expand_inside_quotes = 0    
+let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'   
+imap <expr> <CR> pumvisible() ? "\<c-y>" : "<Plug>delimitMateCR"
+
+
+""""""""""
+"" vim-mundo
+noremap <F10> :NERDTreeToggle<cr>
+noremap <leader><F10> :NERDTreeFind<cr>
+let NERDTreeShowHidden=1
+
+
+""""""""""
+"" vim-markdown
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_fenced_languages = ['go=go', 'viml=vim', 'bash=sh']
+let g:vim_markdown_toml_frontmatter = 1
+let g:vim_markdown_frontmatter = 1
+let g:vim_markdown_new_list_item_indent = 2
+let g:vim_markdown_no_extensions_in_markdown = 1
+
+
+""""""""""
+"" vim-json
+let g:vim_json_syntax_conceal = 0
+
+
+""""""""""
 "" vim-mundo
 nnoremap <F5> :MundoToggle<CR>
 let g:mundo_close_on_revert = 1
+
+
+""""""""""
+"" vim-Choosewin
+nmap - <Plug>(choosewin)
 
 
 """"""""""
@@ -489,20 +581,47 @@ noremap <leader>grm :Gdelete<CR>
 
 
 """"""""""
-"" stevearc/vim-arduino
-" :ArduinoChooseBoard - Select the type of board from a list.
-" :ArduinoChooseProgrammer - Select the programmer from a list.
-" :ArduinoChoosePort - Select the serial port from a list.
-" :ArduinoVerify - Build the sketch.
-" :ArduinoUpload - Build and upload the sketch.
-" :ArduinoSerial - Connect to the board for debugging over a serial port.
-" :ArduinoUploadAndSerial - Build, upload, and connect for debugging.
-
-
-""""""""""
 "" godlygeek/tabular
 " :Tabularize /^[^=]*\zs=
 command! -nargs=1 -range TabFirst exec <line1> . ',' . <line2> . 'Tabularize /^[^' . escape(<q-args>, '\^$.[?*~') . ']*\zs' . escape(<q-args>, '\^$.[?*~')
+
+
+""""""""""
+"" ultisnips
+function! g:UltiSnips_Complete()
+	call UltiSnips#ExpandSnippet()
+	if g:ulti_expand_res == 0
+		if pumvisible()
+			return "\<C-n>"
+		else
+			call UltiSnips#JumpForwards()
+			if g:ulti_jump_forwards_res == 0
+				return "\<TAB>"
+				endif
+			endif
+	endif
+	return ""
+endfunction
+
+function! g:UltiSnips_Reverse()
+	call UltiSnips#JumpBackwards()
+	if g:ulti_jump_backwards_res == 0
+		return "\<C-P>"
+	endif
+
+	return ""
+endfunction
+
+if !exists("g:UltiSnipsJumpForwardTrigger")
+	let g:UltiSnipsJumpForwardTrigger = "<tab>"
+endif
+
+if !exists("g:UltiSnipsJumpBackwardTrigger")
+	let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+endif
+
+au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsJumpBackwardTrigger . " <C-R>=g:UltiSnips_Reverse()<cr>"
 
 
 """"""""""
@@ -533,6 +652,8 @@ cnoreabbrev Qall qall
 noremap YY "+y<CR>
 noremap <leader>p "+gP<CR>
 noremap XX "+x<CR>
+
+set pastetoggle=<F1>
 
 "" Manage splits
 " Create a vertical split using :vsp and horizontal with :sp
@@ -566,7 +687,7 @@ nnoremap <leader><leader> <C-^>
 " :bufdo bd    - deletes all buffers, stops at first error (unwritten changes)
 " :bufdo! bd   - deletes all buffers except those with unwritten changes
 " :bufdo! bd!  - deletes all buffers, no error on any unwritten changes
- 
+
 " :bw          - completely deletes the current buffer, error if there are unwritten changes
 " :bw!         - completely deletes the current buffer, no error if unwritten changes
 " :bufdo bw    - completely deletes all buffers, stops at first error (unwritten changes)
