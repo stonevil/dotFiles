@@ -106,17 +106,23 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'tpope/vim-fugitive'
 	Plug 'mhinz/vim-signify'
 
-	" C/C++ Bundle
+	" C/C++/ObjC Bundle
 	"Plug 'vim-scripts/c.vim'
+	"Plug 'zchee/deoplete-clang'
 
 	" Swift Bundle
-	"Plug 'keith/swift'
+	"Plug 'keith/swift',                  { 'for': 'swift' }
+	"Plug 'mitsuse/autocomplete-swift',   { 'for': 'swift' }
 
 	" Lua Bundle
 	"Plug 'tbastos/vim-lua'
 
 	" Crystal Bundle
 	"Plug 'rhysd/vim-crystal',            { 'for': 'ruby' }
+	"Plug 'yoru/deoplete-crystal',        { 'for': 'ruby' }
+
+	" Ruby Bundle
+	"Plug 'uplus/deoplete-solargraph',    { 'for': 'ruby' }
 
 	" OpsCode Chef Bundle
 	"Plug 't9md/vim-chef'
@@ -125,7 +131,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'fatih/vim-hclfmt'
 
 	" Nginx Bundle
-	Plug 'LeonB/vim-nginx',              {'for' : 'nginx'}
+	Plug 'LeonB/vim-nginx',               {'for' : 'nginx'}
 
 	" TOML Bundle
 	Plug 'cespare/vim-toml'
@@ -476,11 +482,11 @@ endif
 
 """"""""""
 "" delimitMate
-let g:delimitMate_expand_cr = 1   
-let g:delimitMate_expand_space = 1    
-let g:delimitMate_smart_quotes = 1    
-let g:delimitMate_expand_inside_quotes = 0    
-let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'   
+let g:delimitMate_expand_cr = 1
+let g:delimitMate_expand_space = 1
+let g:delimitMate_smart_quotes = 1
+let g:delimitMate_expand_inside_quotes = 0
+let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'
 imap <expr> <CR> pumvisible() ? "\<c-y>" : "<Plug>delimitMateCR"
 
 
