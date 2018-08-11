@@ -1,4 +1,0 @@
----
-BUNDLE_PATH: "/Users/stone/.chefdk/gem"
-BUNDLE_DISABLE_SHARED_GEMS: '1'
-BUNDLE_WITHOUT: package:guard:vagrant:critic
