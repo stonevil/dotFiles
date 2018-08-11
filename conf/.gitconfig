@@ -46,21 +46,20 @@
   decorate = full
 
 [alias]
-  # Base commands
+  # base commands
   ci = commit
-  br = branch
   co = checkout
-  df = diff
+  cl = clone
+  br = branch
+  cp = cherry-pick
   lg = log -p
   st = log status --short
   cia = commit --allow-empty-message -a
+  df = diff
+  diff = diff --word-diff
+  dc = diff --cached
 
-  # Stash commands
-  sl = stash list
-  sa = stash apply
-  ss = stash save
-
-  # Log related
+  # log related
   l = log
   lh = log --graph
   la = !git lh --date-order --all 2> /dev/null
@@ -76,15 +75,6 @@
   rh = reset --hard
   rh1 = reset HEAD^ --hard
   rh2 = reset HEAD^^ --hard
-
-  # basic shortcuts
-  cp = cherry-pick
-  cl = clone
-  ci = commit
-  co = checkout
-  br = branch
-  diff = diff --word-diff
-  dc = diff --cached
 
   # stash shortcuts
   sl = stash list
@@ -180,3 +170,5 @@
   clean = git-lfs clean %f
   smudge = git-lfs smudge %f
   required = true
+[http]
+	cookiefile = /Users/stone/.gitcookies
