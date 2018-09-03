@@ -142,6 +142,9 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	" HashiCorp Bundle
 	Plug 'hashivim/vim-hashicorp-tools'
 
+	" Ansible Bundle
+	Plug 'pearofducks/ansible-vim', { 'do': 'cd ./UltiSnips; ./generate.py' }
+
 	" JSON Bundle
 	Plug 'elzr/vim-json',                 {'for' : 'json'}
 
@@ -351,6 +354,12 @@ augroup markdown
 	au!
 	au BufRead,BufNewFile *.markdown,*.mdown,*.mkdn,*.mkd,*.md,*.mdwn set filetype=markdown
 augroup END
+
+
+""""""""""
+"" ansible-vim
+let g:ansible_unindent_after_newline = 1
+let g:ansible_attribute_highlight = "ob"
 
 
 """"""""""
