@@ -1,25 +1,20 @@
-# Vagrant ######################################################################
+# Vagrant
 export VAGRANT=/opt/vagrant
+
 if [[ -d $VAGRANT ]]; then
 	export PATH=$VAGRANT/bin:$PATH
-  if [[ -d '/Applications/Veertu.app' ]]; then
-    echo "Veertu detected. Vagrant now use Veertu!"
-    function vv() { vagrant up $@ --provider veertu; }
-    export VAGRANT_DEFAULT_PROVIDER='veertu'
-  else
-		if [[ -f '/Applications/VMware Fusion.app/Contents/Library/vmrun' ]]; then
-			echo "VMware Fusion detected. Vagrant now use VMware Fusion!"
-			function vv() { vagrant up $@ --provider vmware_fusion; }
-			export VAGRANT_DEFAULT_PROVIDER='vmware_fusion'
+	if [[ -f '/Applications/VMware Fusion.app/Contents/Library/vmrun' ]]; then
+		echo "VMware Fusion detected. Vagrant now use VMware Fusion!"
+		function vv() { vagrant up $@ --provider vmware_fusion; }
+		export VAGRANT_DEFAULT_PROVIDER='vmware_fusion'
+	else
+		if [[ -f '/usr/bin/vmware' ]] && [[ -f '/usr/share/applications/vmware-workstation.desktop' ]]; then
+			echo "VMware Workstation for Linux detected. Vagrant now use VMware Workstation!"
+			function vv() { vagrant up $@ --provider vmware_workstation; }
+			export VAGRANT_DEFAULT_PROVIDER='vmware_workstation'
 		else
-			if [[ -f '/usr/bin/vmware' ]] && [[ -f '/usr/share/applications/vmware-workstation.desktop' ]]; then
-				echo "VMware Workstation for Linux detected. Vagrant now use VMware Workstation!"
-				function vv() { vagrant up $@ --provider vmware_workstation; }
-				export VAGRANT_DEFAULT_PROVIDER='vmware_workstation'
-			else
-				echo "Vagrant now use VirtualBox!"
-				function vv() { vagrant up $@; }
-			fi
+			echo "Vagrant now use VirtualBox!"
+			function vv() { vagrant up $@; }
 		fi
 	fi
 
@@ -31,6 +26,10 @@ if [[ -d $VAGRANT ]]; then
   alias vs='vagrant ssh'
   alias vt='vagrant status'
   alias vr='vagrant resume'
+
+	function vagrant-ip() {
+		vagrant ssh -c "ip address show eth0 | grep 'inet ' | sed -e 's/^.*inet //' -e 's/\/.*$//'"
+	}
 
   function vagrant-update-all-plugins() { for plugin in $(vagrant plugin list | cut -f1 -d' '); do vagrant plugin update $plugin; done; }
 fi
