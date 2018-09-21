@@ -53,6 +53,8 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'junegunn/fzf.vim'
 	Plug 'ctrlpvim/ctrlp.vim'
 	Plug 'christoomey/vim-tmux-navigator'
+	Plug 'tmux-plugins/vim-tmux-focus-events'
+	Plug 'blueyed/vim-diminactive'
 	Plug 'thaerkh/vim-workspace'
 	Plug 'simnalamburt/vim-mundo'
 	Plug 'majutsushi/tagbar',             { 'on': 'TagbarToggle'}
@@ -144,6 +146,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 
 	" Ansible Bundle
 	Plug 'pearofducks/ansible-vim', { 'do': 'cd ./UltiSnips; ./generate.py' }
+	Plug 'Yggdroot/indentLine'
 
 	" JSON Bundle
 	Plug 'elzr/vim-json',                 {'for' : 'json'}
@@ -360,6 +363,11 @@ augroup END
 "" ansible-vim
 let g:ansible_unindent_after_newline = 1
 let g:ansible_attribute_highlight = "ob"
+let g:ansible_template_syntaxes = { '*.rb.j2': 'ruby' }
+
+"" Yggdroot/indentLine
+"let g:indentLine_setColors = 0
+":IndentLinesToggle
 
 
 """"""""""
@@ -427,6 +435,11 @@ let g:tagbar_type_markdown = {
 	\ ]
 \ }
 
+
+""""""""""
+"" vim-diminactive
+let g:diminactive_enable_focus = 1
+let g:diminactive_use_syntax = 1
 
 """"""""""
 "" vim-tmux-navigator
