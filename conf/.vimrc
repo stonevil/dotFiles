@@ -63,6 +63,9 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'scrooloose/nerdtree'
 	Plug 'Xuyuanp/nerdtree-git-plugin'
 
+	" Asynchronous linting/fixing for Vim and Language Server Protocol (LSP) integration
+	Plug 'w0rp/ale'
+
 	" Land on window you chose like tmux's 'display-pane'
 	Plug 't9md/vim-choosewin'
 
@@ -278,7 +281,7 @@ endif
 augroup FileType go
 	au!
 	set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
-	au FileType go nmap gd <Plug>(go-def)
+
 	au FileType go nmap <leader>dd <Plug>(go-def-vertical)
 
 	au FileType go nmap <leader>dv <Plug>(go-doc-vertical)
@@ -290,7 +293,12 @@ augroup FileType go
 	au FileType go nmap <leader>b <Plug>(go-build)
 	au FileType go nmap <leader>t <Plug>(go-test)
 
-	au FileType go nmap <F12> <Plug>(go-metalinter)
+	au FileType go nmap <F9> :GoCoverageToggle -short<CR>
+	au FileType go nmap <F10> :GoTest -short<CR>
+	au FileType go nmap <F12> <Plug>(go-def)
+
+	au FileType go nmap <leader><F12> <Plug>(go-metalinter)
+
 	let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
 	let go_metalinter_autosave = 1
 	let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck']
@@ -303,6 +311,8 @@ augroup FileType go
 
 	let g:go_snippet_case_type = "camelcase"
 
+	let g:go_addtags_transform = "snakecase"
+
 	let g:go_highlight_types = 1
 	let g:go_highlight_fields = 1
 	let g:go_highlight_structs = 1
@@ -311,6 +321,9 @@ augroup FileType go
 	" let g:go_highlight_operators = 1
 	" let g:go_highlight_extra_types = 1
 	let g:go_highlight_build_constraints = 1
+
+	let g:go_auto_sameids = 1
+	let g:go_auto_type_info = 1
 augroup END
 
 augroup vagrant
@@ -532,6 +545,16 @@ let g:vim_markdown_no_extensions_in_markdown = 1
 """"""""""
 "" vim-json
 let g:vim_json_syntax_conceal = 0
+
+
+""""""""""
+"" w0rp/ale
+" Error and warning signs.
+let g:ale_sign_error = '⤫'
+let g:ale_sign_warning = '⚠'
+" Enable integration with airline.
+let g:airline#extensions#ale#enabled = 1
+let g:ale_statusline_format = ['☀️️ %d', '🕯️ %d', '']
 
 
 """"""""""
