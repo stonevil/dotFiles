@@ -272,7 +272,6 @@ function! ToggleSpell(lang)
 		let b:old_spellfile = &spellfile
 		let b:old_dictionary = &dictionary
 	endif
-
 	let l:newMode = ""
 	if !&l:spell || a:lang != &l:spelllang
 		setlocal spell
@@ -290,8 +289,8 @@ function! ToggleSpell(lang)
 	endif
 	return l:newMode
 endfunction
-nmap <silent><leader><F7> :echo ToggleSpell("en_us")<CR> "Toggle English spell
-nmap <silent><leader><F8> :echo ToggleSpell("uk_ua")<CR> "Toggle Ukraine spell
+nnoremap <leader>gb :call ToggleSpell("en_gb")<CR> "Toggle English spell
+nnoremap <leader>uk :call ToggleSpell("uk_ua")<CR> "Toggle Ukraine spell
 
 "" Vimux global settings
 if exists('$TMUX')
@@ -302,7 +301,6 @@ if exists('$TMUX')
 	map <leader>vz :call VimuxZoomRunner()<CR>
 	map <leader>vp :VimuxPromptCommand<CR>
 endif
-
 
 "" Configuration groups
 augroup FileType go
