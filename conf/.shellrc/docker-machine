@@ -1,8 +1,8 @@
 # Docker Machine
 export MACHINE_STORAGE_PATH=$HOME/.docker/storage
 export MACHINE_CPU_COUNT="1"
-export MACHINE_MEMORY_SIZE="1024"
-export MACHINE_DISK_SIZE="10240"
+export MACHINE_MEMORY_SIZE="2048"
+export MACHINE_DISK_SIZE="20480"
 
 if command -v docker-machine >/dev/null; then
 	alias docker-create-vb='docker-machine create --driver virtualbox --virtualbox-cpu-count $MACHINE_CPU_COUNT --virtualbox-memory $MACHINE_MEMORY_SIZE --virtualbox-disk-size $MACHINE_DISK_SIZE --virtualbox-ui-type "headless"'
