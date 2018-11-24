@@ -54,6 +54,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'ctrlpvim/ctrlp.vim'
 	Plug 'christoomey/vim-tmux-navigator'
 	Plug 'tmux-plugins/vim-tmux-focus-events'
+	Plug 'roxma/vim-tmux-clipboard'
 	Plug 'blueyed/vim-diminactive'
 	Plug 'thaerkh/vim-workspace'
 	Plug 'simnalamburt/vim-mundo'
@@ -148,7 +149,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'hashivim/vim-hashicorp-tools'
 
 	" Ansible Bundle
-	Plug 'pearofducks/ansible-vim', { 'do': 'cd ./UltiSnips; ./generate.py' }
+	Plug 'pearofducks/ansible-vim',       { 'do': 'cd ./UltiSnips; ./generate.py' }
 	Plug 'Yggdroot/indentLine'
 
 	" JSON Bundle
@@ -477,7 +478,9 @@ let g:tagbar_type_markdown = {
 """"""""""
 "" vim-diminactive
 let g:diminactive_enable_focus = 1
+let g:diminactive_use_colorcolumn = 0
 let g:diminactive_use_syntax = 1
+
 
 """"""""""
 "" vim-tmux-navigator
@@ -701,17 +704,6 @@ au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsJumpBackwardTrigger . " 
 
 
 """"""""""
-"" Theme
-set t_Co=256
-
-colorscheme onedark
-set background=dark
-silent do ColorScheme
-" alduin, onedark, sierra
-let g:airline_theme='onedark'
-
-
-""""""""""
 "" Abbreviations
 cnoreabbrev W! w!
 cnoreabbrev Q! q!
@@ -783,3 +775,14 @@ nnoremap <silent> <leader><space> :noh<cr>
 "" Move visual block
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
+
+
+""""""""""
+"" Theme
+set t_Co=256
+
+colorscheme alduin
+set background=dark
+silent do ColorScheme
+" alduin, onedark, sierra
+let g:airline_theme='alduin'
