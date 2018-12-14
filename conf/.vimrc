@@ -8,8 +8,8 @@ endif
 
 function! InstallPlug(plugpath)
 	if !filereadable(a:plugpath)
-		echo "Installing vim-plug..."
-		execute "!curl -fL --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim -o " . a:plugpath
+		echo 'Installing vim-plug...'
+		execute '!curl -fL --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim -o ' . a:plugpath
 " 	silent !\curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 " 	let g:not_finish_vimplug = "yes"
 		autocmd VimEnter * PlugInstall
@@ -26,8 +26,8 @@ endfunction
 call InstallPlug(vimplug_exists)
 
 
-let g:vim_bootstrap_langs = "go,html,javascript,php,python,ruby"
-let g:vim_bootstrap_editor = "nvim"
+let g:vim_bootstrap_langs = 'go,html,javascript,php,python,ruby'
+let g:vim_bootstrap_editor = 'nvim'
 
 
 "" Install vim-plug if required
@@ -177,7 +177,7 @@ call plug#end()
 
 "" Global settings override
 "let mapleader="\"
-set go=
+set guioptions=
 
 "http://stackoverflow.com/questions/20186975/vim-mac-how-to-copy-to-clipboard-without-pbcopy
 set clipboard^=unnamed
@@ -208,7 +208,7 @@ set wildignore+=*.bak,*.o,*.obj,.git,.hg,.svn,*.rbc,*.pyc,__pycache__,*.swp,.DS_
 
 set autoindent									" Enabile Autoindent
 set shiftround									" Round indent to multiple of 'shiftwidth'. Applies to > and < commands.
-set noet ci pi sts=2 ts=2 sw=2	" noexpandtab, copyindent, preserveindent, softtabstop=2, shiftwidth=2, tabstop=2
+set noexpandtab ci pi sts=2 ts=2 sw=2	" noexpandtab, copyindent, preserveindent, softtabstop=2, shiftwidth=2, tabstop=2
 set wrap linebreak nolist				" Word wrap without line breaks
 set backspace=indent,eol,start	" Makes backspace key more powerful.
 
@@ -273,20 +273,20 @@ function! ToggleSpell(lang)
 		let b:old_spellfile = &spellfile
 		let b:old_dictionary = &dictionary
 	endif
-	let l:newMode = ""
+	let l:newMode = ''
 	if !&l:spell || a:lang != &l:spelllang
 		setlocal spell
-		let l:newMode = "spell"
-		execute "setlocal spelllang=" . a:lang
-		execute "setlocal spellfile=" . "~/.vim/spell/" . matchstr(a:lang, "[a-zA-Z][a-zA-Z]") . "." . &encoding . ".add"
-		execute "setlocal dictionary=" . "~/.vim/spell/" . a:lang . "." . &encoding . ".dic"
-		let l:newMode .= ", " . a:lang
+		let l:newMode = 'spell'
+		execute 'setlocal spelllang=' . a:lang
+		execute 'setlocal spellfile=' . '~/.vim/spell/' . matchstr(a:lang, '[a-zA-Z][a-zA-Z]') . '.' . &encoding . '.add'
+		execute 'setlocal dictionary=' . '~/.vim/spell/' . a:lang . '.' . &encoding . '.dic'
+		let l:newMode .= ', ' . a:lang
 	else
 		setlocal nospell
-		let l:newMode = "nospell"
-		execute "setlocal spelllang=" . b:old_spelllang
-		execute "setlocal spellfile=" . b:old_spellfile
-		execute "setlocal dictionary=" . b:old_dictionary
+		let l:newMode = 'nospell'
+		execute 'setlocal spelllang=' . b:old_spelllang
+		execute 'setlocal spellfile=' . b:old_spellfile
+		execute 'setlocal dictionary=' . b:old_dictionary
 	endif
 	return l:newMode
 endfunction
@@ -306,7 +306,7 @@ endif
 "" Configuration groups
 augroup FileType go
 	au!
-	set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
+	set runtimepath+=$GOPATH/src/github.com/golang/lint/misc/vim
 
 	au FileType go nmap <leader>dd <Plug>(go-def-vertical)
 
@@ -328,16 +328,16 @@ augroup FileType go
 	let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
 	let go_metalinter_autosave = 1
 	let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck']
-	let g:go_metalinter_deadline = "5s"
-	let g:go_fmt_command = "goimports"
+	let g:go_metalinter_deadline = '5s'
+	let g:go_fmt_command = 'goimports'
 
 	map <C-n> :cn<CR>
 	map <C-m> :cp<CR>
 	nnoremap <leader>a :cclose<CR>
 
-	let g:go_snippet_case_type = "camelcase"
+	let g:go_snippet_case_type = 'camelcase'
 
-	let g:go_addtags_transform = "snakecase"
+	let g:go_addtags_transform = 'snakecase'
 
 	let g:go_highlight_types = 1
 	let g:go_highlight_fields = 1
@@ -401,7 +401,7 @@ augroup END
 """"""""""
 "" ansible-vim
 let g:ansible_unindent_after_newline = 1
-let g:ansible_attribute_highlight = "ob"
+let g:ansible_attribute_highlight = 'ob'
 let g:ansible_template_syntaxes = { '*.rb.j2': 'ruby' }
 
 "" Yggdroot/indentLine
@@ -478,7 +478,7 @@ let g:tagbar_type_markdown = {
 """"""""""
 "" vim-diminactive
 let g:diminactive_enable_focus = 1
-let g:diminactive_use_colorcolumn = 0
+let g:diminactive_use_colorcolumn = 1
 let g:diminactive_use_syntax = 1
 
 
@@ -504,7 +504,7 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline#extensions#tmuxline#enabled = 0
 let g:tmuxline_powerline_separators = 0
 let g:airline#extensions#tmuxline#enabled = 1
-let airline#extensions#tmuxline#snapshot_file = "~/.tmux.theme"
+let airline#extensions#tmuxline#snapshot_file = '~/.tmux.theme'
 
 
 """"""""""
@@ -679,7 +679,7 @@ function! g:UltiSnips_Complete()
 				endif
 			endif
 	endif
-	return ""
+	return ''
 endfunction
 
 function! g:UltiSnips_Reverse()
@@ -688,19 +688,19 @@ function! g:UltiSnips_Reverse()
 		return "\<C-P>"
 	endif
 
-	return ""
+	return ''
 endfunction
 
-if !exists("g:UltiSnipsJumpForwardTrigger")
-	let g:UltiSnipsJumpForwardTrigger = "<tab>"
+if !exists('g:UltiSnipsJumpForwardTrigger')
+	let g:UltiSnipsJumpForwardTrigger = '<tab>'
 endif
 
-if !exists("g:UltiSnipsJumpBackwardTrigger")
-	let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+if !exists('g:UltiSnipsJumpBackwardTrigger')
+	let g:UltiSnipsJumpBackwardTrigger='<s-tab>'
 endif
 
-au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
-au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsJumpBackwardTrigger . " <C-R>=g:UltiSnips_Reverse()<cr>"
+au InsertEnter * exec 'inoremap <silent> ' . g:UltiSnipsExpandTrigger . ' <C-R>=g:UltiSnips_Complete()<cr>'
+au InsertEnter * exec 'inoremap <silent> ' . g:UltiSnipsJumpBackwardTrigger . ' <C-R>=g:UltiSnips_Reverse()<cr>'
 
 
 """"""""""
