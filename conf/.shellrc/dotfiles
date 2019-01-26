@@ -111,6 +111,19 @@ function dotfiles-update-all() {
 			yes Y | gcloud components update
 		fi
 
+		# Update Pip packages
+		if command -v pip2 >/dev/null; then
+			pip2 freeze --local | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip2 install -U
+		fi
+		if command -v pip3 >/dev/null; then
+			pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U
+		fi
+
+		# Update gcloud components
+		if command -v gcloud >/dev/null; then
+			yes Y | gcloud components update
+		fi
+
 	else
 		echo "Offline. No connection to github"
 	fi
