@@ -1,3 +1,7 @@
+" vint: -ProhibitAutocmdWithNoGroup
+" vint: -ProhibitSetNoCompatible
+
+
 if 0 | endif
 
 if has('nvim')
@@ -58,7 +62,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'blueyed/vim-diminactive'
 	Plug 'thaerkh/vim-workspace'
 	Plug 'simnalamburt/vim-mundo'
-	Plug 'majutsushi/tagbar',             { 'on': 'TagbarToggle'}
+	Plug 'majutsushi/tagbar',             { 'on': 'TagbarToggle' }
 	Plug 'benmills/vimux'
 
 	Plug 'scrooloose/nerdtree'
@@ -72,6 +76,9 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 
 	" Comment stuff out. Use gcc to comment out a line (takes a count), gc to comment out the target of a motion
 	Plug 'tpope/vim-commentary'
+
+	" Displaying thin vertical lines at each indentation level for code indented with spaces
+	Plug 'Yggdroot/indentLine'
 
 	" Vim sugar for the UNIX shell commands
 	Plug 'tpope/vim-eunuch'
@@ -137,23 +144,22 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'fatih/vim-hclfmt'
 
 	" Nginx Bundle
-	Plug 'LeonB/vim-nginx',               {'for' : 'nginx'}
+	Plug 'LeonB/vim-nginx',               { 'for' : 'nginx' }
 
 	" TOML Bundle
 	Plug 'cespare/vim-toml'
 
 	" Docker Bundle
-	Plug 'ekalinin/Dockerfile.vim',       {'for' : 'Dockerfile'}
+	Plug 'ekalinin/Dockerfile.vim',       { 'for' : 'Dockerfile' }
 
 	" HashiCorp Bundle
 	Plug 'hashivim/vim-hashicorp-tools'
 
 	" Ansible Bundle
 	Plug 'pearofducks/ansible-vim',       { 'do': 'cd ./UltiSnips; ./generate.py' }
-	Plug 'Yggdroot/indentLine'
 
 	" JSON Bundle
-	Plug 'elzr/vim-json',                 {'for' : 'json'}
+	Plug 'elzr/vim-json',                 { 'for' : 'json' }
 
 	" Markdown Bundle
 	Plug 'plasticboy/vim-markdown'
@@ -199,6 +205,8 @@ set shell=/bin/zsh
 set encoding=utf-8							" Set default encoding to UTF-8
 set fileencoding=utf-8
 set fileencodings=utf-8
+scriptencoding utf-8
+
 set autoread										" Automatically read changed files
 set autowrite										" Automatically save before :next, :make etc.
 set noswapfile									" Don't use swapfile
@@ -268,7 +276,7 @@ endfunction
 
 " Toggle spell with a language
 function! ToggleSpell(lang)
-	if !exists("b:old_spelllang")
+	if !exists('b:old_spelllang')
 		let b:old_spelllang = &spelllang
 		let b:old_spellfile = &spellfile
 		let b:old_dictionary = &dictionary
@@ -583,6 +591,10 @@ let g:ale_sign_warning = '⚠'
 " Enable integration with airline.
 let g:airline#extensions#ale#enabled = 1
 let g:ale_statusline_format = ['☀️️ %d', '🕯️ %d', '']
+let g:ale_ansible_ansible_lint_executable = 'ansible-lint -x ANSIBLE0204'
+
+nmap <silent> <leader> <C-j> <Plug>(ale_previous_wrap)
+nmap <silent> <leader> <C-k> <Plug>(ale_next_wrap)
 
 
 """"""""""
