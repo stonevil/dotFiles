@@ -4,3 +4,5 @@ if ! command -v ansible-lint >/dev/null; then
 		brew install ansible-lint
 	fi
 fi
+
+alias ansible-lint='ansible-lint -c ~/.ansible-lint'
