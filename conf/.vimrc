@@ -37,10 +37,11 @@ let g:vim_bootstrap_editor = 'nvim'
 "" Install vim-plug if required
 "" Required:
 call plug#begin(expand('~/.config/nvim/plugged'))
-	Plug 'flazz/vim-colorschemes'
+	"Plug 'flazz/vim-colorschemes'
+	Plug 'aonemd/kuroi.vim'
 	Plug 'bling/vim-airline'
 	Plug 'vim-airline/vim-airline-themes'
-"	Plug 'edkolev/tmuxline.vim'
+	Plug 'edkolev/tmuxline.vim'
 
 	" Autocomplition and debug
 	if has('nvim')
@@ -509,7 +510,7 @@ let g:airline#extensions#branch#enabled = 1
 
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 
-let g:airline#extensions#tmuxline#enabled = 0
+let g:airline#extensions#tmuxline#enabled = 1
 let g:tmuxline_powerline_separators = 0
 let g:airline#extensions#tmuxline#enabled = 1
 let airline#extensions#tmuxline#snapshot_file = '~/.tmux.theme'
@@ -525,7 +526,7 @@ else
 endif
 let g:workspace_session_disable_on_args = 1
 let g:workspace_persist_undo_history = 1
-let g:workspace_undodir='.undodir'
+"let g:workspace_undodir='.undodir'
 let g:workspace_autosave_always = 1
 let g:workspace_autosave_untrailspaces = 0
 
@@ -792,9 +793,19 @@ vnoremap K :m '<-2<CR>gv=gv
 """"""""""
 "" Theme
 set t_Co=256
+"set termguicolors								" Use the true color mode
 
-colorscheme alduin
+colorscheme kuroi
 set background=dark
 silent do ColorScheme
-" alduin, onedark, sierra
-let g:airline_theme='alduin'
+" alduin, kuroi
+"let g:airline_theme='alduin'
+
+set colorcolumn=0
+highlight ColorColumn ctermbg=235 guibg=#2c2d27
+
+""""""""""
+"" Reopen last position
+if has("autocmd")
+	au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
