@@ -1,7 +1,7 @@
 mash = {
   position = {"ctrl", "alt", "cmd"},
   focus    = {"ctrl", "alt"},
-  utils    = {"ctrl", "alt", "cmd"}
+  utils    = {"ctrl", "alt", "shift"}
 }
 
 hs.loadSpoon("Lunette")
@@ -11,22 +11,22 @@ require('battery')
 
 customBindings = {
 	leftHalf = {
-		{{"cmd", "alt"}, "left"},
+		{mash.position, "left"},
 	},
 	rightHalf = {
-		{{"cmd", "alt"}, "right"},
+		{mash.position, "right"},
 	},
 	fullScreen = {
-		{{"ctrl", "cmd", "alt"}, "f"},
+		{mash.position, "f"},
 	},
 	center = {
-		{{"cmd", "alt"}, "C"},
+		{mash.position, "c"},
 	},
 	nextDisplay = {
-		{{"ctrl", "alt", "cmd"}, "right"},
+		{mash.utils, "right"},
 	},
 	prevDisplay = {
-		{{"ctrl", "alt", "cmd"}, "left"},
+		{mash.utils, "left"},
 	},
 	topHalf = false,
 	bottomHalf = false,
