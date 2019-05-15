@@ -361,6 +361,11 @@ augroup FileType go
 	let g:go_auto_type_info = 1
 augroup END
 
+augroup sshconfig
+	au!
+	au BufRead,BufNewFile  *.sshconfig set syntax=sshconfig
+augroup END
+
 augroup vagrant
 	au!
 	au BufRead,BufNewFile Vagrantfile set filetype=ruby
