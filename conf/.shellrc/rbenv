@@ -1,6 +1,0 @@
-# RBENV #### #####################################################################
-# Add RBENV to the PATH
-export RBENV=~/.rbenv/
-if [[ -d $RBENV ]]; then
-  eval "$(rbenv init -)"
-fi
