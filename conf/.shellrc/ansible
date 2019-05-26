@@ -1,3 +1,12 @@
+# vim:ft=sh :
+
+# Install Ansible
+if ! command -v ansible >/dev/null; then
+	if command -v brew >/dev/null; then
+		brew install ansible
+	fi
+fi
+
 # Install Ansible lint
 if ! command -v ansible-lint >/dev/null; then
 	if command -v brew >/dev/null; then

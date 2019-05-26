@@ -1,3 +1,5 @@
+# vim:ft=sh :
+
 # Install Go
 if ! command -v go >/dev/null; then
 	if command -v brew >/dev/null; then

@@ -1,3 +1,5 @@
+# vim:ft=sh :
+
 function passgen() {
   openssl rand -base64 $1
 }

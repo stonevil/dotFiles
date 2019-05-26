@@ -38,6 +38,7 @@ let g:vim_bootstrap_editor = 'nvim'
 "" Required:
 call plug#begin(expand('~/.config/nvim/plugged'))
 	"Plug 'flazz/vim-colorschemes'
+	Plug 'sonph/onehalf', {'rtp': 'vim/'}
 	Plug 'aonemd/kuroi.vim'
 	Plug 'bling/vim-airline'
 	Plug 'vim-airline/vim-airline-themes'
@@ -803,7 +804,7 @@ set t_Co=256
 colorscheme kuroi
 set background=dark
 silent do ColorScheme
-" alduin, kuroi
+" alduin, kuroi, onehalfdark
 "let g:airline_theme='alduin'
 
 set colorcolumn=0
@@ -811,6 +812,6 @@ highlight ColorColumn ctermbg=235 guibg=#2c2d27
 
 """"""""""
 "" Reopen last position
-if has("autocmd")
+if has('autocmd')
 	au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif

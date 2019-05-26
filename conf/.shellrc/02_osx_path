@@ -1,3 +1,5 @@
+# vim:ft=sh :
+
 if [[ $(uname) = "Darwin" ]]; then
   # Add homebrew to the PATH
   export HOMEBREW=~/.homebrew

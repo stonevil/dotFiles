@@ -1,4 +1,6 @@
-# VMware #######################################################################
+# vim:ft=sh :
+
+# VMware
 if [[ -d '/Applications/VMware Fusion.app' ]]; then
   function ovftool() {
     cd /Applications/VMware\ Fusion.app/Contents/Library/

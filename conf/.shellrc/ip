@@ -1,3 +1,5 @@
+# vim:ft=sh :
+
 # Return my IP address
 function IP-all() {
   ifconfig lo0 | grep 'inet ' | sed -e 's/:/ /' | awk '{print "lo0       : " $2}'

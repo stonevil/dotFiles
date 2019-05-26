@@ -1,3 +1,5 @@
+# vim:ft=sh :
+
 # Aliases
 alias ll='ls -lahG'
 alias l='ls -lahG'

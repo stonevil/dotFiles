@@ -1,4 +1,6 @@
-# Install all ##################################################################
+# vim:ft=sh :
+
+# Install all
 function dotfiles-install-all() {
 	# Check internet connection to github
 	if [[ `curl -sL -w "%{http_code}\\n" "http://www.google.com/" -o /dev/null` -eq 200 ]]; then
@@ -44,7 +46,7 @@ function dotfiles-install-all() {
 		fi
 }
 
-# Update All ###################################################################
+# Update All
 function dotfiles-update-all() {
 	# Check internet connection to github
 	if [[ `curl -sL -w "%{http_code}\\n" "http://www.google.com/" -o /dev/null` -eq 200 ]]; then
@@ -129,7 +131,7 @@ function dotfiles-update-all() {
 	fi
 }
 
-# Create aliases ###############################################################
+# Create aliases
 function dotfiles-aliases-all() {
 	# Create aliases
 	if [[ -d $DOTFILES ]]; then

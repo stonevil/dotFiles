@@ -1,3 +1,5 @@
+# vim:ft=sh :
+
 if [[ $(uname) = "Linux" ]]; then
   # Add Linuxbrew to the PATH
   export HOMEBREW=~/.homebrew

@@ -1,4 +1,5 @@
-# OS X #########################################################################
+# vim:ft=sh :
+
 # Return OS X memory status
 if [[ $(uname) = "Darwin" ]]; then
   function memory-stats() {

@@ -1,3 +1,5 @@
+# vim:ft=sh :
+
 # Install EDITOR
 if ! command -v nvim >/dev/null; then
 	if command -v brew >/dev/null; then
@@ -6,8 +8,8 @@ if ! command -v nvim >/dev/null; then
 		gem install sqlint
 		luarocks install luacheck
 		pip2 install --upgrade pip
-		pip2 install -q ansible-lint
 		pip3 install --upgrade pip
+		pip3 install -q ansible-lint
 		pip3 install -q neovim-remote
 		pip3 install -q neovim
 		pip3 install -q vim-vint
@@ -19,16 +21,16 @@ fi
 
 # Setup EDITOR
 if [[ -f $HOMEBREW/bin/nvim ]]; then
-  export EDITOR="$HOMEBREW/bin/nvim"
+	export EDITOR="$HOMEBREW/bin/nvim"
 else
-  if [[ -f /Applications/MacVim.app/Contents/MacOS/Vim ]]; then
-    export EDITOR="/Applications/MacVim.app/Contents/MacOS/Vim"
-    export VIMRUNTIME="/Applications/MacVim.app/Contents/Resources/vim/runtime"
-  else
-    if [[ -f /usr/bin/vim ]]; then
-      export EDITOR="/usr/bin/vim"
-    fi
-  fi
+	if [[ -f /Applications/MacVim.app/Contents/MacOS/Vim ]]; then
+		export EDITOR="/Applications/MacVim.app/Contents/MacOS/Vim"
+		export VIMRUNTIME="/Applications/MacVim.app/Contents/Resources/vim/runtime"
+	else
+		if [[ -f /usr/bin/vim ]]; then
+			export EDITOR="/usr/bin/vim"
+		fi
+	fi
 fi
 
 # VIM/NVIM session file

@@ -1,3 +1,5 @@
+# vim:ft=sh :
+
 # Docker Machine
 export MACHINE_STORAGE_PATH=$HOME/.docker/storage
 export MACHINE_CPU_COUNT="1"

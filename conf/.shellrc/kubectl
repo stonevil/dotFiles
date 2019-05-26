@@ -1,3 +1,52 @@
+# vim:ft=sh :
+
+# Install Google Cloud SDK
+if ! command -v gcloud >/dev/null; then
+	if command -v brew >/dev/null; then
+		brew install caskroom/cask/google-cloud-sdk
+	fi
+fi
+
+# Install kubectl
+if ! command -v kubectl >/dev/null; then
+	if command -v brew >/dev/null; then
+		brew install kubectl
+	fi
+fi
+
+# Install helm
+if ! command -v helm >/dev/null; then
+	if command -v brew >/dev/null; then
+		brew install kubernetes-helm
+	fi
+fi
+
+# Install validator for kubernetes yaml files
+if ! command -v kubeval >/dev/null; then
+	if command -v brew >/dev/null; then
+		brew tap garethr/kubeval && brew install kubeval
+	fi
+fi
+
+# Install minikube
+if ! command -v minikube >/dev/null; then
+	if command -v brew >/dev/null; then
+		brew install homebrew/cask/minikube
+	fi
+fi
+
+# Install oauth2l
+if ! command -v oauth2l >/dev/null; then
+	if command -v brew >/dev/null; then
+		brew install python3 && pip3 install google-oauth2l --upgrade
+	fi
+fi
+
+# Configure gcurl alias
+if command -v oauth2l >/dev/null; then
+	alias gcurl='curl -H "$(oauth2l header --json ~/credentials.json cloud-platform userinfo.email)" -H "Content-Type: application/json" '
+fi
+
 # Kubernetes
 alias k='kubectl'
 alias ksys='kubectl --namespace=kube-system'
