@@ -44,3 +44,6 @@ export EDITOR=$EDITOR
 alias v=$EDITOR
 alias vi=$EDITOR
 alias vim=$EDITOR
+
+# Open files with Vim
+alias -s {yml,yaml,cfg,go}=vim
