@@ -3,11 +3,10 @@
 # Install EDITOR
 if ! command -v nvim >/dev/null; then
 	if command -v brew >/dev/null; then
-		brew install python2 python3 ruby lua ctags gotags fzf ag clipper neovim swiftlint swiftformat yamllint shfmt
+		brew install python3 ruby lua ctags gotags fzf bat rg clipper neovim swiftlint swiftformat yamllint shfmt
 		gem update `gem list | cut -d ' ' -f 1`
 		gem install sqlint
 		luarocks install luacheck
-		pip2 install --upgrade pip
 		pip3 install --upgrade pip
 		pip3 install -q ansible-lint
 		pip3 install -q neovim-remote

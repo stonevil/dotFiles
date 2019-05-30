@@ -55,9 +55,9 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	let g:deoplete#enable_at_startup = 1
 
 	" UI/UX
-	Plug 'junegunn/fzf',                  { 'dir': '~/.fzf', 'do': './install --all' }
+	Plug 'junegunn/fzf' ",                  { 'dir': '~/.fzf', 'do': './install --all' }
 	Plug 'junegunn/fzf.vim'
-	Plug 'ctrlpvim/ctrlp.vim'
+	Plug 'pbogut/fzf-mru.vim'
 	Plug 'christoomey/vim-tmux-navigator'
 	Plug 'tmux-plugins/vim-tmux-focus-events'
 	Plug 'roxma/vim-tmux-clipboard'
@@ -68,7 +68,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'benmills/vimux'
 
 	Plug 'scrooloose/nerdtree'
-	Plug 'Xuyuanp/nerdtree-git-plugin'
+	"	Plug 'Xuyuanp/nerdtree-git-plugin'
 
 	" Asynchronous linting/fixing for Vim and Language Server Protocol (LSP) integration
 	Plug 'w0rp/ale'
@@ -117,7 +117,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'godoctor/godoctor.vim',         { 'for': 'golang' }
 	Plug 'benmills/vimux-golang',         { 'for': 'golang' }
 
- " Git Bundle
+	" Git Bundle
 	Plug 'tpope/vim-fugitive'
 	Plug 'mhinz/vim-signify'
 
@@ -268,12 +268,12 @@ function! ToggleNumber()
 endfunc
 
 function! ArduinoStatusLine()
-  let port = arduino#GetPort()
-  let line = '%f [' . g:arduino_board . '] [' . g:arduino_programmer . ']'
-  if !empty(port)
-    let line = line . ' (' . port . ':' . g:arduino_serial_baud . ')'
-  endif
-  return line
+	let port = arduino#GetPort()
+	let line = '%f [' . g:arduino_board . '] [' . g:arduino_programmer . ']'
+	if !empty(port)
+		let line = line . ' (' . port . ':' . g:arduino_serial_baud . ')'
+	endif
+	return line
 endfunction
 
 " Toggle spell with a language
@@ -427,67 +427,11 @@ let g:ansible_template_syntaxes = { '*.rb.j2': 'ruby' }
 """"""""""
 "" tagbar
 nmap <silent> <F4> :TagbarToggle<CR>
-let g:tagbar_type_go = {
-	\ 'ctagstype' : 'go',
-	\ 'kinds' : [
-		\ 'p:package',
-		\ 'i:imports:1',
-		\ 'c:constants',
-		\ 'v:variables',
-		\ 't:types',
-		\ 'n:interfaces',
-		\ 'w:fields',
-		\ 'e:embedded',
-		\ 'm:methods',
-		\ 'r:constructor',
-		\ 'f:functions'
-	\ ],
-	\ 'sro' : '.',
-	\ 'kind2scope' : {
-		\ 't' : 'ctype',
-		\ 'n' : 'ntype'
-	\ },
-	\ 'scope2kind' : {
-		\ 'ctype' : 't',
-		\ 'ntype' : 'n'
-	\ },
-	\ 'ctagsbin' : 'gotags',
-	\ 'ctagsargs' : '-sort -silent'
-\ }
-let g:tagbar_type_ruby = {
-	\ 'kinds' : [
-		\ 'm:modules',
-		\ 'c:classes',
-		\ 'd:describes',
-		\ 'C:contexts',
-		\ 'f:methods',
-		\ 'F:singleton methods'
-	\ ]
-\ }
-let g:tagbar_type_ansible = {
-	\ 'ctagstype' : 'ansible',
-	\ 'kinds' : [
-		\ 't:tasks'
-	\ ],
-	\ 'sort' : 0
-\ }
-let g:tagbar_type_puppet = {
-	\ 'ctagstype': 'puppet',
-	\ 'kinds': [
-		\'c:class',
-		\'s:site',
-		\'n:node',
-		\'d:definition'
- \]
-\}
-let g:tagbar_type_markdown = {
-	\ 'ctagstype' : 'markdown',
-	\ 'kinds' : [
-		\ 'h:Heading_L1',
-		\ 'i:Heading_L2',
-		\ 'k:Heading_L3'
-	\ ]
-\ }
+let g:tagbar_type_go = { 'ctagstype' : 'go', 'kinds' : [ 'p:package', 'i:imports:1', 'c:constants', 'v:variables', 't:types', 'n:interfaces', 'w:fields', 'e:embedded', 'm:methods', 'r:constructor', 'f:functions' ], 'sro' : '.', 'kind2scope' : { 't' : 'ctype', 'n' : 'ntype' }, 'scope2kind' : { 'ctype' : 't', 'ntype' : 'n' }, 'ctagsbin' : 'gotags', 'ctagsargs' : '-sort -silent' }
+let g:tagbar_type_ruby = { 'kinds' : [ 'm:modules', 'c:classes', 'd:describes', 'C:contexts', 'f:methods', 'F:singleton methods' ] }
+let g:tagbar_type_ansible = { 'ctagstype' : 'ansible', 'kinds' : [ 't:tasks' ], 'sort' : 0 }
+let g:tagbar_type_puppet = { 'ctagstype': 'puppet', 'kinds': [ 'c:class', 's:site', 'n:node', 'd:definition' ]}
+let g:tagbar_type_markdown = { 'ctagstype' : 'markdown', 'kinds' : [ 'h:Heading_L1', 'i:Heading_L2', 'k:Heading_L3' ]}
 
 
 """"""""""
@@ -538,27 +482,6 @@ let g:workspace_autosave_untrailspaces = 0
 
 
 """"""""""
-"" vim-ctrlp
-cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
-noremap <leader>b :CtrlPBuffer<CR>
-noremap <leader>r :CtrlPMRU<CR>
-let g:ctrlp_map = '<leader>e'
-let g:ctrlp_open_new_file = 'r'
-let g:ctrlp_show_hidden = 1
-
-let g:ctrlp_tabpage_position = 'ac'
-let g:ctrlp_match_window = 'top,order:ttb,min:1,max:20,results:20'
-
-if executable('ag')
-	set grepprg=ag\ -i\ --nogroup\ --nocolor\ --hidden\ --ignore\ .git\ --ignore\ .svn\ --ignore\ .hg\ --ignore\ .DS_Store
-	" Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-	let g:ctrlp_user_command = 'ag %s -l --hidden --nocolor --ignore .git --ignore .svn --ignore .hg --ignore .DS_Store -g ""'
-	" ag is fast enough that CtrlP doesn't need to cache
-	let g:ctrlp_use_caching = 0
-endif
-
-
-""""""""""
 "" delimitMate
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 1
@@ -597,8 +520,9 @@ let g:ale_sign_error = '⤫'
 let g:ale_sign_warning = '⚠'
 " Enable integration with airline.
 let g:airline#extensions#ale#enabled = 1
-let g:ale_statusline_format = ['☀️️ %d', '🕯️ %d', '']
+let g:ale_statusline_format = ['%d error(s)', '%d warning(s)', 'OK']
 let g:ale_ansible_ansible_lint_executable = 'ansible-lint -x ANSIBLE0204'
+let g:ale_set_signs = 0
 
 nmap <silent> <leader> <C-j> <Plug>(ale_previous_wrap)
 nmap <silent> <leader> <C-k> <Plug>(ale_next_wrap)
@@ -618,6 +542,32 @@ nmap - <Plug>(choosewin)
 """"""""""
 "" vim-fzf
 " Default fzf layout
+nnoremap <silent> <leader>e :Files<CR>
+nnoremap <silent> <leader>g :GFiles<CR>
+nnoremap <silent> <leader>] :Buffers<CR>
+nnoremap <silent> <leader>r :FZFMru<CR>
+nnoremap <silent> <leader>h :History<CR>
+
+" Search in command history
+nnoremap <silent> <leader>H :History:<CR>
+
+" Search for lines in current buffer
+nnoremap <silent> <leader>f :BLines<CR>
+" Search for lines in loaded buffers
+nnoremap <silent> <leader>F :Lines<CR>
+" Search for marked lines
+nnoremap <silent> <leader>' :Marks<CR>
+
+nnoremap <silent> <leader>t :Tags<CR>
+nnoremap <silent> <leader>T :BTags<CR>
+
+nnoremap <silent> <leader>rg :Rg<Space>
+nnoremap <silent> <leader>! :Rg!<Space>
+
+nnoremap <silent> <leader>ft :Filetypes<CR>
+
+let g:fzf_action = { 'ctrl-t': 'tab split', 'ctrl-x': 'split', 'ctrl-v': 'vsplit', 'ctrl-y': {lines -> setreg('*', join(lines, "\n"))}}
+
 let g:fzf_layout = { 'up': '~60%' }
 
 " Customize fzf colors to match your color scheme
@@ -638,10 +588,13 @@ let g:fzf_colors =
 
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
+nnoremap <silent> <leader>c  :Commits<CR>
+nnoremap <silent> <leader>bc :BCommits<CR>
+
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
 " [[B]Commits] Customize the options used by 'git log':
-let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+let g:fzf_commits_log_options = '--graph --color=always --format="%C(yellow)%h%C(red)%d%C(reset) - %C(bold green)(%ar)%C(reset) %s %C(blue)<%an>%C(reset)"'
 " [Tags] Command to generate tags file
 let g:fzf_tags_command = 'ctags -R'
 " [Commands] --expect expression for directly executing the command
@@ -653,8 +606,8 @@ if executable('git')
 endif
 
 " Command for string search
-if executable('ag')
-	command! -bang -nargs=* Find call fzf#vim#grep('ag --column --color-line-number --no-heading --fixed-strings --ignore-case --hidden --follow --color --ignore .git --ignore .svn --ignore .hg --ignore .DS_Store --ignore .o --ignore .obj --ignore .rbc --ignore .pyc --ignore __pycache__ '.shellescape(<q-args>), 1, <bang>0 ? fzf#vim#with_preview('up:60%') : fzf#vim#with_preview('right:50%:hidden', '?'), <bang>0)
+if executable('rg')
+	command! -bang -nargs=* Find call fzf#vim#grep('rg --no-ignore --hidden --follow --ignore-case --column --no-heading --line-number --color=always '.shellescape(<q-args>), 1, fzf#vim#with_preview(), <bang>0)
 endif
 
 

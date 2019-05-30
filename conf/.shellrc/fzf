@@ -1,3 +1,58 @@
 # vim:ft=sh :
 
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+if ! command -v fzf >/dev/null; then
+	if command -v brew >/dev/null; then
+		brew install fzf bat rg
+	fi
+fi
+
+[[ $- == *i* ]] && source $HOMEBREW/Cellar/fzf/*/shell/completion.zsh 2> /dev/null
+source $HOMEBREW/Cellar/fzf/*/shell/key-bindings.zsh 2> /dev/null
+
+alias f='fzf'
+
+
+export BAT_THEME="TwoDark"
+
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --ignore-case --glob "!.git/*" --glob "!.svn/*" --glob "!node_modules/*"'
+export FZF_DEFAULT_OPTS='--height 60% --layout=reverse --preview "[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || head -100 {}) 2> /dev/null | head -100"'
+
+#export FZF_COMPLETION_OPTS='--preview "(bat --color=always {} || cat {} || tree -C {}) 2> /dev/null | head -200"'
+
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_CTRL_T_OPTS="$FZF_COMPLETION_OPTS"
+
+
+# fd - cd to selected directory
+fd() {
+	local dir
+	dir=$(find ${1:-.} -not -path '*/\.git/*' -not -path '*/\.svn/*' -type d -print 2> /dev/null | fzf +m) &&
+	cd "$dir"
+}
+
+# ts [FUZZY PATTERN] - switch to selected tmux session
+ts() {
+	local session
+	session=$(tmux list-sessions -F "#{session_name}" | fzf --query="$1" --select-1 --exit-0) &&
+	tmux switch-client -t "$session"
+}
+
+# tp - switch to selected tmux pane
+tp() {
+	local panes current_window current_pane target target_window target_pane
+	panes=$(tmux list-panes -s -F '#I:#P - #{pane_current_path} #{pane_current_command}')
+	current_pane=$(tmux display-message -p '#I:#P')
+	current_window=$(tmux display-message -p '#I')
+
+	target=$(echo "$panes" | grep -v "$current_pane" | fzf +m --reverse) || return
+
+	target_window=$(echo $target | awk 'BEGIN{FS=":|-"} {print$1}')
+	target_pane=$(echo $target | awk 'BEGIN{FS=":|-"} {print$2}' | cut -c 1)
+
+	if [[ $current_window -eq $target_window ]]; then
+		tmux select-pane -t ${target_window}.${target_pane}
+	else
+		tmux select-pane -t ${target_window}.${target_pane} &&
+		tmux select-window -t $target_window
+	fi
+}
