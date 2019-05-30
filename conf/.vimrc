@@ -68,7 +68,8 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'benmills/vimux'
 
 	Plug 'scrooloose/nerdtree'
-	"	Plug 'Xuyuanp/nerdtree-git-plugin'
+	Plug 'Xuyuanp/nerdtree-git-plugin'
+	Plug 'scrooloose/nerdcommenter'
 
 	" Asynchronous linting/fixing for Vim and Language Server Protocol (LSP) integration
 	Plug 'w0rp/ale'
@@ -495,6 +496,22 @@ imap <expr> <CR> pumvisible() ? "\<c-y>" : "<Plug>delimitMateCR"
 noremap <F10> :NERDTreeToggle<cr>
 noremap <leader><F10> :NERDTreeFind<cr>
 let NERDTreeShowHidden=1
+
+""""""""""
+"" nerdcommenter
+let g:NERDCompactSexyComs = 1
+let g:NERDCommentEmptyLines = 1
+let g:NERDTrimTrailingWhitespace = 1
+let g:NERDToggleCheckAllLines = 1
+
+" Comment out the current line or text selected in visual mode
+" [count]<leader>cc
+" Toggles the comment state of the selected line(s). If the topmost selected line is commented, all selected lines are uncommented and vice versa
+" [count]<leader>c<space>
+" Adds comment delimiters to the end of line and goes into insert mode between them
+" <leader>cA
+" Uncomments the selected line(s)
+" [count]<leader>cu
 
 
 """"""""""
