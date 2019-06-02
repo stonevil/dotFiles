@@ -13,7 +13,7 @@ alias f='fzf'
 
 export BAT_THEME="TwoDark"
 
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --ignore-case --glob "!.git/*" --glob "!.svn/*" --glob "!node_modules/*"'
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --ignore-case --glob "!.git/*" --glob "!.svn/*" --glob "!node_modules/*" --glob "!.undodir/*"'
 export FZF_DEFAULT_OPTS='--height 60% --layout=reverse --preview "[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || head -100 {}) 2> /dev/null | head -100"'
 export FZF_COMPLETION_OPTS='--height 60% --layout=reverse --preview "(bat --style=numbers --color=always {} || cat {} || tree -C {}) 2> /dev/null | head -200"'
 
@@ -29,14 +29,14 @@ export FZF_CTRL_T_OPTS="$FZF_COMPLETION_OPTS"
 # fe - edit selected file(s)
 fe() {
 	local files
-	IFS=$'\n' files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0))
+	IFS=$'\n' files=($(fzf --query="$1" --multi --select-1 --exit-0))
 	[[ -n "$files" ]] && vim "${files[@]}"
 }
 
 # fd - cd to selected directory
 fd() {
 	local dir
-	dir=$(find ${1:-.} -not -path '*/\.git/*' -not -path '*/\.svn/*' -type d -print 2> /dev/null | fzf +m) &&
+	dir=$(find ${1:-.} -not -path '*/\.git/*' -not -path '*/\.svn/*' -not -path '*/\.undodir/*' -type d -print 2> /dev/null | fzf +m) &&
 	cd "$dir"
 }
 
