@@ -15,7 +15,7 @@ export FZF_DEFAULT_COMMAND_IGNORE="--glob '!.git/*' --glob '!.svn/*' --glob '!no
 
 export FZF_DEFAULT_COMMAND="rg --files --no-ignore --hidden --follow --ignore-case $FZF_DEFAULT_COMMAND_IGNORE"
 
-export FZF_DEFAULT_OPTS='--bind F2:toggle-preview,ctrl-f:page-down,ctrl-b:page-up --border --height 60% --layout=reverse --preview "[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || head -100 {}) 2> /dev/null | head -100"'
+export FZF_DEFAULT_OPTS='--bind F2:toggle-preview,ctrl-f:page-down,ctrl-b:page-up --border --height 60% --layout=reverse --preview "[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers,changes --color=always {} || head -100 {}) 2> /dev/null | head -100"'
 
 export FZF_COMPLETION_OPTS="$FZF_COMPLETION_OPTS"
 
@@ -43,7 +43,7 @@ bindkey -s '^e' 'fe^M'
 # fpe [FUZZY PATTERN] - Search by content and edit selected file(s)
 fpe() {
 	local files
-	IFS=$'\n' files=($( rg --files-with-matches --no-messages --no-ignore --hidden --follow --ignore-case --glob '!.git/*' --glob '!.svn/*' --glob '!node_modules/*' --glob '!.undodir/*' --glob '!.session.vim' --glob '!.DS_Store' $1 | fzf --bind "F2:toggle-preview,ctrl-f:page-down,ctrl-b:page-up" --border --height 60% --layout=reverse --preview "(bat --style=numbers --color=always {}) 2> /dev/null | head -100 | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 $1 || rg --ignore-case --pretty --context 10 $1 {}"))
+	IFS=$'\n' files=($( rg --files-with-matches --no-messages --no-ignore --hidden --follow --ignore-case --glob '!.git/*' --glob '!.svn/*' --glob '!node_modules/*' --glob '!.undodir/*' --glob '!.session.vim' --glob '!.DS_Store' $1 | fzf --bind "F2:toggle-preview,ctrl-f:page-down,ctrl-b:page-up" --border --height 60% --layout=reverse --preview "(bat --style=numbers,changes --color=always {}) 2> /dev/null | head -100 | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 $1 || rg --ignore-case --pretty --context 10 $1 {}"))
 	[[ -n "$files" ]] && vim "${files[@]}"
 }
 
@@ -102,14 +102,19 @@ is_in_git_repo() {
 }
 
 # fgshow - git commit browser
-fgshow() {
+gshow() {
 	is_in_git_repo || return
 
 	git log --graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr (%an)" "$@" | fzf --preview "echo {}" --preview-window down:5:hidden:wrap --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort --bind "ctrl-m:execute: (grep -o '[a-f0-9]\{7\}' | head -1 | xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF' {} FZF-EOF"
 }
 
-fad() {
+gad() {
 	is_in_git_repo || return
 
-	git ls-files -m -o --exclude-standard | fzf --print0 -m | xargs -0 -t -o git add && git commit -v
+	git ls-files -m -o --exclude-standard | fzf --print0 -m --height 100% --preview "(git diff --color=always {+1} | bat --style=numbers,changes --color=always) 2> /dev/null" | xargs -0 -t -o git add
 }
+
+# [[ $(file --mime {}) =~ binary ]] && echo {} is a binary file ||
+#git ls-files -m -o --exclude-standard | fzf --print0 -m | xargs -0 -t -o git add && git commit -v
+
+#(bat --style=numbers,changes --color=always {} || head -100 {}) 2> /dev/null | head -100"

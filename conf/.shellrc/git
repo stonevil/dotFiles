@@ -2,7 +2,6 @@
 
 # Git
 if command -v git >/dev/null; then
-	alias gad='git add'
 	alias gAD='git add -A'
 	alias gpu='git push'
 	alias glg='git log'
