@@ -1,5 +1,4 @@
 # vim:ft=sh :
-#!/bin/bash
 
 if ! command -v fzf >/dev/null; then
 	if command -v brew >/dev/null; then
