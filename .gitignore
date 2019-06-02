@@ -21,4 +21,5 @@ _yardoc
 doc/
 
 # Vim artifacts
+.session.vim
 .undodir

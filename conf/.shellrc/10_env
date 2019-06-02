@@ -10,3 +10,5 @@ if [[ $(uname) = "Linux" ]]; then
 	LOGICAL_CPU=$(lscpu -p | egrep -v '^#' | wc -l)
 	PHYSICAL_CPU=$(lscpu -p | egrep -v '^#' | sort -u -t, -k 2,4 | wc -l)
 fi
+
+export CLICOLOR=true

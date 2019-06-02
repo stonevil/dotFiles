@@ -1,4 +1,5 @@
 # vim:ft=sh :
+#!/bin/bash
 
 if ! command -v fzf >/dev/null; then
 	if command -v brew >/dev/null; then
@@ -9,16 +10,22 @@ fi
 [[ $- == *i* ]] && source $HOMEBREW/Cellar/fzf/*/shell/completion.zsh 2> /dev/null
 source $HOMEBREW/Cellar/fzf/*/shell/key-bindings.zsh 2> /dev/null
 
-alias f='fzf'
-
 export BAT_THEME="TwoDark"
 
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --ignore-case --glob "!.git/*" --glob "!.svn/*" --glob "!node_modules/*" --glob "!.undodir/*"'
-export FZF_DEFAULT_OPTS='--height 60% --layout=reverse --preview "[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || head -100 {}) 2> /dev/null | head -100"'
-export FZF_COMPLETION_OPTS='--height 60% --layout=reverse --preview "(bat --style=numbers --color=always {} || cat {} || tree -C {}) 2> /dev/null | head -200"'
+export FZF_DEFAULT_COMMAND_IGNORE="--glob '!.git/*' --glob '!.svn/*' --glob '!node_modules/*' --glob '!.undodir/*' --glob '!.session.vim' --glob '!.DS_Store'"
+
+export FZF_DEFAULT_COMMAND="rg --files --no-ignore --hidden --follow --ignore-case $FZF_DEFAULT_COMMAND_IGNORE"
+
+export FZF_DEFAULT_OPTS='--bind F2:toggle-preview,ctrl-f:page-down,ctrl-b:page-up --border --height 60% --layout=reverse --preview "[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || head -100 {}) 2> /dev/null | head -100"'
+
+export FZF_COMPLETION_OPTS="$FZF_COMPLETION_OPTS"
 
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="$FZF_COMPLETION_OPTS"
+
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:5:hidden:wrap"
+
+export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 
 
 # CTRL-J / CTRL-K (or CTRL-N / CTRL-P) to move cursor up and down
@@ -32,12 +39,36 @@ fe() {
 	IFS=$'\n' files=($(fzf --query="$1" --multi --select-1 --exit-0))
 	[[ -n "$files" ]] && vim "${files[@]}"
 }
+zle -N fe
+bindkey -s '^e' 'fe^M'
+
+# fpe [FUZZY PATTERN] - Search by content and edit selected file(s)
+fpe() {
+	local files
+	IFS=$'\n' files=($( rg --files-with-matches --no-messages --no-ignore --hidden --follow --ignore-case --glob '!.git/*' --glob '!.svn/*' --glob '!node_modules/*' --glob '!.undodir/*' --glob '!.session.vim' --glob '!.DS_Store' $1 | fzf --bind "F2:toggle-preview,ctrl-f:page-down,ctrl-b:page-up" --border --height 60% --layout=reverse --preview "(bat --style=numbers --color=always {}) 2> /dev/null | head -100 | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 $1 || rg --ignore-case --pretty --context 10 $1 {}"))
+	[[ -n "$files" ]] && vim "${files[@]}"
+}
+
 
 # fd - cd to selected directory
 fd() {
 	local dir
 	dir=$(find ${1:-.} -not -path '*/\.git/*' -not -path '*/\.svn/*' -not -path '*/\.undodir/*' -type d -print 2> /dev/null | fzf +m) &&
 	cd "$dir"
+}
+
+# fkill - kill selected process
+fkill() {
+	local pid
+	if [ "$UID" != "0" ]; then
+		pid=$(ps -f -u $UID | sed 1d | fzf -m --preview 'echo {}' --preview-window down:5:hidden:wrap | awk '{print $2}')
+	else
+		pid=$(ps -ef | sed 1d | fzf -m --preview 'echo {}' --preview-window down:5:hidden:wrap | awk '{print $2}')
+	fi
+
+	if [ "x$pid" != "x" ]; then
+		echo $pid | xargs kill -${1:-9}
+	fi
 }
 
 # ts [FUZZY PATTERN] - switch to selected tmux session
@@ -65,4 +96,22 @@ tp() {
 		tmux select-pane -t ${target_window}.${target_pane} &&
 		tmux select-window -t $target_window
 	fi
+}
+
+# Check if git repo
+is_in_git_repo() {
+	git rev-parse HEAD > /dev/null 2>&1
+}
+
+# fgshow - git commit browser
+fgshow() {
+	is_in_git_repo || return
+
+	git log --graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr (%an)" "$@" | fzf --preview "echo {}" --preview-window down:5:hidden:wrap --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort --bind "ctrl-m:execute: (grep -o '[a-f0-9]\{7\}' | head -1 | xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF' {} FZF-EOF"
+}
+
+fad() {
+	is_in_git_repo || return
+
+	git ls-files -m -o --exclude-standard | fzf --print0 -m | xargs -0 -t -o git add && git commit -v
 }
