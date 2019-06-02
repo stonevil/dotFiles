@@ -15,7 +15,7 @@ export FZF_DEFAULT_COMMAND_IGNORE="--glob '!.git/*' --glob '!.svn/*' --glob '!no
 
 export FZF_DEFAULT_COMMAND="rg --files --no-ignore --hidden --follow --ignore-case $FZF_DEFAULT_COMMAND_IGNORE"
 
-export FZF_DEFAULT_OPTS='--bind F2:toggle-preview,ctrl-f:page-down,ctrl-b:page-up --border --height 60% --layout=reverse --preview "[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers,changes --color=always {} || head -100 {}) 2> /dev/null | head -100"'
+export FZF_DEFAULT_OPTS='--bind F2:toggle-preview,ctrl-f:page-down,ctrl-b:page-up,alt-f:preview-page-down,alt-b:preview-page-up,q:abort --border --height 80% --layout=reverse --preview "[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers,changes --color=always {} || head -100 {}) 2> /dev/null | head -100"'
 
 export FZF_COMPLETION_OPTS="$FZF_COMPLETION_OPTS"
 
@@ -41,9 +41,9 @@ zle -N fe
 bindkey -s '^e' 'fe^M'
 
 # fpe [FUZZY PATTERN] - Search by content and edit selected file(s)
-fpe() {
+fce() {
 	local files
-	IFS=$'\n' files=($( rg --files-with-matches --no-messages --no-ignore --hidden --follow --ignore-case --glob '!.git/*' --glob '!.svn/*' --glob '!node_modules/*' --glob '!.undodir/*' --glob '!.session.vim' --glob '!.DS_Store' $1 | fzf --bind "F2:toggle-preview,ctrl-f:page-down,ctrl-b:page-up" --border --height 60% --layout=reverse --preview "(bat --style=numbers,changes --color=always {}) 2> /dev/null | head -100 | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 $1 || rg --ignore-case --pretty --context 10 $1 {}"))
+	IFS=$'\n' files=($( rg --files-with-matches --no-messages --no-ignore --hidden --follow --ignore-case --glob '!.git/*' --glob '!.svn/*' --glob '!node_modules/*' --glob '!.undodir/*' --glob '!.session.vim' --glob '!.DS_Store' $1 | fzf --preview "(bat --style=numbers,changes --color=always {}) 2> /dev/null | head -100 | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 100 $1 || rg --ignore-case --pretty --context 100 $1 {}"))
 	[[ -n "$files" ]] && vim "${files[@]}"
 }
 
