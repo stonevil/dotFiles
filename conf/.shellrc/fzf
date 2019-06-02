@@ -105,16 +105,11 @@ is_in_git_repo() {
 gshow() {
 	is_in_git_repo || return
 
-	git log --graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr (%an)" "$@" | fzf --preview "echo {}" --preview-window down:5:hidden:wrap --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort --bind "ctrl-m:execute: (grep -o '[a-f0-9]\{7\}' | head -1 | xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF' {} FZF-EOF"
+	git log --pretty=oneline --abbrev-commit | fzf --height 100% --preview-window down:90%  --preview 'echo {} | cut -f 1 -d " " | xargs git show --color=always'
 }
 
 gad() {
 	is_in_git_repo || return
 
-	git ls-files -m -o --exclude-standard | fzf --print0 -m --height 100% --preview "(git diff --color=always {+1} | bat --style=numbers,changes --color=always) 2> /dev/null" | xargs -0 -t -o git add
+	git ls-files -m -o --exclude-standard | fzf --print0 -m --height 100% --preview-window down:90% --preview "(git diff --color=always {+1} | bat --style=numbers,changes --color=always) 2> /dev/null" | xargs -0 -t -o git add
 }
-
-# [[ $(file --mime {}) =~ binary ]] && echo {} is a binary file ||
-#git ls-files -m -o --exclude-standard | fzf --print0 -m | xargs -0 -t -o git add && git commit -v
-
-#(bat --style=numbers,changes --color=always {} || head -100 {}) 2> /dev/null | head -100"
