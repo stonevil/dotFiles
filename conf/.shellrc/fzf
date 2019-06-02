@@ -28,7 +28,6 @@ export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:5:hidden:wrap"
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 
 
-# CTRL-J / CTRL-K (or CTRL-N / CTRL-P) to move cursor up and down
 # Enter key to select the item, CTRL-C / CTRL-G / ESC to exit
 # On multi-select mode (-m), TAB and Shift-TAB to mark multiple items
 
