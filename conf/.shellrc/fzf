@@ -43,7 +43,7 @@ bindkey -s '^e' 'fe^M'
 # fpe [FUZZY PATTERN] - Search by content and edit selected file(s)
 fce() {
 	local files
-	IFS=$'\n' files=($( rg --files-with-matches --no-messages --no-ignore --hidden --follow --ignore-case --glob '!.git/*' --glob '!.svn/*' --glob '!node_modules/*' --glob '!.undodir/*' --glob '!.session.vim' --glob '!.DS_Store' $1 | fzf --preview "(bat --style=numbers,changes --color=always {}) 2> /dev/null | head -100 | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 100 $1 || rg --ignore-case --pretty --context 100 $1 {}"))
+	IFS=$'\n' files=($( rg --files-with-matches --no-messages --no-ignore --hidden --follow --ignore-case --glob '!.git/*' --glob '!.svn/*' --glob '!node_modules/*' --glob '!.undodir/*' --glob '!.session.vim' --glob '!.DS_Store' $1 | fzf --multi --preview "(bat --style=numbers,changes --color=always {}) 2> /dev/null | head -100 | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 100 $1 || rg --ignore-case --pretty --context 100 $1 {}"))
 	[[ -n "$files" ]] && vim "${files[@]}"
 }
 
@@ -102,13 +102,13 @@ is_in_git_repo() {
 }
 
 # fgshow - git commit browser
-gshow() {
+fshow() {
 	is_in_git_repo || return
 
 	git log --pretty=oneline --abbrev-commit | fzf --height 100% --preview-window down:90%  --preview 'echo {} | cut -f 1 -d " " | xargs git show --color=always'
 }
 
-gad() {
+fad() {
 	is_in_git_repo || return
 
 	git ls-files -m -o --exclude-standard | fzf --print0 -m --height 100% --preview-window down:90% --preview "(git diff --color=always {+1} | bat --style=numbers,changes --color=always) 2> /dev/null" | xargs -0 -t -o git add
