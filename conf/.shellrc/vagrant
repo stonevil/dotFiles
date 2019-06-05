@@ -2,6 +2,11 @@
 
 # Vagrant
 export VAGRANT=/opt/vagrant
+export VAGRANT_DOTFILE_PATH=$HOME/Vagrant
+
+if [[ ! -d $VAGRANT_DOTFILE_PATH ]]; then
+	mkdir -p $VAGRANT_DOTFILE_PATH
+fi
 
 if [[ -d $VAGRANT ]]; then
 	export PATH=$VAGRANT/bin:$PATH
@@ -20,18 +25,18 @@ if [[ -d $VAGRANT ]]; then
 		fi
 	fi
 
-  export VAGRANT_PROVIDER_GUI="false"
+	export VAGRANT_PROVIDER_GUI="false"
 
-  function vl() { vagrant reload $@ --provision; }
-  alias vh='vagrant halt'
-  alias vd='vagrant destroy'
-  alias vs='vagrant ssh'
-  alias vt='vagrant status'
-  alias vr='vagrant resume'
+	function vl() { vagrant reload $@ --provision; }
+	alias vh='vagrant halt'
+	alias vd='vagrant destroy'
+	alias vs='vagrant ssh'
+	alias vt='vagrant status'
+	alias vr='vagrant resume'
 
 	function vagrant-ip() {
 		vagrant ssh -c "ip address show eth0 | grep 'inet ' | sed -e 's/^.*inet //' -e 's/\/.*$//'"
 	}
 
-  function vagrant-update-all-plugins() { for plugin in $(vagrant plugin list | cut -f1 -d' '); do vagrant plugin update $plugin; done; }
+	function vagrant-update-all-plugins() { for plugin in $(vagrant plugin list | cut -f1 -d' '); do vagrant plugin update $plugin; done; }
 fi
