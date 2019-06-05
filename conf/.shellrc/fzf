@@ -38,7 +38,7 @@ fe() {
 	[[ -n "$files" ]] && vim "${files[@]}"
 }
 zle -N fe
-bindkey -s '^e' 'fe^M'
+bindkey -s '^f' 'fe^M'
 
 # fpe [FUZZY PATTERN] - Search by content and edit selected file(s)
 fce() {
