@@ -1,10 +1,10 @@
 # vim:ft=sh :
 
 if [[ $(uname) = "Linux" ]]; then
-  # Add Linuxbrew to the PATH
-  export HOMEBREW=~/.homebrew
-  if [[ -d $HOMEBREW ]]; then
-    export PATH=$HOMEBREW/bin:$HOMEBREW/sbin:$PATH
-    export MANPATH=$HOMEBREW/share/man:$MANPATH
-  fi
+	# Add Linuxbrew to the PATH
+	export HOMEBREW=~/.homebrew
+	if [[ -d $HOMEBREW ]]; then
+		export PATH=$HOMEBREW/bin:$HOMEBREW/sbin:$PATH
+		export MANPATH=$HOMEBREW/share/man:$MANPATH
+	fi
 fi
