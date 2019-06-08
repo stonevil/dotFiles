@@ -12,7 +12,7 @@ if [ -d $SHELLRC ]; then
 		done
 	fi
 else
-  echo "404: $SHELLRC folder not found"
+	echo "404: $SHELLRC folder not found"
 fi
 
 # Load shared for bash and zsh config file
