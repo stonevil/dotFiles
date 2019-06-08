@@ -1,7 +1,7 @@
 # vim:ft=sh :
 
 if [[ $(uname) = "Darwin" ]]; then
-	function memory-stats() {
+	function memorystats() {
 		FREE_BLOCKS=$(vm_stat | grep free | awk '{ print $3 }' | sed 's/\.//')
 		INACTIVE_BLOCKS=$(vm_stat | grep inactive | awk '{ print $3 }' | sed 's/\.//')
 		SPECULATIVE_BLOCKS=$(vm_stat | grep speculative | awk '{ print $3 }' | sed 's/\.//')
@@ -13,7 +13,7 @@ if [[ $(uname) = "Darwin" ]]; then
 		echo Total free: $TOTAL MB
 	}
 
-	function powerstat() {
+	function powerstats() {
 		b=$(system_profiler SPPowerDataType)
 		amp=$(echo "$b" | grep 'Amperage (mA):' | cut -d ':' -f 2 | xargs)
 		volt=$(echo "$b" | grep 'Voltage (mV):' | cut -d ':' -f 2 | xargs)
