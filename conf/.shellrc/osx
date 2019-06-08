@@ -1,34 +1,34 @@
 # vim:ft=sh :
 
-# Return OS X memory status
 if [[ $(uname) = "Darwin" ]]; then
-  function memory-stats() {
-    FREE_BLOCKS=$(vm_stat | grep free | awk '{ print $3 }' | sed 's/\.//')
-    INACTIVE_BLOCKS=$(vm_stat | grep inactive | awk '{ print $3 }' | sed 's/\.//')
-    SPECULATIVE_BLOCKS=$(vm_stat | grep speculative | awk '{ print $3 }' | sed 's/\.//')
-    FREE=$((($FREE_BLOCKS+SPECULATIVE_BLOCKS)*4096/1048576))
-    INACTIVE=$(($INACTIVE_BLOCKS*4096/1048576))
-    TOTAL=$((($FREE+$INACTIVE)))
-    echo Free:       $FREE MB
-    echo Inactive:   $INACTIVE MB
-    echo Total free: $TOTAL MB
-  }
+	function memory-stats() {
+		FREE_BLOCKS=$(vm_stat | grep free | awk '{ print $3 }' | sed 's/\.//')
+		INACTIVE_BLOCKS=$(vm_stat | grep inactive | awk '{ print $3 }' | sed 's/\.//')
+		SPECULATIVE_BLOCKS=$(vm_stat | grep speculative | awk '{ print $3 }' | sed 's/\.//')
+		FREE=$((($FREE_BLOCKS+SPECULATIVE_BLOCKS)*4096/1048576))
+		INACTIVE=$(($INACTIVE_BLOCKS*4096/1048576))
+		TOTAL=$((($FREE+$INACTIVE)))
+		echo Free:       $FREE MB
+		echo Inactive:   $INACTIVE MB
+		echo Total free: $TOTAL MB
+	}
 
-  alias network-interfaces-list='networksetup -listallhardwareports'
+	function powerstat() {
+		b=$(system_profiler SPPowerDataType)
+		amp=$(echo "$b" | grep 'Amperage (mA):' | cut -d ':' -f 2 | xargs)
+		volt=$(echo "$b" | grep 'Voltage (mV):' | cut -d ':' -f 2 | xargs)
+		power=$(($amp * $volt / 1000))
+		echo "$b" | grep --color=never -A 1 'Battery Information:'
+		echo "$b" | grep --color=never -A 1 'Amperage (mA)'
+		echo "      Total Power (mW): $power"
+		echo ""
+		echo "$b" | grep --color=never -A 99 'AC Charger Information:'
+	}
 
-  # AirPort OS X command line
-  function airport() { /System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport; }
+	alias network-interfaces-list='networksetup -listallhardwareports'
+	alias airport='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport'
 
-  # Flush DNS cache
-  function dns-cache-flush() { sudo killall -HUP mDNSResponder ; say "DNS cache flushed"; }
-
-  # Search in Internet with Safari from CLI
-  function search() { open /Applications/Safari.app/ "http://duckduckgo.com/?q= $@"; }
-
-  # Flush Finder Context Menu
-  function finder-context-menu-flush() { sudo /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain user; killall Finder; say "Open With has been rebuilt, Finder will relaunch"; }
-
-  # Game on/off optimisation
-  function game-on { sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist; say "Game mode on"; }
-  function game-off { sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist; say "Game mode off"; }
+	function audio-reload() {
+		sudo launchctl unload /System/Library/LaunchDaemons/com.apple.audio.coreaudiod.plist && sudo launchctl load /System/Library/LaunchDaemons/com.apple.audio.coreaudiod.plist
+	}
 fi
