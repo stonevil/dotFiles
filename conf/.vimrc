@@ -98,6 +98,9 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	" :SudoWrite: Write a privileged file with sudo.
 	" :SudoEdit: Edit a privileged file with sudo
 
+	"
+	"Plug 'junegunn/vim-easy-align'
+
 	" Tabulation
 	Plug 'godlygeek/tabular'
 
@@ -147,6 +150,10 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	" HCL
 	Plug 'fatih/vim-hclfmt'
 
+	" Helm
+	Plug 'towolf/vim-helm'
+	"Plug 'mustache/vim-mustache-handlebars'
+
 	" Nginx Bundle
 	Plug 'LeonB/vim-nginx',               { 'for' : 'nginx' }
 
@@ -166,7 +173,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'elzr/vim-json',                 { 'for' : 'json' }
 
 	" Markdown Bundle
-	Plug 'plasticboy/vim-markdown'
+	"Plug 'plasticboy/vim-markdown'
 
 	" Arduino Bundle
 	Plug 'sudar/vim-arduino-syntax',      { 'for': 'arduino' }
@@ -540,6 +547,14 @@ let g:airline#extensions#ale#enabled = 1
 let g:ale_statusline_format = ['%d error(s)', '%d warning(s)', 'OK']
 let g:ale_ansible_ansible_lint_executable = 'ansible-lint -x ANSIBLE0204'
 let g:ale_set_signs = 0
+
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+
+let g:ale_fixers = { '*': ['trim_whitespace', 'remove_trailing_lines'], 'javascript': ['prettier', 'eslint'], 'sh': ['shfmt'], 'yaml': ['prettier'], }
+
+let g:ale_fix_on_save = 1
+"let g:ale_lint_on_text_changed = 'never'
 
 nmap <silent> <leader> <C-j> <Plug>(ale_previous_wrap)
 nmap <silent> <leader> <C-k> <Plug>(ale_next_wrap)
