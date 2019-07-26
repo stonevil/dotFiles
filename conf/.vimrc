@@ -121,6 +121,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'fatih/vim-go',                  { 'do': ':GoInstallBinaries', 'for': 'golang' }
 	Plug 'godoctor/godoctor.vim',         { 'for': 'golang' }
 	Plug 'benmills/vimux-golang',         { 'for': 'golang' }
+	Plug 'sebdah/vim-delve',              { 'for': 'golang' }
 
 	" Git Bundle
 	Plug 'tpope/vim-fugitive'
