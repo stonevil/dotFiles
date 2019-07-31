@@ -6,8 +6,8 @@ if ! command -v fzf >/dev/null; then
 	fi
 fi
 
-[[ $- == *i* ]] && source $HOMEBREW/Cellar/fzf/*/shell/completion.zsh 2> /dev/null
-source $HOMEBREW/Cellar/fzf/*/shell/key-bindings.zsh 2> /dev/null
+[[ $- == *i* ]] && source $HOMEBREW/Cellar/fzf/*/shell/completion.zsh 2>/dev/null
+source $HOMEBREW/Cellar/fzf/*/shell/key-bindings.zsh 2>/dev/null
 
 export BAT_THEME="TwoDark"
 
@@ -26,10 +26,8 @@ export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:5:hidden:wrap"
 
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 
-
 # Enter key to select the item, CTRL-C / CTRL-G / ESC to exit
 # On multi-select mode (-m), TAB and Shift-TAB to mark multiple items
-
 
 # fe - edit selected file(s)
 fe() {
@@ -43,16 +41,15 @@ bindkey -s '^f' 'fe^M'
 # fpe [FUZZY PATTERN] - Search by content and edit selected file(s)
 fce() {
 	local files
-	IFS=$'\n' files=($( rg --files-with-matches --no-messages --no-ignore --hidden --follow --ignore-case --glob '!.git/*' --glob '!.svn/*' --glob '!node_modules/*' --glob '!.undodir/*' --glob '!.session.vim' --glob '!.DS_Store' $1 | fzf --multi --preview "(bat --style=numbers,changes --color=always {}) 2> /dev/null | head -100 | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 100 $1 || rg --ignore-case --pretty --context 100 $1 {}"))
+	IFS=$'\n' files=($(rg --files-with-matches --no-messages --no-ignore --hidden --follow --ignore-case --glob '!.git/*' --glob '!.svn/*' --glob '!node_modules/*' --glob '!.undodir/*' --glob '!.session.vim' --glob '!.DS_Store' $1 | fzf --multi --preview "(bat --style=numbers,changes --color=always {}) 2> /dev/null | head -100 | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 100 $1 || rg --ignore-case --pretty --context 100 $1 {}"))
 	[[ -n "$files" ]] && vim "${files[@]}"
 }
-
 
 # fd - cd to selected directory
 fd() {
 	local dir
-	dir=$(find ${1:-.} -not -path '*/\.git/*' -not -path '*/\.svn/*' -not -path '*/\.undodir/*' -type d -print 2> /dev/null | fzf +m) &&
-	cd "$dir"
+	dir=$(find ${1:-.} -not -path '*/\.git/*' -not -path '*/\.svn/*' -not -path '*/\.undodir/*' -type d -print 2>/dev/null | fzf +m) &&
+		cd "$dir"
 }
 
 # fkill - kill selected process
@@ -73,7 +70,7 @@ fkill() {
 ts() {
 	local session
 	session=$(tmux list-sessions -F "#{session_name}" | fzf --query="$1" --select-1 --exit-0) &&
-	tmux switch-client -t "$session"
+		tmux switch-client -t "$session"
 }
 
 # tp - switch to selected tmux pane
@@ -92,20 +89,20 @@ tp() {
 		tmux select-pane -t ${target_window}.${target_pane}
 	else
 		tmux select-pane -t ${target_window}.${target_pane} &&
-		tmux select-window -t $target_window
+			tmux select-window -t $target_window
 	fi
 }
 
 # Check if git repo
 is_in_git_repo() {
-	git rev-parse HEAD > /dev/null 2>&1
+	git rev-parse HEAD >/dev/null 2>&1
 }
 
 # fgshow - git commit browser
 fshow() {
 	is_in_git_repo || return
 
-	git log --pretty=oneline --abbrev-commit | fzf --height 100% --preview-window down:90%  --preview 'echo {} | cut -f 1 -d " " | xargs git show --color=always'
+	git log --pretty=oneline --abbrev-commit | fzf --height 100% --preview-window down:90% --preview 'echo {} | cut -f 1 -d " " | xargs git show --color=always'
 }
 
 fad() {

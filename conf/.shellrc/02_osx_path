@@ -1,6 +1,6 @@
 # vim:ft=sh :
 
-if [[ $(uname) = "Darwin" ]]; then
+if [[ $(uname) == "Darwin" ]]; then
 	# Add homebrew to the PATH
 	export HOMEBREW=~/.homebrew
 	if [[ -d $HOMEBREW ]]; then

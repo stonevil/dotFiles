@@ -32,11 +32,11 @@ if command -v git >/dev/null; then
 	alias glogout='git credential-cache exit'
 
 	function git-submodule-remove() {
-	git config -f .git/config --remove-section submodule.$1
-	git config -f .gitmodules --remove-section submodule.$1
-	git rm --cached $1
-	git commit -m "Remove $1 cookbook submodule"
-	rm -rf $1
-	rm -rf .git/modules/$1;
+		git config -f .git/config --remove-section submodule.$1
+		git config -f .gitmodules --remove-section submodule.$1
+		git rm --cached $1
+		git commit -m "Remove $1 cookbook submodule"
+		rm -rf $1
+		rm -rf .git/modules/$1
 	}
 fi

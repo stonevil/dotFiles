@@ -3,21 +3,21 @@
 # Install all
 function dotfiles-install-all() {
 	# Check internet connection to github
-	if [[ `curl -sL -w "%{http_code}\\n" "http://www.google.com/" -o /dev/null` -eq 200 ]]; then
+	if [[ $(curl -sL -w "%{http_code}\n" "http://www.google.com/" -o /dev/null) -eq 200 ]]; then
 		if command -v git >/dev/null; then
 			# Install homebrew at OS X
-			if [[ $(uname) = "Darwin" ]]; then
+			if [[ $(uname) == "Darwin" ]]; then
 				if [[ -d $HOME/.homebrew ]]; then
 					cd $HOME && mv -f $HOME/.homebrew $HOME/.homebrew.previous
 				fi
 				# Clone homebrew from git repo
 				git clone https://github.com/Homebrew/homebrew.git $HOME/.homebrew
-				$HOME/.homebrew/bin/brew update && $HOME/.homebrew/bin/brew upgrade \
-				&& $HOME/.homebrew/bin/brew cleanup
+				$HOME/.homebrew/bin/brew update && $HOME/.homebrew/bin/brew upgrade &&
+					$HOME/.homebrew/bin/brew cleanup
 			fi
 
 			# Install homebrew at Linux
-			if [[ $(uname) = "Linux" ]]; then
+			if [[ $(uname) == "Linux" ]]; then
 				# Install on Debian and Ubuntu
 				# sudo apt-get install build-essential curl git m4 ruby texinfo libbz2-dev libcurl4-openssl-dev libexpat-dev libncurses-dev zlib1g-dev
 				if [[ -d $HOME/.homebrew ]]; then
@@ -25,8 +25,8 @@ function dotfiles-install-all() {
 				fi
 				# Clone homebrew from git repo
 				git clone https://github.com/Homebrew/linuxbrew.git $HOME/.homebrew
-				$HOME/.homebrew/bin/brew update && $HOME/.homebrew/bin/brew upgrade \
-				&& $HOME/.homebrew/bin/brew cleanup
+				$HOME/.homebrew/bin/brew update && $HOME/.homebrew/bin/brew upgrade &&
+					$HOME/.homebrew/bin/brew cleanup
 			fi
 
 			# Install oh-my-zsh and modules
@@ -40,32 +40,32 @@ function dotfiles-install-all() {
 				cd $HOME && mv -f $HOME/.tmux $HOME/.tmux.previous
 			fi
 			mkdir -p $HOME/.tmux/plugins && git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
-			else
-				echo "Stop execution. Please install git"
-			fi
+		else
+			echo "Stop execution. Please install git"
 		fi
+	fi
 }
 
 # Update All
 function dotfiles-update-all() {
 	# Check internet connection to github
-	if [[ `curl -sL -w "%{http_code}\\n" "http://www.google.com/" -o /dev/null` -eq 200 ]]; then
+	if [[ $(curl -sL -w "%{http_code}\n" "http://www.google.com/" -o /dev/null) -eq 200 ]]; then
 		# Update dotFiles
 		pushd $DOTFILES && git pull && git pull --recurse-submodules && popd && source $DOTFILES/conf/.zshrc
 
 		# Update brew
-		if [[ $(uname) = "Darwin" ]]; then
+		if [[ $(uname) == "Darwin" ]]; then
 			if command -v brew >/dev/null; then
-				$HOMEBREW/bin/brew update \
-				&& $HOMEBREW/bin/brew upgrade \
-				&& $HOMEBREW/bin/brew cleanup
+				$HOMEBREW/bin/brew update &&
+					$HOMEBREW/bin/brew upgrade &&
+					$HOMEBREW/bin/brew cleanup
 			fi
 		fi
-		if [[ $(uname) = "Linux" ]]; then
+		if [[ $(uname) == "Linux" ]]; then
 			if command -v brew >/dev/null; then
-				$HOMEBREW/bin/brew update \
-				&& $HOMEBREW/bin/brew upgrade \
-				&& $HOMEBREW/bin/brew cleanup
+				$HOMEBREW/bin/brew update &&
+					$HOMEBREW/bin/brew upgrade &&
+					$HOMEBREW/bin/brew cleanup
 			fi
 		fi
 
@@ -76,13 +76,12 @@ function dotfiles-update-all() {
 
 		# Update TMUX Plugin Manager
 		if [[ -d $HOME/.tmux/plugins ]]; then
-			for file in $HOME/.tmux/plugins/*
-			do
+			for file in $HOME/.tmux/plugins/*; do
 				if [[ -d $file ]]; then
 					pushd $file
-						if [[ -d '.git' ]]; then
-							git pull
-						fi
+					if [[ -d '.git' ]]; then
+						git pull
+					fi
 					popd
 				fi
 			done
@@ -90,13 +89,12 @@ function dotfiles-update-all() {
 
 		# Update Vim Plugins
 		if [[ -d $HOME/.vim/bundle ]]; then
-			for file in $HOME/.vim/bundle/*
-			do
+			for file in $HOME/.vim/bundle/*; do
 				if [[ -d $file ]]; then
 					pushd $file
-						if [[ -d '.git' ]]; then
-							git pull
-						fi
+					if [[ -d '.git' ]]; then
+						git pull
+					fi
 					popd
 				fi
 			done
@@ -135,14 +133,13 @@ function dotfiles-update-all() {
 function dotfiles-aliases-all() {
 	# Create aliases
 	if [[ -d $DOTFILES ]]; then
-		for file in $DOTFILES/conf/.*
-			do
-				f=`echo $file | awk -F"/" '{print $NF}'`
-				if [[ $f != . ]] && [[ $f != .. ]]; then
-					mv -f $HOME/$f $HOME/$f.previous
-					ln -sf $file $HOME
-				fi
-			done
+		for file in $DOTFILES/conf/.*; do
+			f=$(echo $file | awk -F"/" '{print $NF}')
+			if [[ $f != . ]] && [[ $f != .. ]]; then
+				mv -f $HOME/$f $HOME/$f.previous
+				ln -sf $file $HOME
+			fi
+		done
 	else
 		echo "404: $DOTFILES folder not found"
 	fi
