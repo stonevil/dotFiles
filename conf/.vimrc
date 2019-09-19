@@ -73,7 +73,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'ryanoasis/vim-devicons'
 
 	" Asynchronous linting/fixing for Vim and Language Server Protocol (LSP) integration
-	Plug 'w0rp/ale'
+	Plug 'dense-analysis/ale'
 
 	" Land on window you chose like tmux's 'display-pane'
 	Plug 't9md/vim-choosewin'
@@ -539,7 +539,7 @@ let g:vim_json_syntax_conceal = 0
 
 
 """"""""""
-"" w0rp/ale
+"" dense-analysis/ale
 " Error and warning signs.
 let g:ale_sign_error = '⤫'
 let g:ale_sign_warning = '⚠'
