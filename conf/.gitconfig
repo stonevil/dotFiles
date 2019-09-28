@@ -1,174 +1,174 @@
 [core]
-  excludesfile = ~/.gitignore_global
-  editor = $EDITOR
-    pager = less -R
-    autocrlf = input
-    safecrlf = true
-    whitespace = fix, -indent-with-non-tab, space-before-tab, trailing-space, cr-at-eol
+	excludesfile = ~/.gitignore_global
+	editor = $EDITOR
+		pager = less -R
+		autocrlf = input
+		safecrlf = true
+		whitespace = fix, -indent-with-non-tab, space-before-tab, trailing-space, cr-at-eol
 
 [user]
-  name = Myroslav Rys
-  email = stonevil@gmail.com
+	name = Myroslav Rys
+	email = stonevil@gmail.com
 
 [mergetool]
-  keepBackup = true
+	keepBackup = true
 
 [credential]
-  helper = cache --timeout=900
+	helper = cache --timeout=900
 
 [color]
-  ui = true
-  diff = true
-  grep = true
-  status = true
+	ui = true
+	diff = true
+	grep = true
+	status = true
 
 [color "branch"]
-  local = yellow
-  remote = green
-  current = yellow reverse
+	local = yellow
+	remote = green
+	current = yellow reverse
 
 [color "diff"]
-  old = red bold
-  new = blue bold
-  meta = normal
-  frag = magenta bold
-#  whitespace = Resourcesed reverse
+	old = red bold
+	new = blue bold
+	meta = normal
+	frag = magenta bold
+#	whitespace = Resourcesed reverse
 
 [color "status"]
-  added = yellow
-  changed = green
-  untracked = cyan
+	added = yellow
+	changed = green
+	untracked = cyan
 
 [diff]
-  renames = copy
+	renames = copy
 
 [log]
-  decorate = full
+	decorate = full
 
 [alias]
-  # base commands
-  ci = commit
-  co = checkout
-  cl = clone
-  br = branch
-  cp = cherry-pick
-  lg = log -p
-  st = log status --short
-  cia = commit --allow-empty-message -a
-  df = diff
-  diff = diff --word-diff
-  dc = diff --cached
+	# base commands
+	ci = commit
+	co = checkout
+	cl = clone
+	br = branch
+	cp = cherry-pick
+	lg = log -p
+	st = log status --short
+	cia = commit --allow-empty-message -a
+	df = diff
+	diff = diff --word-diff
+	dc = diff --cached
 
-  # log related
-  l = log
-  lh = log --graph
-  la = !git lh --date-order --all 2> /dev/null
-  lb = log --graph --simplify-by-decoration
-  lba = !git lb --all
-  h = !git --no-pager log --graph -n 15
-  a = !git --no-pager la -n 15
+	# log related
+	l = log
+	lh = log --graph
+	la = !git lh --date-order --all 2> /dev/null
+	lb = log --graph --simplify-by-decoration
+	lba = !git lb --all
+	h = !git --no-pager log --graph -n 15
+	a = !git --no-pager la -n 15
 
-  # some resets without explanation
-  r = reset
-  r1 = reset HEAD^
-  r2 = reset HEAD^^
-  rh = reset --hard
-  rh1 = reset HEAD^ --hard
-  rh2 = reset HEAD^^ --hard
+	# some resets without explanation
+	r = reset
+	r1 = reset HEAD^
+	r2 = reset HEAD^^
+	rh = reset --hard
+	rh1 = reset HEAD^ --hard
+	rh2 = reset HEAD^^ --hard
 
-  # stash shortcuts
-  sl = stash list
-  sa = stash apply
-  ss = stash save
+	# stash shortcuts
+	sl = stash list
+	sa = stash apply
+	ss = stash save
 
-  # Diff your staged changes == review before committing
-  ds = diff --staged
-  # Smarter status - include tag and branch info
-  st = status -sb
+	# Diff your staged changes == review before committing
+	ds = diff --staged
+	# Smarter status - include tag and branch info
+	st = status -sb
 
-  # Pretty one-line log with tags, branches and authors
-  #ls = log --pretty=format:"%C(yellow)%h %C(blue)%ad%C(red)%d %C(reset)%s%C(green) [%cn]" --decorate --date=short
-  # A verbose ls, shows changed files too
-  #lsv = log --pretty=format:"%C(yellow)%h %C(blue)%ad%C(red)%d %C(reset)%s%C(green) [%cn]" --decorate --date=short --numstat
+	# Pretty one-line log with tags, branches and authors
+	#ls = log --pretty=format:"%C(yellow)%h %C(blue)%ad%C(red)%d %C(reset)%s%C(green) [%cn]" --decorate --date=short
+	# A verbose ls, shows changed files too
+	#lsv = log --pretty=format:"%C(yellow)%h %C(blue)%ad%C(red)%d %C(reset)%s%C(green) [%cn]" --decorate --date=short --numstat
 
-  # Show all prfiles
-  ls = !git rev-parse --abbrev-ref HEAD | xargs git ls-tree -r --full-tree --full-name --name-only
+	# Show all prfiles
+	ls = !git rev-parse --abbrev-ref HEAD | xargs git ls-tree -r --full-tree --full-name --name-only
 
-  # Push into current remote branch
-  pc = !git rev-parse --abbrev-ref HEAD | xargs git push origin
+	# Push into current remote branch
+	pc = !git rev-parse --abbrev-ref HEAD | xargs git push origin
 
-  # Show untracked files
-  stu = status --untracked-files=no
+	# Show untracked files
+	stu = status --untracked-files=no
 
-  # Show history
-  history = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+	# Show history
+	history = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
 
-  # Show git commands
-  commitmmands = help -a
+	# Show git commands
+	commitmmands = help -a
 
-  # Get object type
-  type = cat-file -t
+	# Get object type
+	type = cat-file -t
 
-  # Gett file info
-  info = cat-file -p
+	# Gett file info
+	info = cat-file -p
 
-  # Show commit logs
-  logs = Show !git shortlog --summary | sort --reverse --numeric-sort
+	# Show commit logs
+	logs = Show !git shortlog --summary | sort --reverse --numeric-sort
 
-  # Show conflicts
-  conflicts = !git ls-files --unmerged | cut -f2 | sort -u | xargs  grep -El '<<<<<<<|=======|>>>>>>>'
+	# Show conflicts
+	conflicts = !git ls-files --unmerged | cut -f2 | sort -u | xargs	grep -El '<<<<<<<|=======|>>>>>>>'
 
-  # Show unmergd files
-  unmerged = files !git ls-files --unmerged | cut -f2 | sort -u
+	# Show unmergd files
+	unmerged = files !git ls-files --unmerged | cut -f2 | sort -u
 
-  # Show aliases
-  aliases = !git config -l | grep alias | cut -c 7-
+	# Show aliases
+	aliases = !git config -l | grep alias | cut -c 7-
 
-  # Find files
-  find = !git ls-files -r HEAD | grep -ii
+	# Find files
+	find = !git ls-files -r HEAD | grep -ii
 
-  # Remove files which have been diffeleted
-  remove = !git ls-files -z --deleted | xargs -0 git rm
+	# Remove files which have been diffeleted
+	remove = !git ls-files -z --deleted | xargs -0 git rm
 
-  # Ignore a file
-  ignore = !([ ! -e .gitignore ] && touch .gitignore) |gitignore echo $1 >> .gitignore
+	# Ignore a file
+	ignore = !([ ! -e .gitignore ] && touch .gitignore) |gitignore echo $1 >> .gitignore
 
-  # Assume a file as unchanged
-  assume = !gitt update-index --assume-unchanged
+	# Assume a file as unchanged
+	assume = !gitt update-index --assume-unchanged
 
-  # Unassume a file
-  unassume = !gitignoret update-index --no-assume-unchanged
+	# Unassume a file
+	unassume = !gitignoret update-index --no-assume-unchanged
 
-  # Show assumed files
-  assumed = !git ls-files -v | grep ^h | cut -c 3-
+	# Show assumed files
+	assumed = !git ls-files -v | grep ^h | cut -c 3-
 
-  # Pull from remote repository
-  fork = !git config --get remote.origin.url | xargs git pull
+	# Pull from remote repository
+	fork = !git config --get remote.origin.url | xargs git pull
 
-  # Delete multiple branches
-  #git branch -D `git for-each-ref --format=for-each-ref"%(refname:short)" refs/heads/...`
+	# Delete multiple branches
+	#git branch -D `git for-each-ref --format=for-each-ref"%(refname:short)" refs/heads/...`
 
-  go = !gitgo
-  springcleaning = for-each-ref --sort=-committerdate --format='%(refname:short) %(committerdate:short)'
+	go = !gitgo
+	springcleaning = for-each-ref --sort=-committerdate --format='%(refname:short) %(committerdate:short)'
 
-  #revert = checkout --
+	#revert = checkout --
 
 [push]
-  default = matching
+	default = matching
 
 [help]
-  autocorrect = 1
+	autocorrect = 1
 [filter "media"]
-  required = true
-  clean = git media clean %f
-  smudge = git media smudge %f
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
 [filter "hawser"]
-  clean = git hawser clean %f
-  smudge = git hawser smudge %f
-  required = true
+	clean = git hawser clean %f
+	smudge = git hawser smudge %f
+	required = true
 [filter "lfs"]
-  clean = git-lfs clean %f
-  smudge = git-lfs smudge %f
-  required = true
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
 [http]
 	cookiefile = /Users/stone/.gitcookies
