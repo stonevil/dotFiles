@@ -117,11 +117,9 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 
 	" Go Bundle
 	Plug 'zchee/deoplete-go',             { 'build': {'unix': 'make'}, 'for': 'golang' }
-	Plug 'jodosha/vim-godebug',           { 'for': 'golang' }
 	Plug 'fatih/vim-go',                  { 'do': ':GoInstallBinaries', 'for': 'golang' }
 	Plug 'godoctor/godoctor.vim',         { 'for': 'golang' }
-	Plug 'benmills/vimux-golang',         { 'for': 'golang' }
-	Plug 'sebdah/vim-delve',              { 'for': 'golang' }
+	"Plug 'benmills/vimux-golang',         { 'for': 'golang' }
 
 	" Git Bundle
 	Plug 'tpope/vim-fugitive'
@@ -540,6 +538,8 @@ let g:vim_json_syntax_conceal = 0
 
 """"""""""
 "" dense-analysis/ale
+" Recommended for macOS
+let g:delve_backend = "native"
 " Error and warning signs.
 let g:ale_sign_error = '⤫'
 let g:ale_sign_warning = '⚠'
@@ -548,6 +548,8 @@ let g:airline#extensions#ale#enabled = 1
 let g:ale_statusline_format = ['%d error(s)', '%d warning(s)', 'OK']
 let g:ale_ansible_ansible_lint_executable = 'ansible-lint -x ANSIBLE0204'
 let g:ale_set_signs = 0
+let g:delve_enable_syntax_highlighting = 1
+let g:delve_new_command = "new"
 
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
