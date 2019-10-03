@@ -38,5 +38,6 @@ if [[ -d $VAGRANT ]]; then
 		vagrant ssh -c "ip address show eth0 | grep 'inet ' | sed -e 's/^.*inet //' -e 's/\/.*$//'"
 	}
 
+	function vagrant-install-all-plugins() { vagrant plugin install vagrant-vbguest }
 	function vagrant-update-all-plugins() { for plugin in $(vagrant plugin list | cut -f1 -d' '); do vagrant plugin update $plugin; done; }
 fi
