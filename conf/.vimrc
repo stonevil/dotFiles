@@ -174,6 +174,9 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	" Markdown Bundle
 	"Plug 'plasticboy/vim-markdown'
 
+	" Logrotate Bundle
+	Plug 'moon-musick/vim-logrotate'
+
 	" Arduino Bundle
 	Plug 'sudar/vim-arduino-syntax',      { 'for': 'arduino' }
 	Plug 'stevearc/vim-arduino',          { 'for': 'arduino' }
