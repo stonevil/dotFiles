@@ -12,7 +12,7 @@ function dotfiles-install-all() {
 				fi
 				# Clone homebrew from git repo
 				git clone https://github.com/Homebrew/homebrew.git $HOME/.homebrew
-				$HOME/.homebrew/bin/brew update && $HOME/.homebrew/bin/brew upgrade &&
+				$HOME/.homebrew/bin/brew update && $HOME/.homebrew/bin/brew upgrade && $HOME/.homebrew/bin/brew cask upgrade &&
 					$HOME/.homebrew/bin/brew cleanup
 			fi
 
@@ -25,7 +25,7 @@ function dotfiles-install-all() {
 				fi
 				# Clone homebrew from git repo
 				git clone https://github.com/Homebrew/linuxbrew.git $HOME/.homebrew
-				$HOME/.homebrew/bin/brew update && $HOME/.homebrew/bin/brew upgrade &&
+				$HOME/.homebrew/bin/brew update && $HOME/.homebrew/bin/brew upgrade && $HOME/.homebrew/bin/brew cask upgrade &&
 					$HOME/.homebrew/bin/brew cleanup
 			fi
 
@@ -58,6 +58,7 @@ function dotfiles-update-all() {
 			if command -v brew >/dev/null; then
 				$HOMEBREW/bin/brew update &&
 					$HOMEBREW/bin/brew upgrade &&
+					$HOMEBREW/bin/brew cask upgrade &&
 					$HOMEBREW/bin/brew cleanup
 			fi
 		fi
@@ -65,6 +66,7 @@ function dotfiles-update-all() {
 			if command -v brew >/dev/null; then
 				$HOMEBREW/bin/brew update &&
 					$HOMEBREW/bin/brew upgrade &&
+					$HOMEBREW/bin/brew cask upgrade &&
 					$HOMEBREW/bin/brew cleanup
 			fi
 		fi
