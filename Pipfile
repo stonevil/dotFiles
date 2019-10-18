@@ -1,13 +1,13 @@
-ansible==2.8.5
+ansible==2.8.6
 ansible-lint==4.1.0
-asn1crypto==1.0.1
+asn1crypto==1.2.0
 certifi==2019.9.11
-cffi==1.12.3
+cffi==1.13.0
 chardet==3.0.4
 clipboard==0.0.4
 console==0.96
 cpplint==1.4.4
-cryptography==2.7
+cryptography==2.8
 docker-pycreds==0.4.0
 ezenv==0.91
 fasteners==0.15
@@ -24,7 +24,7 @@ msgpack==0.6.2
 neovim==0.3.1
 oauth2client==4.1.3
 pyasn1==0.4.7
-pyasn1-modules==0.2.6
+pyasn1-modules==0.2.7
 pycparser==2.19
 Pygments==2.4.2
 pynvim==0.3.2
@@ -39,4 +39,4 @@ six==1.12.0
 ui==0.1.4
 urllib3==1.25.6
 websocket-client==0.56.0
-youtube-dl==2019.9.28
+youtube-dl==2019.10.16
