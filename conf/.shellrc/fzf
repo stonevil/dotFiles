@@ -38,7 +38,7 @@ fe() {
 zle -N fe
 bindkey -s '^f' 'fe^M'
 
-# fpe [FUZZY PATTERN] - Search by content and edit selected file(s)
+# fce [FUZZY PATTERN] - Search by content and edit selected file(s)
 fce() {
 	local files
 	IFS=$'\n' files=($(rg --files-with-matches --no-messages --no-ignore --hidden --follow --ignore-case --glob '!.git/*' --glob '!.svn/*' --glob '!node_modules/*' --glob '!.undodir/*' --glob '!.session.vim' --glob '!.DS_Store' $1 | fzf --multi --preview "(bat --style=numbers,changes --color=always {}) 2> /dev/null | head -100 | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 100 $1 || rg --ignore-case --pretty --context 100 $1 {}"))
