@@ -28,13 +28,6 @@ if ! command -v kubeval >/dev/null; then
 	fi
 fi
 
-# Install minikube
-if ! command -v minikube >/dev/null; then
-	if command -v brew >/dev/null; then
-		brew install homebrew/cask/minikube
-	fi
-fi
-
 # Install oauth2l
 if ! command -v oauth2l >/dev/null; then
 	if command -v brew >/dev/null; then
