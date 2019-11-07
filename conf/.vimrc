@@ -115,6 +115,9 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	" Snippets
 	Plug 'SirVer/ultisnips'
 
+	" EnhancedDiff
+	"Plug 'chrisbra/vim-diff-enhanced'
+
 	" Go Bundle
 	Plug 'zchee/deoplete-go',             { 'build': {'unix': 'make'}, 'for': 'golang' }
 	Plug 'fatih/vim-go',                  { 'do': ':GoInstallBinaries', 'for': 'golang' }
@@ -179,14 +182,6 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 
 	" Arduino Bundle
 	Plug 'sudar/vim-arduino-syntax',      { 'for': 'arduino' }
-	Plug 'stevearc/vim-arduino',          { 'for': 'arduino' }
-	" :ArduinoChooseBoard - Select the type of board from a list.
-	" :ArduinoChooseProgrammer - Select the programmer from a list.
-	" :ArduinoChoosePort - Select the serial port from a list.
-	" :ArduinoVerify - Build the sketch.
-	" :ArduinoUpload - Build and upload the sketch.
-	" :ArduinoSerial - Connect to the board for debugging over a serial port.
-	" :ArduinoUploadAndSerial - Build, upload, and connect for debugging.
 
 
 	" Enable clipboard over network connection. https://github.com/wincent/clipper is required
@@ -277,15 +272,6 @@ function! ToggleNumber()
 		set relativenumber
 	endif
 endfunc
-
-function! ArduinoStatusLine()
-	let port = arduino#GetPort()
-	let line = '%f [' . g:arduino_board . '] [' . g:arduino_programmer . ']'
-	if !empty(port)
-		let line = line . ' (' . port . ':' . g:arduino_serial_baud . ')'
-	endif
-	return line
-endfunction
 
 " Toggle spell with a language
 function! ToggleSpell(lang)
