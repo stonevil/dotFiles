@@ -647,6 +647,7 @@ noremap <leader>gdf :Gvdiff<CR>
 noremap <leader>ggr :Ggrep<CR>
 
 noremap <leader>gst :Gstatus<CR> "Press - to add/reset a file's changes, or p to add/reset --patch.
+noremap <leader>gad :Gwrite<CR>
 noremap <leader>gco :Gcommit<CR>
 
 noremap <leader>gbl :Gblame<CR>
