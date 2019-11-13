@@ -540,6 +540,9 @@ let g:ale_set_signs = 0
 let g:delve_enable_syntax_highlighting = 1
 let g:delve_new_command = "new"
 
+" Hover window support
+let g:ale_set_balloons = 1
+
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
 

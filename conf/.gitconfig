@@ -10,6 +10,17 @@
 	name = Myroslav Rys
 	email = stonevil@gmail.com
 
+[diff]
+	renames = copy
+	tool = vimdiff
+
+[difftool]
+	prompt = 0
+
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+
 [mergetool]
 	keepBackup = true
 
@@ -38,9 +49,6 @@
 	added = yellow
 	changed = green
 	untracked = cyan
-
-[diff]
-	renames = copy
 
 [log]
 	decorate = full
