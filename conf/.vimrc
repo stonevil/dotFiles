@@ -61,7 +61,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'christoomey/vim-tmux-navigator'
 	Plug 'tmux-plugins/vim-tmux-focus-events'
 	Plug 'roxma/vim-tmux-clipboard'
-	Plug 'blueyed/vim-diminactive'
+	"Plug 'blueyed/vim-diminactive'
 	Plug 'thaerkh/vim-workspace'
 	Plug 'simnalamburt/vim-mundo'
 	Plug 'majutsushi/tagbar',             { 'on': 'TagbarToggle' }
@@ -433,9 +433,9 @@ let g:tagbar_type_markdown = { 'ctagstype' : 'markdown', 'kinds' : [ 'h:Heading_
 
 """"""""""
 "" vim-diminactive
-let g:diminactive_enable_focus = 1
-let g:diminactive_use_colorcolumn = 1
-let g:diminactive_use_syntax = 1
+"let g:diminactive_enable_focus = 1
+"let g:diminactive_use_colorcolumn = 1
+"let g:diminactive_use_syntax = 1
 
 
 """"""""""
@@ -789,7 +789,8 @@ silent do ColorScheme
 "let g:airline_theme='alduin'
 
 set colorcolumn=0
-highlight ColorColumn ctermbg=235 guibg=#2c2d27
+"highlight ColorColumn ctermbg=235 guibg=#2c2d27
+highlight Normal ctermbg=NONE guibg=NONE
 
 """"""""""
 "" Reopen last position
