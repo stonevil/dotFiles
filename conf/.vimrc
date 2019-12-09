@@ -69,7 +69,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 
 	Plug 'scrooloose/nerdtree'
 	Plug 'Xuyuanp/nerdtree-git-plugin'
-	Plug 'scrooloose/nerdcommenter'
+	Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 	Plug 'ryanoasis/vim-devicons'
 
 	" Asynchronous linting/fixing for Vim and Language Server Protocol (LSP) integration
@@ -79,7 +79,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 't9md/vim-choosewin'
 
 	" Comment stuff out. Use gcc to comment out a line (takes a count), gc to comment out the target of a motion
-	Plug 'tpope/vim-commentary'
+	Plug 'scrooloose/nerdcommenter'
 
 	" Displaying thin vertical lines at each indentation level for code indented with spaces
 	Plug 'Yggdroot/indentLine'
@@ -783,14 +783,18 @@ set t_Co=256
 "set termguicolors								" Use the true color mode
 
 colorscheme kuroi
+set colorcolumn=0
 set background=dark
 silent do ColorScheme
 " alduin, kuroi, onehalfdark
 "let g:airline_theme='alduin'
 
-set colorcolumn=0
-"highlight ColorColumn ctermbg=235 guibg=#2c2d27
 highlight Normal ctermbg=NONE guibg=NONE
+highlight NonText ctermbg=NONE guibg=NONE
+highlight Comment ctermbg=NONE guibg=NONE
+"highlight CursorLine ctermbg=NONE guibg=NONE
+highlight CursorColumn ctermbg=NONE guibg=NONE
+highlight LineNr ctermbg=NONE guibg=NONE
 
 """"""""""
 "" Reopen last position
