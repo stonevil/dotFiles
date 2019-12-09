@@ -23,3 +23,6 @@ doc/
 # Vim artifacts
 .session.vim
 .undodir
+
+# Brew artifacts
+Brewfile.lock.json
