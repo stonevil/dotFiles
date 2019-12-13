@@ -134,7 +134,7 @@ brew "makedepend"
 brew "memtester"
 brew "ninja"
 brew "minicom"
-brew "minikube", link: false
+brew "minikube"
 brew "mkcert"
 brew "mkdocs"
 brew "multitail"
