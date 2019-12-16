@@ -64,7 +64,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	"Plug 'blueyed/vim-diminactive'
 	Plug 'thaerkh/vim-workspace'
 	Plug 'simnalamburt/vim-mundo'
-	Plug 'majutsushi/tagbar',             { 'on': 'TagbarToggle' }
+	"Plug 'majutsushi/tagbar',             { 'on': 'TagbarToggle' }
 	Plug 'benmills/vimux'
 
 	Plug 'scrooloose/nerdtree'
@@ -74,6 +74,9 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 
 	" Asynchronous linting/fixing for Vim and Language Server Protocol (LSP) integration
 	Plug 'dense-analysis/ale'
+
+	" Viewer & Finder for LSP symbols and tags
+	Plug 'liuchengxu/vista.vim'
 
 	" Land on window you chose like tmux's 'display-pane'
 	Plug 't9md/vim-choosewin'
@@ -423,12 +426,12 @@ let g:ansible_template_syntaxes = { '*.rb.j2': 'ruby' }
 
 """"""""""
 "" tagbar
-nmap <silent> <F4> :TagbarToggle<CR>
-let g:tagbar_type_go = { 'ctagstype' : 'go', 'kinds' : [ 'p:package', 'i:imports:1', 'c:constants', 'v:variables', 't:types', 'n:interfaces', 'w:fields', 'e:embedded', 'm:methods', 'r:constructor', 'f:functions' ], 'sro' : '.', 'kind2scope' : { 't' : 'ctype', 'n' : 'ntype' }, 'scope2kind' : { 'ctype' : 't', 'ntype' : 'n' }, 'ctagsbin' : 'gotags', 'ctagsargs' : '-sort -silent' }
-let g:tagbar_type_ruby = { 'kinds' : [ 'm:modules', 'c:classes', 'd:describes', 'C:contexts', 'f:methods', 'F:singleton methods' ] }
-let g:tagbar_type_ansible = { 'ctagstype' : 'ansible', 'kinds' : [ 't:tasks' ], 'sort' : 0 }
-let g:tagbar_type_puppet = { 'ctagstype': 'puppet', 'kinds': [ 'c:class', 's:site', 'n:node', 'd:definition' ]}
-let g:tagbar_type_markdown = { 'ctagstype' : 'markdown', 'kinds' : [ 'h:Heading_L1', 'i:Heading_L2', 'k:Heading_L3' ]}
+"nmap <silent> <F4> :TagbarToggle<CR>
+"let g:tagbar_type_go = { 'ctagstype' : 'go', 'kinds' : [ 'p:package', 'i:imports:1', 'c:constants', 'v:variables', 't:types', 'n:interfaces', 'w:fields', 'e:embedded', 'm:methods', 'r:constructor', 'f:functions' ], 'sro' : '.', 'kind2scope' : { 't' : 'ctype', 'n' : 'ntype' }, 'scope2kind' : { 'ctype' : 't', 'ntype' : 'n' }, 'ctagsbin' : 'gotags', 'ctagsargs' : '-sort -silent' }
+"let g:tagbar_type_ruby = { 'kinds' : [ 'm:modules', 'c:classes', 'd:describes', 'C:contexts', 'f:methods', 'F:singleton methods' ] }
+"let g:tagbar_type_ansible = { 'ctagstype' : 'ansible', 'kinds' : [ 't:tasks' ], 'sort' : 0 }
+"let g:tagbar_type_puppet = { 'ctagstype': 'puppet', 'kinds': [ 'c:class', 's:site', 'n:node', 'd:definition' ]}
+"let g:tagbar_type_markdown = { 'ctagstype' : 'markdown', 'kinds' : [ 'h:Heading_L1', 'i:Heading_L2', 'k:Heading_L3' ]}
 
 
 """"""""""
