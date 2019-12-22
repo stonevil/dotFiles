@@ -162,6 +162,9 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	" Nginx Bundle
 	Plug 'LeonB/vim-nginx',               { 'for' : 'nginx' }
 
+	" Logstash Bundle
+	Plug 'robbles/logstash.vim'
+
 	" TOML Bundle
 	Plug 'cespare/vim-toml'
 
