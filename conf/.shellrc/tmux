@@ -6,3 +6,5 @@ if ! command -v tmux >/dev/null; then
 		brew install tmux
 	fi
 fi
+
+function stmux() { ssh $@ -t bash -c '~/.homebrew/bin/tmux attach-session -dv'; }
