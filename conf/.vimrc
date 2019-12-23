@@ -191,7 +191,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 
 
 	" Enable clipboard over network connection. https://github.com/wincent/clipper is required
-	"Plug 'wincent/vim-clipper'
+	Plug 'wincent/vim-clipper'
 call plug#end()
 
 
