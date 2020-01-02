@@ -78,9 +78,6 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	" Viewer & Finder for LSP symbols and tags
 	Plug 'liuchengxu/vista.vim'
 
-	" Land on window you chose like tmux's 'display-pane'
-	Plug 't9md/vim-choosewin'
-
 	" Comment stuff out. Use gcc to comment out a line (takes a count), gc to comment out the target of a motion
 	Plug 'scrooloose/nerdcommenter'
 
@@ -474,7 +471,7 @@ let airline#extensions#tmuxline#snapshot_file = '~/.tmux.theme'
 
 """"""""""
 "" vim-workspace
-nnoremap <leader>s :ToggleWorkspace<CR>
+nnoremap <leader>ws :ToggleWorkspace<CR>
 if empty($VIM_SESSION_FILENAME)
 	let g:workspace_session_name = 'Session.vim'
 else
@@ -572,26 +569,43 @@ let g:mundo_close_on_revert = 1
 
 
 """"""""""
-"" vim-Choosewin
-nmap - <Plug>(choosewin)
-
-
-""""""""""
 "" vim-fzf
-" Default fzf layout
+" Files (similar to :FZF)
 nnoremap <silent> <leader>e :Files<CR>
+
+" Git files (git ls-files)
 nnoremap <silent> <leader>g :GFiles<CR>
+" Git files (git status)
+nnoremap <silent> <leader>g :GFiles?<CR>
+
+" Search Git commits (requires fugitive.vim)
+nnoremap <silent> <leader>c  :Commits<CR>
+" Search Git commits for the current buffer
+nnoremap <silent> <leader>bc :BCommits<CR>
+
+" Search open buffers
 nnoremap <silent> <leader>b :Buffers<CR>
+
+" Similar to MRU
 nnoremap <silent> <leader>r :FZFMru<CR>
+
+" Search v:oldfiles and open buffers
 nnoremap <silent> <leader>h :History<CR>
+
+" Search in windows
+nnoremap <silent> <leader>win :Windows<CR>
 
 " Search in command history
 nnoremap <silent> <leader>H :History:<CR>
+
+" Search in commands
+nnoremap <silent> <leader>com :Commands<CR>
 
 " Search for lines in current buffer
 nnoremap <silent> <leader>f :BLines<CR>
 " Search for lines in loaded buffers
 nnoremap <silent> <leader>F :Lines<CR>
+
 " Search for marked lines
 nnoremap <silent> <leader>' :Marks<CR>
 
@@ -602,6 +616,8 @@ nnoremap <silent> <leader>rg :Rg<Space>
 nnoremap <silent> <leader>! :Rg!<Space>
 
 nnoremap <silent> <leader>ft :Filetypes<CR>
+
+nnoremap <silent> <leader>s :Snippets<CR>
 
 let g:fzf_action = { 'ctrl-t': 'tab split', 'ctrl-x': 'split', 'ctrl-v': 'vsplit', 'ctrl-y': {lines -> setreg('*', join(lines, "\n"))}}
 
@@ -624,9 +640,6 @@ let g:fzf_colors =
 	\ 'header':		['fg', 'Comment'] }
 
 let g:fzf_history_dir = '~/.local/share/fzf-history'
-
-nnoremap <silent> <leader>c  :Commits<CR>
-nnoremap <silent> <leader>bc :BCommits<CR>
 
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
