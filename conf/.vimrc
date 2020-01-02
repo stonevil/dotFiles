@@ -415,6 +415,10 @@ augroup markdown
 	au BufRead,BufNewFile *.markdown,*.mdown,*.mkdn,*.mkd,*.md,*.mdwn set filetype=markdown
 augroup END
 
+augroup ansible
+	au BufRead,BufNewFile */playbooks/*.yml set filetype=yaml.ansible
+augroup END
+
 
 """"""""""
 "" ansible-vim
@@ -577,7 +581,7 @@ nmap - <Plug>(choosewin)
 " Default fzf layout
 nnoremap <silent> <leader>e :Files<CR>
 nnoremap <silent> <leader>g :GFiles<CR>
-nnoremap <silent> <leader>] :Buffers<CR>
+nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>r :FZFMru<CR>
 nnoremap <silent> <leader>h :History<CR>
 
@@ -642,6 +646,8 @@ endif
 if executable('rg')
 	command! -bang -nargs=* Find call fzf#vim#grep('rg --no-ignore --hidden --follow --ignore-case --column --no-heading --line-number --color=always --glob "!.git/*" --glob "!.svn/*" --glob "!node_modules/*" --glob "!.undodir/*" --glob "!.session.vim" '.shellescape(<q-args>), 1, fzf#vim#with_preview(), <bang>0)
 endif
+
+" https://github.com/junegunn/fzf.vim
 
 
 """"""""""
