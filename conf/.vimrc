@@ -114,6 +114,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 
 	" Snippets
 	Plug 'SirVer/ultisnips'
+	Plug 'honza/vim-snippets'
 
 	" EnhancedDiff
 	"Plug 'chrisbra/vim-diff-enhanced'
@@ -171,8 +172,8 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	" HashiCorp Bundle
 	Plug 'hashivim/vim-hashicorp-tools'
 
-	" Ansible Bundle
-	Plug 'pearofducks/ansible-vim',       { 'do': 'cd ./UltiSnips; ./generate.py' }
+	" Ansible Bundle. Snippets do not working: https://github.com/pearofducks/ansible-vim/issues/87
+	Plug 'pearofducks/ansible-vim',       { 'do': './UltiSnips/generate.sh' }
 
 	" JSON Bundle
 	Plug 'elzr/vim-json',                 { 'for' : 'json' }
