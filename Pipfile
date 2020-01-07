@@ -18,7 +18,7 @@ pyasn1-modules==0.2.7
 pycparser==2.19
 pynvim==0.4.0
 pyOpenSSL==19.1.0
-PyYAML==5.2
+PyYAML==5.3
 rsa==4.0
 ruamel.yaml==0.16.5
 ruamel.yaml.clib==0.2.0
