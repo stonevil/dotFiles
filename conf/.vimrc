@@ -151,32 +151,32 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	"Plug 't9md/vim-chef'
 
 	" HCL
-	Plug 'fatih/vim-hclfmt'
+	"Plug 'fatih/vim-hclfmt'
 
 	" Helm
-	Plug 'towolf/vim-helm'
+	"Plug 'towolf/vim-helm'
 	"Plug 'mustache/vim-mustache-handlebars'
 
 	" Nginx Bundle
-	Plug 'LeonB/vim-nginx',               { 'for' : 'nginx' }
+	"Plug 'LeonB/vim-nginx',               { 'for' : 'nginx' }
 
 	" Logstash Bundle
 	Plug 'robbles/logstash.vim'
 
 	" TOML Bundle
-	Plug 'cespare/vim-toml'
+	"Plug 'cespare/vim-toml'
 
 	" Docker Bundle
-	Plug 'ekalinin/Dockerfile.vim',       { 'for' : 'Dockerfile' }
+	"Plug 'ekalinin/Dockerfile.vim',       { 'for' : 'Dockerfile' }
 
 	" HashiCorp Bundle
 	Plug 'hashivim/vim-hashicorp-tools'
 
 	" Ansible Bundle. Snippets do not working: https://github.com/pearofducks/ansible-vim/issues/87
-	Plug 'pearofducks/ansible-vim',       { 'do': './UltiSnips/generate.sh' }
+	"Plug 'pearofducks/ansible-vim',       { 'do': './UltiSnips/generate.sh' }
 
 	" JSON Bundle
-	Plug 'elzr/vim-json',                 { 'for' : 'json' }
+	"Plug 'elzr/vim-json',                 { 'for' : 'json' }
 
 	" Markdown Bundle
 	"Plug 'plasticboy/vim-markdown'
@@ -185,8 +185,10 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'moon-musick/vim-logrotate'
 
 	" Arduino Bundle
-	Plug 'sudar/vim-arduino-syntax',      { 'for': 'arduino' }
+	"Plug 'sudar/vim-arduino-syntax',      { 'for': 'arduino' }
 
+	" Polyglot
+	Plug 'sheerun/vim-polyglot'
 
 	" Enable clipboard over network connection. https://github.com/wincent/clipper is required
 	Plug 'wincent/vim-clipper'
@@ -430,6 +432,24 @@ let g:ansible_template_syntaxes = { '*.rb.j2': 'ruby' }
 
 
 """"""""""
+"" vista
+function! NearestMethodOrFunction() abort
+  return get(b:, 'vista_nearest_method_or_function', '')
+endfunction
+
+set statusline+=%{NearestMethodOrFunction()}
+
+" If you want to show the nearest function in your statusline automatically,
+" you can add the following line to your vimrc
+autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+
+let g:vista_fzf_preview = ['right:50%']
+let g:vista#renderer#enable_icon = 1
+
+nmap <silent> <F4> :Vista!!<CR>
+
+
+""""""""""
 "" tagbar
 "nmap <silent> <F4> :TagbarToggle<CR>
 "let g:tagbar_type_go = { 'ctagstype' : 'go', 'kinds' : [ 'p:package', 'i:imports:1', 'c:constants', 'v:variables', 't:types', 'n:interfaces', 'w:fields', 'e:embedded', 'm:methods', 'r:constructor', 'f:functions' ], 'sro' : '.', 'kind2scope' : { 't' : 'ctype', 'n' : 'ntype' }, 'scope2kind' : { 'ctype' : 't', 'ntype' : 'n' }, 'ctagsbin' : 'gotags', 'ctagsargs' : '-sort -silent' }
@@ -460,7 +480,7 @@ let g:tmux_navigator_disable_when_zoomed = 1
 "" vim-airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#csv#enabled = 1
-let g:airline#extensions#tagbar#enabled = 1
+"let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#branch#enabled = 1
 
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
