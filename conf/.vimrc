@@ -116,6 +116,9 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'SirVer/ultisnips'
 	Plug 'honza/vim-snippets'
 
+	" Enable repeating supported plugin maps with "."
+	Plug 'tpope/vim-repeat'
+
 	" EnhancedDiff
 	"Plug 'chrisbra/vim-diff-enhanced'
 
