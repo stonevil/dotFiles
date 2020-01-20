@@ -1,3 +1,5 @@
+# vim:ft=zsh :
+
 ## dotFiles
 # Path to your dotFiles configuration.
 DOTFILES=$HOME/.Files
@@ -66,7 +68,6 @@ ZSHSYNTAXHIGHLIGHTING=$DOTFILES/modules/zsh-syntax-highlighting
 if [[ -f $ZSHSYNTAXHIGHLIGHTING/zsh-syntax-highlighting.zsh ]]; then
 	source $ZSHSYNTAXHIGHLIGHTING/zsh-syntax-highlighting.zsh
 fi
-
 
 # Load shared for bash and zsh config file
 if [ -d $SHELLRC ]; then
