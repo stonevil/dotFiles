@@ -438,6 +438,19 @@ let g:ansible_template_syntaxes = { '*.rb.j2': 'ruby' }
 """"""""""
 "" airblade/vim-gitgutter
 
+" jump to next hunk (change): ]c
+" jump to previous hunk (change): [c
+" stage the hunk with <Leader>hs
+" undo it with <Leader>hu
+"
+" To stage part of any hunk:
+" preview the hunk, e.g. <Leader>hp
+" move to the preview window, e.g. :wincmd P
+" delete the lines you do not want to stage;
+" stage the remaining lines: either write (:w) the window or stage via <Leader>hs or :GitGutterStageHunk
+"
+" ic operates on all lines in the current hunk.
+" ac operates on all lines in the current hunk and any trailing empty lines.
 
 """"""""""
 "" vista
