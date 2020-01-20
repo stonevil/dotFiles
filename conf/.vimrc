@@ -127,7 +127,8 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 
 	" Git Bundle
 	Plug 'tpope/vim-fugitive'
-	Plug 'mhinz/vim-signify'
+	"Plug 'mhinz/vim-signify'
+	Plug 'airblade/vim-gitgutter'
 
 	" C/C++/ObjC Bundle
 	"Plug 'vim-scripts/c.vim'
@@ -380,8 +381,8 @@ augroup END
 
 augroup docker
 	au!
-	au BufRead,BufNewFile Dockerfile set filetype=Dockerfile
 	if exists('$TMUX')
+		au FileType Dockerfile nmap <F9> :call VimuxRunCommand("clear; hadolint " . bufname("%"))<CR>
 		au FileType Dockerfile nmap <F12> :call VimuxRunCommandInDir("CONTAINERNAME=`basename $PWD \| tr '[:upper:]' '[:lower:]'`; docker build -t $CONTAINERNAME .", 0)<CR><CR>
 	endif
 augroup END
@@ -397,16 +398,19 @@ augroup arduino
 	setl statusline=%!ArduinoStatusLine()
 augroup END
 
+augroup helm
+	au!
+	if exists('$TMUX')
+		au FileType helm nmap <F9> :call VimuxRunCommandInDir("clear; helm install --dry-run --debug .", 0)<CR><CR>
+	endif
+augroup END
+
 augroup kubernetes
 	au!
 	au BufRead,BufNewFile */.kube/config set filetype=yaml
 	au BufRead,BufNewFile */templates/*.yaml,*/deployment/*.yaml,*/templates/*.tpl,*/deployment/*.tpl set filetype=yaml.gotexttmpl
-	au FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 	if exists('$TMUX')
-		au FileType yaml nmap <F7> :call VimuxRunCommand("clear; kubectl apply -f ". bufname("%"))<CR>
-		au FileType yaml nmap <F8> :call VimuxRunCommand("clear; kubectl delete -f ". bufname("%"))<CR>
-		au FileType yaml nmap <F3> :call VimuxRunCommand("clear; kubectl get -f ". bufname("%"))<CR>
-		au FileType yaml nmap <F12> :call VimuxRunCommand("clear; kubeval ". bufname("%"))<CR>
+		au FileType yaml nmap <F9> :call VimuxRunCommand("clear; kubectl --dry-run -o yam". bufname("%"))<CR>
 	endif
 augroup END
 
@@ -429,6 +433,10 @@ let g:ansible_template_syntaxes = { '*.rb.j2': 'ruby' }
 "" Yggdroot/indentLine
 "let g:indentLine_setColors = 0
 ":IndentLinesToggle
+
+
+""""""""""
+"" airblade/vim-gitgutter
 
 
 """"""""""
