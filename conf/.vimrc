@@ -313,7 +313,7 @@ nnoremap <leader>uk :call ToggleSpell("uk_ua")<CR> "Toggle Ukraine spell
 "" Vimux global settings
 if exists('$TMUX')
 	map <leader>vx :VimuxInterruptRunner<CR>
-	map <leader><F12> :VimuxRunLastCommand<CR>
+	map <leader>vl :VimuxRunLastCommand<CR>
 	map <leader>vi :VimuxInspectRunner<CR>
 	map <leader>vq :VimuxCloseRunner<CR>
 	map <leader>vz :call VimuxZoomRunner()<CR>
