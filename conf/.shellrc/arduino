@@ -1,11 +1,5 @@
 # vim:ft=sh :
 
-# Configure toolset for Arduino development
-if [[ -d $HOME/Applications/Arduino.app/Contents/MacOS/Arduino ]]; then
-	ARDUINOAPP_PATH=$HOME/Applications/Arduino.app/Contents/MacOS/Arduino
-	alias arduino=$ARDUINOAPP_PATH
-fi
-
 if [[ -d $HOME/Development/xtensa-esp32-elf ]]; then
 	export XTENSA_PATH=$HOME/Development/xtensa-esp32-elf
 	export PATH=$PATH:$XTENSA_PATH/bin
