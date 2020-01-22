@@ -374,7 +374,14 @@ augroup sshconfig
 	au BufRead,BufNewFile  *.sshconfig set syntax=sshconfig
 augroup END
 
-augroup vagrant
+augroup shellfile
+	au!
+	if exists('$TMUX')
+		au FileType sh nmap <F9> :call VimuxRunCommand("clear; shellcheck " . bufname("%"))<CR>
+	endif
+augroup END
+
+augroup vagrantfile
 	au!
 	au BufRead,BufNewFile Vagrantfile set filetype=ruby
 	if exists('$TMUX')
@@ -382,7 +389,7 @@ augroup vagrant
 	endif
 augroup END
 
-augroup docker
+augroup dockerfile
 	au!
 	if exists('$TMUX')
 		au FileType Dockerfile nmap <F9> :call VimuxRunCommand("clear; hadolint " . bufname("%"))<CR>
@@ -395,13 +402,13 @@ augroup myvimrc
 	au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc,init.vim so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
 augroup END
 
-augroup arduino
+augroup arduinofile
 	au!
 	au BufRead,BufNewFile *.ino,*.pde,*ide set filetype=c++
 	setl statusline=%!ArduinoStatusLine()
 augroup END
 
-augroup helm
+augroup helmfile
 	au!
 	if exists('$TMUX')
 		au FileType helm nmap <F9> :call VimuxRunCommandInDir("clear; helm install --dry-run --debug .", 0)<CR><CR>
