@@ -372,6 +372,11 @@ augroup FileType go
 	let g:go_auto_type_info = 1
 augroup END
 
+augroup myvimrc
+	au!
+	au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc,init.vim so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
+augroup END
+
 augroup sshconfig
 	au!
 	au BufRead,BufNewFile  *.sshconfig set syntax=sshconfig
@@ -400,11 +405,6 @@ augroup dockerfile
 		"au FileType Dockerfile nmap <F9> :call VimuxRunCommand("clear; hadolint " . bufname("%"))<CR>
 		"au FileType Dockerfile nmap <F12> :call VimuxRunCommandInDir("CONTAINERNAME=`basename $PWD \| tr '[:upper:]' '[:lower:]'`; docker build -t $CONTAINERNAME -f " . bufname("%") . " .", 0)<CR><CR>
 	"endif
-augroup END
-
-augroup myvimrc
-	au!
-	au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc,init.vim so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
 augroup END
 
 augroup arduinofile
