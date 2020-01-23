@@ -64,7 +64,9 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'roxma/vim-tmux-clipboard'
 	"Plug 'blueyed/vim-diminactive'
 	Plug 'thaerkh/vim-workspace'
-	Plug 'benmills/vimux'
+
+	"Plug 'benmills/vimux'
+	"Plug 'benmills/vimux-golang',         { 'for': 'golang' }
 
 	Plug 'simnalamburt/vim-mundo'
 
@@ -128,7 +130,6 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'zchee/deoplete-go',             { 'build': {'unix': 'make'}, 'for': 'golang' }
 	Plug 'fatih/vim-go',                  { 'do': ':GoInstallBinaries', 'for': 'golang' }
 	Plug 'godoctor/godoctor.vim',         { 'for': 'golang' }
-	"Plug 'benmills/vimux-golang',         { 'for': 'golang' }
 
 	" Git Bundle
 	Plug 'tpope/vim-fugitive'
@@ -393,10 +394,12 @@ augroup END
 
 augroup dockerfile
 	au!
-	if exists('$TMUX')
-		au FileType Dockerfile nmap <F9> :call VimuxRunCommand("clear; hadolint " . bufname("%"))<CR>
-		au FileType Dockerfile nmap <F12> :call VimuxRunCommandInDir("CONTAINERNAME=`basename $PWD \| tr '[:upper:]' '[:lower:]'`; docker build -t $CONTAINERNAME -f " . bufname("%") . " .", 0)<CR><CR>
-	endif
+	au FileType Dockerfile nmap <F9> :terminal hadolint %<CR>
+	au FileType Dockerfile nmap <F12> :terminal CONTAINERNAME=`basename $PWD | tr '[:upper:]' '[:lower:]'`; docker build -t $CONTAINERNAME -f % .<CR><CR>
+	"if exists('$TMUX')
+		"au FileType Dockerfile nmap <F9> :call VimuxRunCommand("clear; hadolint " . bufname("%"))<CR>
+		"au FileType Dockerfile nmap <F12> :call VimuxRunCommandInDir("CONTAINERNAME=`basename $PWD \| tr '[:upper:]' '[:lower:]'`; docker build -t $CONTAINERNAME -f " . bufname("%") . " .", 0)<CR><CR>
+	"endif
 augroup END
 
 augroup myvimrc
@@ -412,27 +415,30 @@ augroup END
 
 augroup helmfile
 	au!
-	if exists('$TMUX')
-		au FileType helm nmap <F9> :call VimuxRunCommandInDir("clear; helm install --dry-run --debug .", 0)<CR><CR>
-	endif
+	au FileType helm nmap <F9> :terminal helm install --dry-run --debug .<CR><CR>
+	"if exists('$TMUX')
+		"au FileType helm nmap <F9> :call VimuxRunCommandInDir("clear; helm install --dry-run --debug .", 0)<CR><CR>
+	"endif
 augroup END
 
-augroup kubernetes
+augroup k8sfile
 	au!
 	au BufRead,BufNewFile */.kube/config set filetype=yaml
 	au BufRead,BufNewFile */templates/*.yaml,*/deployment/*.yaml,*/templates/*.tpl,*/deployment/*.tpl set filetype=yaml.gotexttmpl
-	if exists('$TMUX')
-		au FileType yaml nmap <F9> :call VimuxRunCommand("clear; kubectl --dry-run -o yam". bufname("%"))<CR>
-	endif
+	au FileType yaml nmap <F9> :terminal kubectl --dry-run -o yam %<CR>
+	"if exists('$TMUX')
+		"au FileType yaml nmap <F9> :call VimuxRunCommand("clear; kubectl --dry-run -o yam". bufname("%"))<CR>
+	"endif
 augroup END
 
-augroup markdown
+augroup markdownfile
 	au!
 	au BufRead,BufNewFile *.markdown,*.mdown,*.mkdn,*.mkd,*.md,*.mdwn set filetype=markdown
 augroup END
 
-augroup ansible
+augroup ansiblefile
 	au BufRead,BufNewFile */playbooks/*.yml set filetype=yaml.ansible
+	au FileType yaml.ansible nmap <F9> :terminal ansible-lint .<CR>
 augroup END
 
 
@@ -780,6 +786,11 @@ endif
 
 au InsertEnter * exec 'inoremap <silent> ' . g:UltiSnipsExpandTrigger . ' <C-R>=g:UltiSnips_Complete()<cr>'
 au InsertEnter * exec 'inoremap <silent> ' . g:UltiSnipsJumpBackwardTrigger . ' <C-R>=g:UltiSnips_Reverse()<cr>'
+
+
+""""""""""
+"" Enter |Terminal-mode| automatically
+autocmd TermOpen * startinsert
 
 
 """"""""""
