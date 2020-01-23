@@ -400,7 +400,7 @@ augroup END
 augroup dockerfile
 	au!
 	au FileType Dockerfile nmap <F9> :terminal hadolint %<CR>
-	au FileType Dockerfile nmap <F12> :terminal CONTAINERNAME=`basename $PWD | tr '[:upper:]' '[:lower:]'`; docker build -t $CONTAINERNAME -f % .<CR><CR>
+	au FileType Dockerfile nmap <F12> :terminal CONTAINERNAME=`basename $PWD \| tr '[:upper:]' '[:lower:]'`; docker build -t $CONTAINERNAME -f % .<CR><CR>
 	"if exists('$TMUX')
 		"au FileType Dockerfile nmap <F9> :call VimuxRunCommand("clear; hadolint " . bufname("%"))<CR>
 		"au FileType Dockerfile nmap <F12> :call VimuxRunCommandInDir("CONTAINERNAME=`basename $PWD \| tr '[:upper:]' '[:lower:]'`; docker build -t $CONTAINERNAME -f " . bufname("%") . " .", 0)<CR><CR>
