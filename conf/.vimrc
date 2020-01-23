@@ -55,21 +55,23 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	let g:deoplete#enable_at_startup = 1
 
 	" UI/UX
-	Plug 'junegunn/fzf' ",                  { 'dir': '~/.fzf', 'do': './install --all' }
+	Plug '~/.homebrew/opt/fzf'
 	Plug 'junegunn/fzf.vim'
 	Plug 'pbogut/fzf-mru.vim'
+
 	Plug 'christoomey/vim-tmux-navigator'
 	Plug 'tmux-plugins/vim-tmux-focus-events'
 	Plug 'roxma/vim-tmux-clipboard'
 	"Plug 'blueyed/vim-diminactive'
 	Plug 'thaerkh/vim-workspace'
-	Plug 'simnalamburt/vim-mundo'
-	"Plug 'majutsushi/tagbar',             { 'on': 'TagbarToggle' }
 	Plug 'benmills/vimux'
 
-	Plug 'scrooloose/nerdtree'
-	Plug 'Xuyuanp/nerdtree-git-plugin'
-	Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+	Plug 'simnalamburt/vim-mundo'
+
+	"Plug 'scrooloose/nerdtree'
+	"Plug 'Xuyuanp/nerdtree-git-plugin'
+	"Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+
 	Plug 'ryanoasis/vim-devicons'
 
 	" Asynchronous linting/fixing for Vim and Language Server Protocol (LSP) integration
@@ -102,7 +104,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	"Plug 'junegunn/vim-easy-align'
 
 	" Tabulation
-	Plug 'godlygeek/tabular'
+	"Plug 'godlygeek/tabular'
 
 	" Simplifies the transition between multiline and single-line cod
 	Plug 'AndrewRadev/splitjoin.vim'
