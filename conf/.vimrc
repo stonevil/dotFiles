@@ -384,17 +384,20 @@ augroup END
 
 augroup shellfile
 	au!
-	if exists('$TMUX')
-		au FileType sh nmap <F9> :call VimuxRunCommand("clear; shellcheck " . bufname("%"))<CR>
-	endif
+	au FileType sh nmap <F9> :terminal shellcheck %<CR>
+	"if exists('$TMUX')
+		"au FileType sh nmap <F9> :call VimuxRunCommand("clear; shellcheck " . bufname("%"))<CR>
+	"endif
 augroup END
 
 augroup vagrantfile
 	au!
 	au BufRead,BufNewFile Vagrantfile set filetype=ruby
-	if exists('$TMUX')
-		au FileType ruby nmap <F12> :call VimuxRunCommandInDir("vagrant validate")<CR>
-	endif
+	au FileType ruby nmap <F9> :terminal vagrant validate<CR>
+	au FileType ruby nmap <F12> :terminal vagrant up<CR>
+	"if exists('$TMUX')
+		"au FileType ruby nmap <F12> :call VimuxRunCommandInDir("vagrant validate")<CR>
+	"endif
 augroup END
 
 augroup dockerfile
