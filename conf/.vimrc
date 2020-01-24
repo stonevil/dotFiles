@@ -209,7 +209,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'sheerun/vim-polyglot'
 
 	" Enable clipboard over network connection. https://github.com/wincent/clipper is required
-	Plug 'wincent/vim-clipper'
+	"Plug 'wincent/vim-clipper'
 call plug#end()
 
 
@@ -533,7 +533,7 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 
 let g:airline#extensions#tmuxline#enabled = 0
 let g:tmuxline_powerline_separators = 0
-let airline#extensions#tmuxline#snapshot_file = '~/.tmux.theme'
+"let airline#extensions#tmuxline#snapshot_file = '~/.tmux.theme'
 
 
 """"""""""
