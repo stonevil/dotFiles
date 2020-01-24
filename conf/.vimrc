@@ -244,7 +244,16 @@ set autowrite										" Automatically save before :next, :make etc.
 set noswapfile									" Don't use swapfile
 set nobackup										" Don't create annoying backup files
 set fileformats=unix,dos,mac		" Prefer Unix over Windows over OS 9 formats
-set wildignore+=*.bak,*.o,*.obj,.git,.hg,.svn,*.rbc,*.pyc,__pycache__,*.swp,.DS_Store
+
+set wildignore+=*.bak,.hg,*.swp,__pycache__
+set wildignore+=*/tmp/*,*.so,*.pyc,*.png,*.jpg,*.gif,*.jpeg,*.ico,*.pdf
+set wildignore+=*.wav,*.mp4,*.mp3
+set wildignore+=*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem
+set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
+set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
+set wildignore+=*.swp,*~,._*
+set wildignore+=_pycache_,.DS_Store,.vscode,.localized
+set wildignore+=.cache,node_modules,package-lock.json,yarn.lock,dist,.git
 
 set autoindent									" Enabile Autoindent
 set shiftround									" Round indent to multiple of 'shiftwidth'. Applies to > and < commands.
@@ -491,6 +500,9 @@ let g:floaterm_keymap_new = '<F9>'
 let g:floaterm_keymap_prev = '<F10>'
 let g:floaterm_keymap_next = '<F11>'
 let g:floaterm_keymap_toggle = '<F12>'
+
+let g:floaterm_width = 0.8
+let g:floaterm_height = 0.8
 
 
 """"""""""
