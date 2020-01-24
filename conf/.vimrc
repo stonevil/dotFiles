@@ -55,19 +55,30 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	let g:deoplete#enable_at_startup = 1
 
 	" UI/UX
+	" Still not decided between FZF and Clap.
+	" CLap works faster and using popup window.
+	" But not very stable and search pretty limited
+
+	" FZF
 	Plug '~/.homebrew/opt/fzf'
 	Plug 'junegunn/fzf.vim'
 	Plug 'pbogut/fzf-mru.vim'
+	" Clap. Generic interactive finder and dispatcher
+	Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
 
+	" TMUX integration
 	Plug 'christoomey/vim-tmux-navigator'
 	Plug 'tmux-plugins/vim-tmux-focus-events'
 	Plug 'roxma/vim-tmux-clipboard'
 	"Plug 'blueyed/vim-diminactive'
+
+	" Workspaces support
 	Plug 'thaerkh/vim-workspace'
 
-	"Plug 'benmills/vimux'
-	"Plug 'benmills/vimux-golang',         { 'for': 'golang' }
+	" Floating terminal
+	Plug 'voldikss/vim-floaterm'
 
+	" Undo tree
 	Plug 'simnalamburt/vim-mundo'
 
 	"Plug 'scrooloose/nerdtree'
@@ -313,15 +324,6 @@ endfunction
 nnoremap <leader>gb :call ToggleSpell("en_gb")<CR> "Toggle English spell
 nnoremap <leader>uk :call ToggleSpell("uk_ua")<CR> "Toggle Ukraine spell
 
-"" Vimux global settings
-"if exists('$TMUX')
-	"map <leader>vx :VimuxInterruptRunner<CR>
-	"map <leader>vl :VimuxRunLastCommand<CR>
-	"map <leader>vi :VimuxInspectRunner<CR>
-	"map <leader>vq :VimuxCloseRunner<CR>
-	"map <leader>vz :call VimuxZoomRunner()<CR>
-	"map <leader>vp :VimuxPromptCommand<CR>
-"endif
 
 "" Configuration groups
 augroup FileType go
@@ -339,9 +341,9 @@ augroup FileType go
 	au FileType go nmap <leader>b <Plug>(go-build)
 	au FileType go nmap <leader>t <Plug>(go-test)
 
-	au FileType go nmap <F9> :GoCoverageToggle -short<CR>
-	au FileType go nmap <F10> :GoTest -short<CR>
-	au FileType go nmap <F12> <Plug>(go-def)
+	au FileType go nmap <leader><F9> :GoCoverageToggle -short<CR>
+	au FileType go nmap <leader><F10> :GoTest -short<CR>
+	au FileType go nmap <leader><F11> <Plug>(go-def)
 
 	au FileType go nmap <leader><F12> <Plug>(go-metalinter)
 
@@ -384,30 +386,20 @@ augroup END
 
 augroup shellfile
 	au!
-	au FileType sh nmap <F9> :terminal shellcheck %<CR>
-	"if exists('$TMUX')
-		"au FileType sh nmap <F9> :call VimuxRunCommand("clear; shellcheck " . bufname("%"))<CR>
-	"endif
+	au FileType sh nnoremap <leader><F12> :terminal shellcheck %<CR>
 augroup END
 
 augroup vagrantfile
 	au!
 	au BufRead,BufNewFile Vagrantfile set filetype=ruby
-	au FileType ruby nmap <F9> :terminal vagrant validate<CR>
-	au FileType ruby nmap <F12> :terminal vagrant up<CR>
-	"if exists('$TMUX')
-		"au FileType ruby nmap <F12> :call VimuxRunCommandInDir("vagrant validate")<CR>
-	"endif
+	au FileType ruby nnoremap <leader><F9> :terminal vagrant up<CR>
+	au FileType ruby nnoremap <leader><F12> :terminal vagrant validate<CR>
 augroup END
 
 augroup dockerfile
 	au!
-	au FileType Dockerfile nmap <F9> :terminal hadolint %<CR>
-	au FileType Dockerfile nmap <F12> :terminal CONTAINERNAME=`basename $PWD \| tr '[:upper:]' '[:lower:]'`; docker build -t $CONTAINERNAME -f % .<CR><CR>
-	"if exists('$TMUX')
-		"au FileType Dockerfile nmap <F9> :call VimuxRunCommand("clear; hadolint " . bufname("%"))<CR>
-		"au FileType Dockerfile nmap <F12> :call VimuxRunCommandInDir("CONTAINERNAME=`basename $PWD \| tr '[:upper:]' '[:lower:]'`; docker build -t $CONTAINERNAME -f " . bufname("%") . " .", 0)<CR><CR>
-	"endif
+	au FileType Dockerfile nnoremap <leader><F9> :terminal CONTAINERNAME=`basename $PWD \| tr '[:upper:]' '[:lower:]'`; docker build -t $CONTAINERNAME -f % .<CR><CR>
+	au FileType Dockerfile nnoremap <leader><F12> :terminal hadolint %<CR>
 augroup END
 
 augroup arduinofile
@@ -418,20 +410,14 @@ augroup END
 
 augroup helmfile
 	au!
-	au FileType helm nmap <F9> :terminal helm install --dry-run --debug .<CR><CR>
-	"if exists('$TMUX')
-		"au FileType helm nmap <F9> :call VimuxRunCommandInDir("clear; helm install --dry-run --debug .", 0)<CR><CR>
-	"endif
+	au FileType helm nnoremap <leader><F12> :terminal helm install --dry-run --debug .<CR><CR>
 augroup END
 
 augroup k8sfile
 	au!
 	au BufRead,BufNewFile */.kube/config set filetype=yaml
 	au BufRead,BufNewFile */templates/*.yaml,*/deployment/*.yaml,*/templates/*.tpl,*/deployment/*.tpl set filetype=yaml.gotexttmpl
-	au FileType yaml nmap <F9> :terminal kubectl --dry-run -o yam %<CR>
-	"if exists('$TMUX')
-		"au FileType yaml nmap <F9> :call VimuxRunCommand("clear; kubectl --dry-run -o yam". bufname("%"))<CR>
-	"endif
+	au FileType yaml nnoremap <leader><F12> :terminal kubectl --dry-run -o yam %<CR>
 augroup END
 
 augroup markdownfile
@@ -441,8 +427,14 @@ augroup END
 
 augroup ansiblefile
 	au BufRead,BufNewFile */playbooks/*.yml set filetype=yaml.ansible
-	au FileType yaml.ansible nmap <F9> :terminal ansible-lint .<CR>
+	au FileType yaml.ansible nnoremap <leader><F12> :terminal ansible-lint .<CR>
 augroup END
+
+
+""""""""""
+"" liuchengxu/vim-clap
+nnoremap <F4> :Clap files --hidden<CR>
+nnoremap <leader><F4> :Clap <CR>
 
 
 """"""""""
@@ -473,6 +465,7 @@ let g:ansible_template_syntaxes = { '*.rb.j2': 'ruby' }
 " ic operates on all lines in the current hunk.
 " ac operates on all lines in the current hunk and any trailing empty lines.
 
+
 """"""""""
 "" vista
 function! NearestMethodOrFunction() abort
@@ -488,17 +481,16 @@ autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 let g:vista_fzf_preview = ['right:50%']
 let g:vista#renderer#enable_icon = 1
 
-nmap <silent> <F4> :Vista!!<CR>
+" Toggle vista view window
+nnoremap <silent> <F1> :Vista!!<CR>
 
 
 """"""""""
-"" tagbar
-"nmap <silent> <F4> :TagbarToggle<CR>
-"let g:tagbar_type_go = { 'ctagstype' : 'go', 'kinds' : [ 'p:package', 'i:imports:1', 'c:constants', 'v:variables', 't:types', 'n:interfaces', 'w:fields', 'e:embedded', 'm:methods', 'r:constructor', 'f:functions' ], 'sro' : '.', 'kind2scope' : { 't' : 'ctype', 'n' : 'ntype' }, 'scope2kind' : { 'ctype' : 't', 'ntype' : 'n' }, 'ctagsbin' : 'gotags', 'ctagsargs' : '-sort -silent' }
-"let g:tagbar_type_ruby = { 'kinds' : [ 'm:modules', 'c:classes', 'd:describes', 'C:contexts', 'f:methods', 'F:singleton methods' ] }
-"let g:tagbar_type_ansible = { 'ctagstype' : 'ansible', 'kinds' : [ 't:tasks' ], 'sort' : 0 }
-"let g:tagbar_type_puppet = { 'ctagstype': 'puppet', 'kinds': [ 'c:class', 's:site', 'n:node', 'd:definition' ]}
-"let g:tagbar_type_markdown = { 'ctagstype' : 'markdown', 'kinds' : [ 'h:Heading_L1', 'i:Heading_L2', 'k:Heading_L3' ]}
+"" vim-floaterm
+let g:floaterm_keymap_new = '<F9>'
+let g:floaterm_keymap_prev = '<F10>'
+let g:floaterm_keymap_next = '<F11>'
+let g:floaterm_keymap_toggle = '<F12>'
 
 
 """"""""""
@@ -558,17 +550,18 @@ imap <expr> <CR> pumvisible() ? "\<c-y>" : "<Plug>delimitMateCR"
 
 
 """"""""""
-"" vim-mundo
-noremap <F10> :NERDTreeToggle<cr>
-noremap <leader><F10> :NERDTreeFind<cr>
-let NERDTreeShowHidden=1
+"" nerdtree
+"noremap <F10> :NERDTreeToggle<cr>
+"noremap <leader><F10> :NERDTreeFind<cr>
+"let NERDTreeShowHidden=1
+
 
 """"""""""
 "" nerdcommenter
-let g:NERDCompactSexyComs = 1
-let g:NERDCommentEmptyLines = 1
-let g:NERDTrimTrailingWhitespace = 1
-let g:NERDToggleCheckAllLines = 1
+"let g:NERDCompactSexyComs = 1
+"let g:NERDCommentEmptyLines = 1
+"let g:NERDTrimTrailingWhitespace = 1
+"let g:NERDToggleCheckAllLines = 1
 
 " Comment out the current line or text selected in visual mode
 " [count]<leader>cc
@@ -627,7 +620,7 @@ nmap <silent> <leader> <C-k> <Plug>(ale_next_wrap)
 
 """"""""""
 "" vim-mundo
-nnoremap <F5> :MundoToggle<CR>
+nnoremap <silent> <leader>mt :MundoToggle<CR>
 let g:mundo_close_on_revert = 1
 
 
