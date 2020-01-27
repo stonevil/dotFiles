@@ -15,7 +15,7 @@ function! InstallPlug(plugpath)
 		if !executable("curl")
 			echoerr "You have to install curl or first install vim-plug yourself!"
 			execute "q!"
-  	endif
+		endif
 		echo 'Installing vim-plug...'
 		execute '!curl -fL --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim -o ' . a:plugpath
 		"silent exec "!\curl -fLo " . vimplug_exists . " --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
