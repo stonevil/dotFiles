@@ -69,7 +69,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'junegunn/fzf.vim'
 	Plug 'pbogut/fzf-mru.vim'
 	" Clap. Generic interactive finder and dispatcher
-	Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
+	"Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
 
 	" TMUX integration
 	Plug 'christoomey/vim-tmux-navigator'
@@ -448,8 +448,8 @@ augroup END
 
 """"""""""
 "" liuchengxu/vim-clap
-nnoremap <F4> :Clap files --hidden<CR>
-nnoremap <leader><F4> :Clap <CR>
+"nnoremap <F4> :Clap files --hidden<CR>
+"nnoremap <leader><F4> :Clap <CR>
 
 
 """"""""""
