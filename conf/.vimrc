@@ -1,3 +1,4 @@
+" vim:ft=vim :
 " vint: -ProhibitAutocmdWithNoGroup
 " vint: -ProhibitSetNoCompatible
 
