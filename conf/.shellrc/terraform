@@ -1,8 +1,0 @@
-# vim:ft=sh :
-
-# Install HashiCorp Terraform
-if ! command -v terraform >/dev/null; then
-	if command -v brew >/dev/null; then
-		brew install terraform
-	fi
-fi

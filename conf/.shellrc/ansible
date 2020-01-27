@@ -1,17 +1,4 @@
+#!/bin/bash
 # vim:ft=sh :
-
-# Install Ansible
-if ! command -v ansible >/dev/null; then
-	if command -v brew >/dev/null; then
-		pip3 install ansible --upgrade
-	fi
-fi
-
-# Install Ansible lint
-if ! command -v ansible-lint >/dev/null; then
-	if command -v brew >/dev/null; then
-		pip3 install ansible-lint --upgrade
-	fi
-fi
 
 alias ansible-lint='ansible-lint -c ~/.ansible-lint'

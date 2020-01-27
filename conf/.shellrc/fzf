@@ -1,3 +1,4 @@
+#!/bin/bash
 # vim:ft=sh :
 
 if ! command -v fzf >/dev/null; then
@@ -15,7 +16,7 @@ export FZF_DEFAULT_COMMAND_IGNORE="--glob '!.git/*' --glob '!.svn/*' --glob '!no
 
 export FZF_DEFAULT_COMMAND="rg --files --no-ignore --hidden --follow --ignore-case $FZF_DEFAULT_COMMAND_IGNORE"
 
-export FZF_DEFAULT_OPTS='--bind F2:toggle-preview,ctrl-f:page-down,ctrl-b:page-up,alt-f:preview-page-down,alt-b:preview-page-up,q:abort --border --preview-window bottom --height 80% --layout=reverse --preview "[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers,changes --color=always {} || head -100 {}) 2> /dev/null | head -100"'
+export FZF_DEFAULT_OPTS='--bind F2:toggle-preview,ctrl-f:page-down,ctrl-b:page-up,alt-f:preview-page-down,alt-b:preview-page-up,q:abort --border --preview-window bottom:hidden --height 80% --layout=reverse --preview "[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers,changes --color=always {} || head -100 {}) 2> /dev/null | head -100"'
 
 export FZF_COMPLETION_OPTS="$FZF_COMPLETION_OPTS"
 
