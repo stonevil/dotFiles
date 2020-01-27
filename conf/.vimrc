@@ -81,7 +81,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'thaerkh/vim-workspace'
 
 	" Floating terminal
-	Plug 'voldikss/vim-floaterm'
+	"Plug 'voldikss/vim-floaterm'
 
 	" Undo tree
 	Plug 'simnalamburt/vim-mundo'
@@ -502,13 +502,13 @@ nnoremap <silent> <F1> :Vista!!<CR>
 
 """"""""""
 "" vim-floaterm
-let g:floaterm_keymap_new = '<F9>'
-let g:floaterm_keymap_prev = '<F10>'
-let g:floaterm_keymap_next = '<F11>'
-let g:floaterm_keymap_toggle = '<F12>'
+"let g:floaterm_keymap_new = '<F9>'
+"let g:floaterm_keymap_prev = '<F10>'
+"let g:floaterm_keymap_next = '<F11>'
+"let g:floaterm_keymap_toggle = '<F12>'
 
-let g:floaterm_width = 0.8
-let g:floaterm_height = 0.8
+"let g:floaterm_width = 0.8
+"let g:floaterm_height = 0.8
 
 
 """"""""""
