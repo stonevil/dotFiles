@@ -12,10 +12,14 @@ endif
 
 function! InstallPlug(plugpath)
 	if !filereadable(a:plugpath)
+		if !executable("curl")
+			echoerr "You have to install curl or first install vim-plug yourself!"
+			execute "q!"
+  	endif
 		echo 'Installing vim-plug...'
 		execute '!curl -fL --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim -o ' . a:plugpath
-" 	silent !\curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-" 	let g:not_finish_vimplug = "yes"
+		"silent exec "!\curl -fLo " . vimplug_exists . " --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+		"let g:not_finish_vimplug = "yes"
 		autocmd VimEnter * PlugInstall
 	endif
 endfunction
@@ -88,7 +92,8 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'ryanoasis/vim-devicons'
 
 	" Asynchronous linting/fixing for Vim and Language Server Protocol (LSP) integration
-	Plug 'dense-analysis/ale'
+	"Plug 'dense-analysis/ale'
+	Plug 'desmap/ale-sensible' | Plug 'dense-analysis/ale'
 
 	" Viewer & Finder for LSP symbols and tags
 	Plug 'liuchengxu/vista.vim'
@@ -621,7 +626,7 @@ let g:ale_set_balloons = 1
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
 
-let g:ale_fixers = { '*': ['trim_whitespace', 'remove_trailing_lines'], 'javascript': ['prettier', 'eslint'], 'sh': ['shfmt'], 'yaml': ['prettier'], }
+let g:ale_fixers = { '*': ['trim_whitespace', 'remove_trailing_lines'], 'javascript': ['prettier', 'eslint'], 'css' : ['prettier'], 'html' : ['prettier'], 'markdown' : ['prettier'], 'json': ['prettier'], 'sh': ['shfmt'], 'yaml': ['prettier'], 'c' : ['clang-format'], 'cpp' : ['clang-format'], 'python' : ['black'], 'go': ['goimports', 'gofmt'] }
 
 let g:ale_fix_on_save = 1
 "let g:ale_lint_on_text_changed = 'never'
@@ -687,9 +692,73 @@ nnoremap <silent> <leader>ft :Filetypes<CR>
 
 nnoremap <silent> <leader>s :Snippets<CR>
 
+
+""""""""""
+"" fzf
+" floating fzf window with borders
+function! CreateCenteredFloatingWindow()
+	let width = min([&columns - 4, max([80, &columns - 20])])
+	let height = min([&lines - 4, max([20, &lines - 10])])
+	let top = ((&lines - height) / 2) - 1
+	let left = (&columns - width) / 2
+	let opts = {'relative': 'editor', 'row': top, 'col': left, 'width': width, 'height': height, 'style': 'minimal'}
+	let top = "╭" . repeat("─", width - 2) . "╮"
+	let mid = "│" . repeat(" ", width - 2) . "│"
+	let bot = "╰" . repeat("─", width - 2) . "╯"
+	let lines = [top] + repeat([mid], height - 2) + [bot]
+	let s:buf = nvim_create_buf(v:false, v:true)
+	call nvim_buf_set_lines(s:buf, 0, -1, v:true, lines)
+	call nvim_open_win(s:buf, v:true, opts)
+	set winhl=Normal:Floating
+	let opts.row += 1
+	let opts.height -= 2
+	let opts.col += 2
+	let opts.width -= 4
+	call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
+	au BufWipeout <buffer> exe 'bw '.s:buf
+endfunction
+
+" Files + devicons + floating fzf
+function! Fzf_dev()
+	let l:fzf_files_options = '--preview "bat --theme="TwoDark" --style=numbers,changes --color=always {2..-1} | head -'.&lines.'"'
+	function! s:files()
+		let l:files = split(system($FZF_DEFAULT_COMMAND), '\n')
+		return s:prepend_icon(l:files)
+	endfunction
+
+	function! s:prepend_icon(candidates)
+		let l:result = []
+		for l:candidate in a:candidates
+			let l:filename = fnamemodify(l:candidate, ':p:t')
+			let l:icon = WebDevIconsGetFileTypeSymbol(l:filename, isdirectory(l:filename))
+			call add(l:result, printf('%s %s', l:icon, l:candidate))
+		endfor
+		return l:result
+	endfunction
+
+	function! s:edit_file(item)
+		let l:pos = stridx(a:item, ' ')
+		let l:file_path = a:item[pos+1:-1]
+		execute 'silent e' l:file_path
+	endfunction
+
+	call fzf#run({ \ 'source': <sid>files(), \ 'sink': function('s:edit_file'), \ 'options': '-m --reverse ' . l:fzf_files_options, \ 'down': '40%', \ 'window': 'call CreateCenteredFloatingWindow()'})
+endfunction
+
 let g:fzf_action = { 'ctrl-t': 'tab split', 'ctrl-x': 'split', 'ctrl-v': 'vsplit', 'ctrl-y': {lines -> setreg('*', join(lines, "\n"))}}
 
-let g:fzf_layout = { 'up': '~60%' }
+"let g:fzf_layout = { 'up': '~60%' }
+let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
+
+" Command for git grep
+if executable('git')
+	command! -bang -nargs=* GGrep call fzf#vim#grep('git grep --line-number '.shellescape(<q-args>), 0, { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
+endif
+
+" Command for string search
+if executable('rg')
+	command! -bang -nargs=* Find call fzf#vim#grep('rg --no-ignore --hidden --follow --ignore-case --column --no-heading --line-number --color=always --glob "!.git/*" --glob "!.svn/*" --glob "!node_modules/*" --glob "!.undodir/*" --glob "!.session.vim" '.shellescape(<q-args>), 1, fzf#vim#with_preview(), <bang>0)
+endif
 
 " Customize fzf colors to match your color scheme
 let g:fzf_colors =
@@ -717,18 +786,6 @@ let g:fzf_commits_log_options = '--graph --color=always --format="%C(yellow)%h%C
 let g:fzf_tags_command = 'ctags -R'
 " [Commands] --expect expression for directly executing the command
 let g:fzf_commands_expect = 'alt-enter,ctrl-x'
-
-" Command for git grep
-if executable('git')
-	command! -bang -nargs=* GGrep call fzf#vim#grep('git grep --line-number '.shellescape(<q-args>), 0, { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
-endif
-
-" Command for string search
-if executable('rg')
-	command! -bang -nargs=* Find call fzf#vim#grep('rg --no-ignore --hidden --follow --ignore-case --column --no-heading --line-number --color=always --glob "!.git/*" --glob "!.svn/*" --glob "!node_modules/*" --glob "!.undodir/*" --glob "!.session.vim" '.shellescape(<q-args>), 1, fzf#vim#with_preview(), <bang>0)
-endif
-
-" https://github.com/junegunn/fzf.vim
 
 
 """"""""""
