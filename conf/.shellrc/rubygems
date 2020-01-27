@@ -1,11 +1,8 @@
+#!/bin/bash
 # vim:ft=sh :
 
 # Ruby Gems
 if command -v gem >/dev/null; then
-	RUBY_VERSION=$(ruby -e "puts RUBY_VERSION")
-	export GEM_HOME=$HOME/.gem/ruby/$RUBY_VERSION
-	export GEM_PATH=$GEM_HOME
-	export PATH=$PATH:$GEM_PATH/bin
 	function gems-update-all() {
 		gem update $(gem list | cut -d ' ' -f 1)
 		echo "All gems for current ruby updated"
