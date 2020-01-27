@@ -493,7 +493,7 @@ set statusline+=%{NearestMethodOrFunction()}
 " you can add the following line to your vimrc
 autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 
-let g:vista_fzf_preview = ['right:50%']
+let g:vista_fzf_preview = ['bottom:50%']
 let g:vista#renderer#enable_icon = 1
 
 " Toggle vista view window
