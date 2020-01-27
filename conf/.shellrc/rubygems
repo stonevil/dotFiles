@@ -8,7 +8,7 @@ if command -v gem >/dev/null; then
 		echo "All gems for current ruby updated"
 	}
 	function gems-remove-all() {
-		for x in $(gem list --no-versions); do gem uninstall $x -a -x -I; done
+		for x in $(gem list --no-versions); do gem uninstall "$x" -a -x -I; done
 		echo "All gems for current updated"
 	}
 	function gems-remove-old() { gem cleanup; }
