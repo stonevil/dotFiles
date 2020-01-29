@@ -650,7 +650,7 @@ nnoremap <silent> <leader>e :Files<CR>
 " Git files (git ls-files)
 nnoremap <silent> <leader>g :GFiles<CR>
 " Git files (git status)
-nnoremap <silent> <leader>g :GFiles?<CR>
+nnoremap <silent> <leader>G :GFiles?<CR>
 
 " Search Git commits (requires fugitive.vim)
 nnoremap <silent> <leader>c  :Commits<CR>
