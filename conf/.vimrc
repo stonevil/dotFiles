@@ -83,6 +83,9 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	" Floating terminal
 	"Plug 'voldikss/vim-floaterm'
 
+	" Shows the context of the currently visible buffer contents
+	Plug 'wellle/context.vim'
+
 	" Undo tree
 	Plug 'simnalamburt/vim-mundo'
 
