@@ -1,31 +1,12 @@
 # vim:ft=sh :
 
-# Install Go
-if ! command -v go >/dev/null; then
-	if command -v brew >/dev/null; then
-		brew install golang
-	fi
-fi
-
 # Configure Go ENV
 if command -v go >/dev/null; then
-	export GOPATH=~/Development/golang
-	export PATH=$GOPATH/bin:$PATH
-	alias go-update='go get -u'
-	alias go-update-all='go get -u all'
-	if [[ ! -d $GOPATH ]]; then
-		mkdir $GOPATH
-	fi
-	export GO15VENDOREXPERIMENT=1
-	# gocode
-	if ! command -v gocode >/dev/null; then
-		go get -u github.com/nsf/gocode
-	fi
-	# gometalinter
-	if ! command -v gometalinter >/dev/null; then
-		go get -u gopkg.in/alecthomas/gometalinter.v2
-	fi
-	if ! command -v dlv >/dev/null; then
-		go get -u github.com/derekparker/delve/cmd/dlv
+	export GOPATH=$HOME/.golang
+	export GOBIN=$GOPATH/bin
+	export PATH=$GOBIN:$PATH
+	export GO111MODULE=on
+	if [ ! -d "$GOPATH" ]; then
+		mkdir "$GOPATH"
 	fi
 fi
