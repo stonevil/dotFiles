@@ -27,3 +27,6 @@ doc/
 
 # Brew artifacts
 Brewfile.lock.json
+
+# Local binary
+bin/
