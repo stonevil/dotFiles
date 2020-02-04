@@ -7,7 +7,12 @@ alias l='ls -lahG'
 alias szsh='sudo /bin/zsh'
 alias fssh='ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
 
-if [[ $(uname) == "Linux" ]]; then
+if [ "$(uname)" = "Darwin" ]; then
+	alias tac='tail -r'
+	alias sed='gsed'
+fi
+
+if [ "$(uname)" = "Linux" ]; then
 	alias pbcopy="xclip -selection clipboard"
 	alias pbpaste="xclip -selection clipboard -o"
 fi
