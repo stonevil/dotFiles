@@ -342,6 +342,28 @@ endfunction
 nnoremap <leader>gb :call ToggleSpell("en_gb")<CR> "Toggle English spell
 nnoremap <leader>uk :call ToggleSpell("uk_ua")<CR> "Toggle Ukraine spell
 
+" Floating fzf window with borders
+function! OpenFloatingWindow()
+	let width = min([&columns - 4, max([80, &columns - 20])])
+	let height = min([&lines - 4, max([20, &lines - 10])])
+	let top = ((&lines - height) / 2) - 1
+	let left = (&columns - width) / 2
+	let opts = {'relative': 'editor', 'row': top, 'col': left, 'width': width, 'height': height, 'style': 'minimal'}
+	let top = "╭" . repeat("─", width - 2) . "╮"
+	let mid = "│" . repeat(" ", width - 2) . "│"
+	let bot = "╰" . repeat("─", width - 2) . "╯"
+	let lines = [top] + repeat([mid], height - 2) + [bot]
+	let s:buf = nvim_create_buf(v:false, v:true)
+	call nvim_buf_set_lines(s:buf, 0, -1, v:true, lines)
+	call nvim_open_win(s:buf, v:true, opts)
+	set winhl=Normal:Floating
+	let opts.row += 1
+	let opts.height -= 2
+	let opts.col += 2
+	let opts.width -= 4
+	call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
+	au BufWipeout <buffer> exe 'bw '.s:buf
+endfunction
 
 "" Configuration groups
 augroup FileType go
@@ -699,29 +721,6 @@ nnoremap <silent> <leader>s :Snippets<CR>
 
 """"""""""
 "" fzf
-" floating fzf window with borders
-function! CreateCenteredFloatingWindow()
-	let width = min([&columns - 4, max([80, &columns - 20])])
-	let height = min([&lines - 4, max([20, &lines - 10])])
-	let top = ((&lines - height) / 2) - 1
-	let left = (&columns - width) / 2
-	let opts = {'relative': 'editor', 'row': top, 'col': left, 'width': width, 'height': height, 'style': 'minimal'}
-	let top = "╭" . repeat("─", width - 2) . "╮"
-	let mid = "│" . repeat(" ", width - 2) . "│"
-	let bot = "╰" . repeat("─", width - 2) . "╯"
-	let lines = [top] + repeat([mid], height - 2) + [bot]
-	let s:buf = nvim_create_buf(v:false, v:true)
-	call nvim_buf_set_lines(s:buf, 0, -1, v:true, lines)
-	call nvim_open_win(s:buf, v:true, opts)
-	set winhl=Normal:Floating
-	let opts.row += 1
-	let opts.height -= 2
-	let opts.col += 2
-	let opts.width -= 4
-	call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
-	au BufWipeout <buffer> exe 'bw '.s:buf
-endfunction
-
 " Files + devicons + floating fzf
 function! Fzf_dev()
 	let l:fzf_files_options = '--preview "bat --theme="TwoDark" --style=numbers,changes --color=always {2..-1} | head -'.&lines.'"'
@@ -746,13 +745,13 @@ function! Fzf_dev()
 		execute 'silent e' l:file_path
 	endfunction
 
-	call fzf#run({ \ 'source': <sid>files(), \ 'sink': function('s:edit_file'), \ 'options': '-m --reverse ' . l:fzf_files_options, \ 'down': '40%', \ 'window': 'call CreateCenteredFloatingWindow()'})
+	call fzf#run({ \ 'source': <sid>files(), \ 'sink': function('s:edit_file'), \ 'options': '-m --reverse ' . l:fzf_files_options, \ 'down': '40%', \ 'window': 'call OpenFloatingWindow()'})
 endfunction
 
 let g:fzf_action = { 'ctrl-t': 'tab split', 'ctrl-x': 'split', 'ctrl-v': 'vsplit', 'ctrl-y': {lines -> setreg('*', join(lines, "\n"))}}
 
 "let g:fzf_layout = { 'up': '~60%' }
-let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
+let g:fzf_layout = { 'window': 'call OpenFloatingWindow()' }
 
 " Command for git grep
 if executable('git')
