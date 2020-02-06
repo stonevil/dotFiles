@@ -1,15 +1,16 @@
-dotFIles in 
+###dotFIles in full redevelopment right now. Use for you own risk.
 
-### dotFiles
+
+dotFiles
+---
 
 My collection of dot and config files.
 
-Highly optimised for OS X 10.14 and higher. In progress optimisation for Alpine Linux sandbox for incredible app for iPad iSH created by [Theodore Dubois](https://github.com/tbodt).
+Highly optimised for macOS 10.14 and higher. In progress optimisation for Alpine Linux sandbox for incredible app iSH for iOS  created by [Theodore Dubois](https://github.com/tbodt).
 
 [iSH GitHub](https://github.com/tbodt/ish)
 
 [iSH](https://ish.app)
-
 
 - ZSH
 - tmux
@@ -18,18 +19,24 @@ Highly optimised for OS X 10.14 and higher. In progress optimisation for Alpine 
 - fzf (a lot love for fzf)
 - Vagrant
 - Docker, Docker Machine (I hate Docker.app)
+- Kubernetes. Minikube
 - Ansible
 - Python 3
 - Go (!)
 
-### Installation (currently broken)
+
+Installation (currently broken)
+---
 
 ```
 curl -L https://raw.githubusercontent.com/stonevil/dotFiles/master/install.sh | /bin/bash -s --
 ```
 
 
-### TODO
+TODO
+---
 
-- rebuild update procedure to become not depended on dotfiles-update-all (idea with aray)
-- rebuild install procedure to be self-deployed
+- rebuild installation and update procedure
+	- macOS
+	- Alpine Linux Docker container
+	- Alpine Linux iSH sandbox
