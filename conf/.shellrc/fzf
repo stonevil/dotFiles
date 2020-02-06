@@ -1,8 +1,10 @@
 # vim:ft=sh :
 
 if command -v fzf >/dev/null; then
-	[[ $- == *i* ]] && source $HOMEBREW/Cellar/fzf/*/shell/completion.zsh 2>/dev/null
-	source $HOMEBREW/Cellar/fzf/*/shell/key-bindings.zsh 2>/dev/null
+	if [ -d "$HOMEBREW"/Cellar/fzf ]; then
+		[[ $- == *i* ]] && source $HOMEBREW/Cellar/fzf/*/shell/completion.zsh 2>/dev/null
+		source $HOMEBREW/Cellar/fzf/*/shell/key-bindings.zsh 2>/dev/null
+	fi
 
 	export BAT_THEME="TwoDark"
 
