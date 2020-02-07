@@ -35,8 +35,9 @@ endfunction
 call InstallPlug(vimplug_exists)
 
 
-let g:vim_bootstrap_langs = 'go,html,javascript,php,python,ruby'
+let g:vim_bootstrap_langs = 'go,html,javascript,python,ruby,ansible,helm,yaml,shell,bash,zsh'
 let g:vim_bootstrap_editor = 'nvim'
+"let g:ale_completion_enabled = 0
 
 
 "" Install vim-plug if required
@@ -47,17 +48,21 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'aonemd/kuroi.vim'
 	Plug 'bling/vim-airline'
 	Plug 'vim-airline/vim-airline-themes'
-	"	Plug 'edkolev/tmuxline.vim'
 
 	" Autocomplition and debug
 	if has('nvim')
-		Plug 'Shougo/deoplete.nvim',        { 'do': ':UpdateRemotePlugins' }
+		Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 	else
 		Plug 'Shougo/deoplete.nvim'
 		Plug 'roxma/nvim-yarp'
 		Plug 'roxma/vim-hug-neovim-rpc'
 	endif
 	let g:deoplete#enable_at_startup = 1
+
+	"" Deoplete
+	Plug 'deoplete-plugins/deoplete-go', { 'do': 'make'}
+	Plug 'deoplete-plugins/deoplete-jedi'
+	Plug 'deoplete-plugins/deoplete-docker'
 
 	" UI/UX
 	" Still not decided between FZF and Clap.
@@ -83,21 +88,14 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	" Floating terminal
 	"Plug 'voldikss/vim-floaterm'
 
-	" Shows the context of the currently visible buffer contents
-	Plug 'wellle/context.vim'
-
 	" Undo tree
 	Plug 'simnalamburt/vim-mundo'
 
-	"Plug 'scrooloose/nerdtree'
-	"Plug 'Xuyuanp/nerdtree-git-plugin'
-	"Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-
+	" Icons
 	Plug 'ryanoasis/vim-devicons'
 
 	" Asynchronous linting/fixing for Vim and Language Server Protocol (LSP) integration
-	"Plug 'dense-analysis/ale'
-	Plug 'desmap/ale-sensible' | Plug 'dense-analysis/ale'
+	Plug 'dense-analysis/ale'
 
 	" Viewer & Finder for LSP symbols and tags
 	Plug 'liuchengxu/vista.vim'
@@ -147,72 +145,24 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	"Plug 'chrisbra/vim-diff-enhanced'
 
 	" Go Bundle
-	Plug 'zchee/deoplete-go',             { 'build': {'unix': 'make'}, 'for': 'golang' }
-	Plug 'fatih/vim-go',                  { 'do': ':GoInstallBinaries', 'for': 'golang' }
-	Plug 'godoctor/godoctor.vim',         { 'for': 'golang' }
+	Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'golang' }
+	Plug 'godoctor/godoctor.vim', { 'for': 'golang' }
+
+	Plug 'towolf/vim-helm'
 
 	" Git Bundle
 	Plug 'tpope/vim-fugitive'
 	"Plug 'mhinz/vim-signify'
 	Plug 'airblade/vim-gitgutter'
 
-	" C/C++/ObjC Bundle
-	"Plug 'vim-scripts/c.vim'
-	"Plug 'zchee/deoplete-clang'
-
-	" Swift Bundle
-	"Plug 'keith/swift',                  { 'for': 'swift' }
-	"Plug 'mitsuse/autocomplete-swift',   { 'for': 'swift' }
-
-	" Lua Bundle
-	"Plug 'tbastos/vim-lua'
-
-	" Crystal Bundle
-	"Plug 'rhysd/vim-crystal',            { 'for': 'ruby' }
-	"Plug 'yoru/deoplete-crystal',        { 'for': 'ruby' }
-
-	" Ruby Bundle
-	"Plug 'uplus/deoplete-solargraph',    { 'for': 'ruby' }
-
-	" OpsCode Chef Bundle
-	"Plug 't9md/vim-chef'
-
-	" HCL
-	"Plug 'fatih/vim-hclfmt'
-
-	" Helm
-	"Plug 'towolf/vim-helm'
-	"Plug 'mustache/vim-mustache-handlebars'
-
-	" Nginx Bundle
-	"Plug 'LeonB/vim-nginx',               { 'for' : 'nginx' }
-
 	" Logstash Bundle
 	Plug 'robbles/logstash.vim'
-
-	" TOML Bundle
-	"Plug 'cespare/vim-toml'
-
-	" Docker Bundle
-	"Plug 'ekalinin/Dockerfile.vim',       { 'for' : 'Dockerfile' }
 
 	" HashiCorp Bundle
 	Plug 'hashivim/vim-hashicorp-tools'
 
-	" Ansible Bundle. Snippets do not working: https://github.com/pearofducks/ansible-vim/issues/87
-	"Plug 'pearofducks/ansible-vim',       { 'do': './UltiSnips/generate.sh' }
-
-	" JSON Bundle
-	"Plug 'elzr/vim-json',                 { 'for' : 'json' }
-
-	" Markdown Bundle
-	"Plug 'plasticboy/vim-markdown'
-
 	" Logrotate Bundle
 	Plug 'moon-musick/vim-logrotate'
-
-	" Arduino Bundle
-	"Plug 'sudar/vim-arduino-syntax',      { 'for': 'arduino' }
 
 	" Polyglot
 	Plug 'sheerun/vim-polyglot'
@@ -286,6 +236,9 @@ set splitright									" Vertical windows should be split to right
 set splitbelow									" Horizontal windows should split to bottom
 
 set hidden											" Buffer should still exist if window is closed
+set updatetime=300							" Smaller updatetime for CursorHold & CursorHoldI
+"set shortmess+=c								" Don't give |ins-completion-menu| messages
+"set signcolumn=yes							" Always show signcolumns
 set showmatch										" Show matching brackets by flickering
 set noshowmode									" We show the mode with airline or lightline
 set completeopt=menu,menuone		" Show popup menu, even if there is one entry
@@ -405,33 +358,15 @@ endfunction
 augroup FileType go
 	au!
 	set runtimepath+=$GOPATH/src/github.com/golang/lint/misc/vim
-
-	au FileType go nmap <leader>dd <Plug>(go-def-vertical)
-
-	au FileType go nmap <leader>dv <Plug>(go-doc-vertical)
-	au FileType go nmap <leader>db <Plug>(go-doc-browser)
-
-	au FileType go nmap <leader>gi <Plug>(go-info)
-
-	au FileType go nmap <leader>r <Plug>(go-run)
-	au FileType go nmap <leader>b <Plug>(go-build)
-	au FileType go nmap <leader>t <Plug>(go-test)
-
-	au FileType go nmap <leader><F9> :GoCoverageToggle -short<CR>
-	au FileType go nmap <leader><F10> :GoTest -short<CR>
-	au FileType go nmap <leader><F11> <Plug>(go-def)
-
-	au FileType go nmap <leader><F12> <Plug>(go-metalinter)
+	let g:go_def_mapping_enabled = 0
+	let g:go_def_mode='gopls'
+	let g:go_info_mode='gopls'
 
 	let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
 	let go_metalinter_autosave = 1
 	let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck']
 	let g:go_metalinter_deadline = '5s'
 	let g:go_fmt_command = 'goimports'
-
-	map <C-n> :cn<CR>
-	map <C-m> :cp<CR>
-	nnoremap <leader>a :cclose<CR>
 
 	let g:go_snippet_case_type = 'camelcase'
 
@@ -481,7 +416,6 @@ augroup END
 augroup arduinofile
 	au!
 	au BufRead,BufNewFile *.ino,*.pde,*ide set filetype=c++
-	setl statusline=%!ArduinoStatusLine()
 augroup END
 
 augroup helmfile
@@ -548,7 +482,7 @@ function! NearestMethodOrFunction() abort
 	return get(b:, 'vista_nearest_method_or_function', '')
 endfunction
 
-set statusline+=%{NearestMethodOrFunction()}
+"set statusline+=%{NearestMethodOrFunction()}
 
 " If you want to show the nearest function in your statusline automatically,
 " you can add the following line to your vimrc
@@ -629,13 +563,6 @@ imap <expr> <CR> pumvisible() ? "\<c-y>" : "<Plug>delimitMateCR"
 
 
 """"""""""
-"" nerdtree
-"noremap <F10> :NERDTreeToggle<cr>
-"noremap <leader><F10> :NERDTreeFind<cr>
-"let NERDTreeShowHidden=1
-
-
-""""""""""
 "" nerdcommenter
 "let g:NERDCompactSexyComs = 1
 "let g:NERDCommentEmptyLines = 1
@@ -663,38 +590,34 @@ let g:vim_markdown_no_extensions_in_markdown = 1
 
 
 """"""""""
-"" vim-json
-let g:vim_json_syntax_conceal = 0
-
-
-""""""""""
 "" dense-analysis/ale
 " Recommended for macOS
 let g:delve_backend = "native"
-" Error and warning signs.
-let g:ale_sign_error = '⤫'
-let g:ale_sign_warning = '⚠'
 " Enable integration with airline.
 let g:airline#extensions#ale#enabled = 1
-let g:ale_statusline_format = ['%d error(s)', '%d warning(s)', 'OK']
+let g:ale_echo_msg_format = '[%code%] %s [%severity%]'
 let g:ale_ansible_ansible_lint_executable = 'ansible-lint -x ANSIBLE0204'
 let g:ale_set_signs = 0
 let g:delve_enable_syntax_highlighting = 1
 let g:delve_new_command = "new"
 
 " Hover window support
-let g:ale_set_balloons = 1
+let g:ale_set_balloons = 0
 
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
 
 let g:ale_fixers = { '*': ['trim_whitespace', 'remove_trailing_lines'], 'javascript': ['prettier', 'eslint'], 'css' : ['prettier'], 'html' : ['prettier'], 'markdown' : ['prettier'], 'json': ['prettier'], 'sh': ['shfmt'], 'yaml': ['prettier'], 'c' : ['clang-format'], 'cpp' : ['clang-format'], 'python' : ['black'], 'go': ['goimports', 'gofmt'] }
 
+let g:ale_lint_on_enter = 0
 let g:ale_fix_on_save = 1
 "let g:ale_lint_on_text_changed = 'never'
 
-nmap <silent> <leader> <C-j> <Plug>(ale_previous_wrap)
-nmap <silent> <leader> <C-k> <Plug>(ale_next_wrap)
+nmap <silent> <leader><C-j> <Plug>(ale_previous_wrap)
+nmap <silent> <leader><C-k> <Plug>(ale_next_wrap)
+
+" TAB to cycle through completion suggestions
+inoremap <silent><expr> <Tab> \ pumvisible() ? "\<C-n>" : "\<TAB>"
 
 
 """"""""""
@@ -997,6 +920,7 @@ highlight Comment ctermbg=NONE guibg=NONE
 "highlight CursorLine ctermbg=NONE guibg=NONE
 highlight CursorColumn ctermbg=NONE guibg=NONE
 highlight LineNr ctermbg=NONE guibg=NONE
+
 
 """"""""""
 "" Reopen last position

@@ -1,1 +1,0 @@
-source $DOTFILES/conf/.vimrc
