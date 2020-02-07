@@ -24,6 +24,8 @@ doc/
 # Vim artifacts
 .session.vim
 .undodir
+config/nvim/autoload/
+config/nvim/plugged/
 
 # Brew artifacts
 Brewfile.lock.json
