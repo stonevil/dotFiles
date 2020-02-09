@@ -353,6 +353,12 @@ function! OpenTermWindow(cmd, ...) abort
 	call termopen(a:cmd, {'on_exit': {j,c,e -> execute('if c == 0 | close | endif')}})
 endfunction
 
+function! HunkStageAndCommit() abort
+	:GitGutterStageHunk
+	:Gcommit
+endfunction
+nnoremap <leader>hc :call HunkStageAndCommit()<CR>
+
 
 """"""""""
 "" Configuration groups
