@@ -253,7 +253,7 @@ set confirm											" Confirm changes (Yes, No, Cancel) instead of error
 "set wildmode=list:longest,full
 
 " Turn off search highlight
-nnoremap <leader><space> :nohlsearch<CR>
+nnoremap <leader><leader><space> :nohlsearch<CR>
 " Toggle line numbering
 nnoremap <leader>N :exec &nu==&rnu? "se nu!" : "se rnu!"<CR>
 
