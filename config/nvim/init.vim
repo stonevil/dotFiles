@@ -81,6 +81,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'tmux-plugins/vim-tmux-focus-events'
 	Plug 'roxma/vim-tmux-clipboard'
 	"Plug 'blueyed/vim-diminactive'
+	Plug 'wellle/tmux-complete.vim'
 
 	" Workspaces support
 	Plug 'thaerkh/vim-workspace'
