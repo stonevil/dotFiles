@@ -34,16 +34,9 @@ endfunction
 " :PlugSnapshot[!] [output path] - Generate script for restoring the current snapshot of the plugins
 call InstallPlug(vimplug_exists)
 
-
-let g:vim_bootstrap_langs = 'go,html,javascript,python,ruby,ansible,helm,yaml,shell,bash,zsh'
-let g:vim_bootstrap_editor = 'nvim'
-"let g:ale_completion_enabled = 0
-
-
 "" Install vim-plug if required
 "" Required:
 call plug#begin(expand('~/.config/nvim/plugged'))
-	"Plug 'flazz/vim-colorschemes'
 	Plug 'sonph/onehalf', {'rtp': 'vim/'}
 	Plug 'aonemd/kuroi.vim'
 	Plug 'bling/vim-airline'
@@ -58,11 +51,8 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 		Plug 'roxma/vim-hug-neovim-rpc'
 	endif
 	let g:deoplete#enable_at_startup = 1
-
-	"" Deoplete
 	Plug 'deoplete-plugins/deoplete-go', { 'do': 'make'}
 	Plug 'deoplete-plugins/deoplete-jedi'
-	Plug 'deoplete-plugins/deoplete-docker'
 
 	" UI/UX
 	" Still not decided between FZF and Clap.
@@ -97,6 +87,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 
 	" Asynchronous linting/fixing for Vim and Language Server Protocol (LSP) integration
 	Plug 'dense-analysis/ale'
+	"Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 	" Viewer & Finder for LSP symbols and tags
 	Plug 'liuchengxu/vista.vim'
@@ -149,6 +140,11 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'golang' }
 	Plug 'godoctor/godoctor.vim', { 'for': 'golang' }
 
+	" Ansible Bundle
+	Plug 'pearofducks/ansible-vim'
+	"Plug 'phenomenes/ansible-snippets'
+
+	" Helm Bundle
 	Plug 'towolf/vim-helm'
 
 	" Git Bundle
@@ -242,7 +238,8 @@ set updatetime=300							" Smaller updatetime for CursorHold & CursorHoldI
 "set signcolumn=yes							" Always show signcolumns
 set showmatch										" Show matching brackets by flickering
 set noshowmode									" We show the mode with airline or lightline
-set completeopt=menu,menuone		" Show popup menu, even if there is one entry
+"set completeopt=menu,menuone		" Show popup menu, even if there is one entry
+set completeopt+=noselect
 set pumheight=10								" Completion window max size
 set nocursorcolumn							" Do not highlight column (speeds up highlighting)
 set cursorline									" Highlight current line
@@ -565,7 +562,6 @@ let g:delimitMate_expand_space = 1
 let g:delimitMate_smart_quotes = 1
 let g:delimitMate_expand_inside_quotes = 0
 let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'
-imap <expr> <CR> pumvisible() ? "\<c-y>" : "<Plug>delimitMateCR"
 
 
 """"""""""
@@ -613,17 +609,14 @@ let g:ale_set_balloons = 0
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
 
-let g:ale_fixers = { '*': ['trim_whitespace', 'remove_trailing_lines'], 'javascript': ['prettier', 'eslint'], 'css' : ['prettier'], 'html' : ['prettier'], 'markdown' : ['prettier'], 'json': ['prettier'], 'sh': ['shfmt'], 'yaml': ['prettier'], 'c' : ['clang-format'], 'cpp' : ['clang-format'], 'python' : ['black'], 'go': ['goimports', 'gofmt'] }
+let g:ale_fixers = { '*': ['trim_whitespace', 'remove_trailing_lines'], 'javascript': ['prettier', 'eslint'], 'css' : ['prettier'], 'html' : ['prettier'], 'markdown' : ['prettier'], 'json': ['prettier'], 'sh': ['shfmt'], 'yaml': ['prettier'], 'c' : ['clang-format'], 'cpp' : ['clang-format'], 'python' : ['black'], 'go': ['gofmt'] }
 
 let g:ale_lint_on_enter = 0
 let g:ale_fix_on_save = 1
-"let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_text_changed = 'never'
 
-nmap <silent> <leader><C-j> <Plug>(ale_previous_wrap)
-nmap <silent> <leader><C-k> <Plug>(ale_next_wrap)
-
-" TAB to cycle through completion suggestions
-inoremap <silent><expr> <Tab> \ pumvisible() ? "\<C-n>" : "\<TAB>"
+nmap <silent> <leader>[g  <Plug>(ale_previous_wrap)
+nmap <silent> <leader>]g <Plug>(ale_next_wrap)
 
 
 """"""""""
@@ -813,7 +806,6 @@ function! g:UltiSnips_Reverse()
 	if g:ulti_jump_backwards_res == 0
 		return "\<C-P>"
 	endif
-
 	return ''
 endfunction
 
@@ -908,10 +900,14 @@ vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
 
+" TAB to cycle through completion suggestions
+inoremap <silent><expr> <Tab> \ pumvisible() ? "\<C-n>" : "\<TAB>"
+
+
 """"""""""
 "" Theme
 set t_Co=256
-"set termguicolors								" Use the true color mode
+"set termguicolors " Use the true color mode
 
 colorscheme kuroi
 set colorcolumn=0
