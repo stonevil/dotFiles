@@ -1,0 +1,4 @@
+# vim:ft=sh :
+
+# Customize PATH
+export MANPATH=/usr/local/share/man:$MANPATH

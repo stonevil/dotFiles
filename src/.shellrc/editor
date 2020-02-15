@@ -1,0 +1,26 @@
+# vim:ft=sh :
+
+# Setup EDITOR
+if [ -f "$HOMEBREW"/bin/nvim ]; then
+	export EDITOR="$HOMEBREW/bin/nvim"
+else
+	if [ -f /usr/bin/vim ]; then
+		export EDITOR="/usr/bin/vim"
+	fi
+fi
+
+# VIM/NVIM session file
+export VIM_SESSION_FILENAME=".session.vim"
+
+# ENV Variables
+export GIT_EDITOR=$EDITOR
+export VISUAL=$EDITOR
+export EDITOR=$EDITOR
+
+# Aliases
+alias v='$EDITOR'
+alias vi='$EDITOR'
+alias vim='$EDITOR'
+
+# Open files with Vim
+alias -s '{yml,yaml,cfg,go}'=vim
