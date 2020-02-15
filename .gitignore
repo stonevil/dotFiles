@@ -1,34 +1,12 @@
-*.gem
-*.rbc
-.bundle
-.config
-coverage
-InstalledFiles
-lib/bundler/man
-pkg
-rdoc
-spec/reports
-test/tmp
-test/version_tmp
-tmp
-tags
-
-# Secrets
-.secrc
-
-# YARD artifacts
-.yardoc
-_yardoc
-doc/
-
 # Vim artifacts
 .session.vim
 .undodir
-config/nvim/autoload/
-config/nvim/plugged/
 
 # Brew artifacts
 Brewfile.lock.json
+
+# Ctags/tags artifacts
+tags
 
 # Local binary
 bin/

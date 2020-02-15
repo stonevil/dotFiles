@@ -1,6 +1,6 @@
 # vim:ft=Dockerfile :
-FROM alpine:edge
 
+FROM alpine:edge
 
 ADD * /root/.Files/
 

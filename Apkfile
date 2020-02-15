@@ -1,11 +1,15 @@
 shadow
 zsh
+bash
 git
 curl
 wget
 neovim
 tmux
 fzf
+ctags
+ncurses
+perl
 python3
 python3-dev
 py3-apipkg

@@ -1,12 +1,12 @@
-ansible==2.9.4
+ansible==2.9.5
 ansible-lint==4.2.0
-cffi==1.13.2
+cffi==1.14.0
 cryptography==2.8
 fasteners==0.15
 google-oauth2l==1.0.2
 greenlet==0.4.15
 httplib2==0.17.0
-Jinja2==2.10.3
+Jinja2==2.11.1
 MarkupSafe==1.1.1
 meson==0.53.1
 monotonic==1.5
@@ -20,7 +20,7 @@ pynvim==0.4.1
 pyOpenSSL==19.1.0
 PyYAML==5.3
 rsa==4.0
-ruamel.yaml==0.16.6
+ruamel.yaml==0.16.10
 ruamel.yaml.clib==0.2.0
 six==1.14.0
 youtube-dl==2020.1.24
