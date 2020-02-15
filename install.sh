@@ -13,7 +13,7 @@ _check_internet_connection() {
 	if command -v curl >/dev/null; then
 		"$(curl -sL -w "%{http_code}\n" "http://www.github.com/" -o /dev/null)" -eq 200 && return 0
 	else
-		echo "curl command not installed. Internet connection is not tested" && return 0
+		echo "curl command is not installed. Internet connection is not tested" && return 0
 	fi
 }
 

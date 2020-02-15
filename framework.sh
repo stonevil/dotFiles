@@ -44,6 +44,7 @@ _install_packages() {
 		fi
 		if command -v go >/dev/null; then
 			cd "$HOME"/.Files || exit
+			. source "$HOME"/.shellrc/golang
 			while IFS= read -r line; do
 				go get -u "$line"
 			done <Gofile
