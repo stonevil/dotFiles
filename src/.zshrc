@@ -2,6 +2,9 @@
 # vim:ft=zsh :
 # shellcheck source=/dev/null
 
+. "$HOME"/.Files/framework.sh || exit 1
+_install_zinit
+
 # Load rc files
 if [ -d "$HOME"/.shellrc ]; then
 	if [ "$(ls -A "$HOME"/.shellrc)" ]; then
@@ -25,30 +28,19 @@ if [ -d "$HOME"/.secrc ]; then
 	fi
 fi
 
-# Zplug
-export ZPLUG_HOME=$HOME/.zplug
-if [ ! -d "$ZPLUG_HOME" ]; then
-	cd "$HOME" || exit
-	if command -v git >/dev/null; then
-		git clone https://github.com/zplug/zplug "$ZPLUG_HOME"
-	else
-		echo "Git CLI is not installed..." && exit 1
-	fi
-fi
-if [ -d "$ZPLUG_HOME" ]; then
-	source "$ZPLUG_HOME"/init.zsh
-fi
+# Zinit
+source $HOME/.zinit/bin/zinit.zsh
 
-zplug "plugins/git", from:oh-my-zsh
-zplug "plugins/branch", from:oh-my-zsh
-zplug "plugins/colored-man-pages", from:oh-my-zsh
+#zplug "plugins/git", from:oh-my-zsh
+#zplug "plugins/branch", from:oh-my-zsh
+#zplug "plugins/colored-man-pages", from:oh-my-zsh
 
 #zplug "Aloxaf/fzf-tab"
 FZF_TAB_OPTS=""
 
-zplug "lincheney/fzf-tab-completion"
+#zplug "lincheney/fzf-tab-completion"
 
-zplug 'wfxr/forgit'
+#zplug 'wfxr/forgit'
 # ga - Interactive git add selector
 # glo - Interactive git log viewer
 # gli - Interactive .gitignore generator
@@ -57,16 +49,9 @@ zplug 'wfxr/forgit'
 # gcf - Interactive git checkout <file> selector
 # gss - Interactive git stash viewer
 # gclean - Interactive git clean selector
-FORGIT_FZF_DEFAULT_OPTS=""
+#FORGIT_FZF_DEFAULT_OPTS=""
 
-# Install plugins if there are plugins that have not been installed
-if ! zplug check; then
-	zplug install
-fi
-# Then, source plugins and add commands to $PATH
-zplug load
-
-
+zinit snippet http://github.com/ohmyzsh/ohmyzsh/raw/master/lib/git.zsh
 #ZSH_THEME="stoned"
 
 #CASE_SENSITIVE="true"

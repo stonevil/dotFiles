@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-# Address Book #################################################################
-# Disable the debug menu in Address Book
-defaults write com.apple.addressbook ABShowDebugMenu -bool false

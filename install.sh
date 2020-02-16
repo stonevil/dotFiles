@@ -54,16 +54,14 @@ if [ -d "$HOME"/.Files ]; then
 		_dump_packages
 		;;
 	pkgs)
-		_install_packages
-		_install_zplug
+		_install_toolset
 		;;
 	dot)
 		_install_dot_files
 		;;
 	*)
 		_install_dot_files
-		_install_packages
-		_install_zplug
+		_install_toolset
 		;;
 	esac
 fi

@@ -30,4 +30,7 @@ libffi
 libffi-dev
 openssl
 openssl-dev
+musl-dev
+gcc
+build-base
 --virtual build-dependencies

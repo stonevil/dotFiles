@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-# iCal #########################################################################
-# Disable the debug menu in iCal (pre-10.8)
-defaults write com.apple.iCal IncludeDebugMenu -bool false
