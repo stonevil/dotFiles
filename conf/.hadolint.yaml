@@ -1,9 +1,0 @@
-# vim:ft=yaml :
----
-ignored:
-  - DL3005
-  - DL3008
-  - DL3017
-
-trustedRegistries:
-  - docker.io

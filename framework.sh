@@ -1,5 +1,6 @@
 #!/bin/sh
 # vim:ft=sh
+# shellcheck source=/dev/null
 
 _install_dot_files() {
 	echo "Installing dotFiles into system"
@@ -11,11 +12,17 @@ _install_toolset() {
 	_install_packages
 }
 
-_install_zinit() {
-	export ZINIT_HOME=$HOME/.zinit
-	if [ ! -d "$ZINIT_HOME" ]; then
+_install_zpm() {
+	if [ ! -f ~/.zpm/zpm.zsh ]; then
 		cd "$HOME" || exit
-		git clone https://github.com/zdharma/zinit.git "$ZINIT_HOME"/bin
+		git clone --recursive https://github.com/zpm-zsh/zpm "$HOME"/.zpm
+	fi
+}
+
+_install_zinit() {
+	if [ ! -f "$HOME"/.zinit/bin/zinit.zsh ]; then
+		cd "$HOME" || exit
+		git clone https://github.com/zdharma/zinit.git "$HOME"/.zinit/bin
 	fi
 }
 
@@ -63,7 +70,7 @@ _install_packages() {
 		fi
 		if command -v go >/dev/null; then
 			cd "$HOME"/.Files || exit
-			if [ -d "$HOME"/.shellrc/golang ]; then
+			if [ -f "$HOME"/.shellrc/golang ]; then
 				source "$HOME"/.shellrc/golang
 			fi
 			while IFS= read -r line; do
@@ -123,38 +130,38 @@ _set_desktop() {
 		# Disk Utility
 		defaults write com.apple.DiskUtility advanced-image-options -bool true
 
-		# Dock, Dashboard and Hot Corners
-		# Enable highlight hover effect for the grid view of a stack (Dock)
+		# Dock: enable highlight hover effect for the grid view of a stack
 		defaults write com.apple.dock mouse-over-hilite-stack -bool true
 
-		# Set the icon size of Dock items to 32 pixels
+		# Dock: set the icon size of Dock items to 32 pixels
 		defaults write com.apple.dock tilesize -int 32
 
-		# Change minimize/maximize window effect
+		# Dock: change minimize/maximize window effect
 		defaults write com.apple.dock mineffect -string "scale"
 
-		# Minimize windows into their application’s icon
+		# Dock: minimize windows into their application’s icon
 		defaults write com.apple.dock minimize-to-application -bool true
 
-		# Enable spring loading for all Dock items
+		# Dock: enable spring loading for all Dock items
 		defaults write com.apple.dock enable-spring-load-actions-on-all-items -bool true
-		# Show indicator lights for open applications in the Dock
+
+		# Dock: show indicator lights for open applications in the Dock
 		defaults write com.apple.dock show-process-indicators -bool true
 
-		# Speed up Mission Control animations
-		defaults write com.apple.dock expose-animation-duration -float 0.1
-
-		# Group windows by application in Mission Control
-		defaults write com.apple.dock expose-group-by-app -bool true
-
-		# Don’t automatically rearrange Spaces based on most recent use
-		defaults write com.apple.dock mru-spaces -bool false
-
-		# Automatically hide and show the Dock
+		# Dock: automatically hide and show
 		defaults write com.apple.dock autohide -bool true
 
-		# Make Dock icons of hidden applications translucent
+		# Dock: make icons of hidden applications translucent
 		defaults write com.apple.dock showhidden -bool true
+
+		# Mission Control: speed up animations
+		defaults write com.apple.dock expose-animation-duration -float 0.1
+
+		# Mission Control: group windows by application
+		defaults write com.apple.dock expose-group-by-app -bool true
+
+		# Mission Control: don’t automatically rearrange Spaces based on most recent use
+		defaults write com.apple.dock mru-spaces -bool false
 
 		# Hot corners
 		# Possible values:
@@ -172,114 +179,94 @@ _set_desktop() {
 		defaults write com.apple.dock wvous-tl-corner -int 6
 		defaults write com.apple.dock wvous-tl-modifier -int 0
 
-		# Finder
-		# Disable Desktop
+		# Finder: disable desktop
 		defaults write com.apple.finder CreateDesktop -bool false
 
-		# Disable quitting via ⌘ + Q
-		defaults write com.apple.finder QuitMenuItem -bool false
-
-		# Disable window animations and Get Info animations
+		# Finder: disable window animations and Get Info animations
 		defaults write com.apple.finder DisableAllAnimations -bool true
 
-		# Set Documents as the default location for new Finder windows
+		# Finder: set Documents as the default location for new Finder windows
 		defaults write com.apple.finder NewWindowTarget -string "PfDo"
 		defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/Documents/"
 
-		# Hide icons for hard drives, servers, and removable media on the desktop
+		# Finder: hide icons for hard drives, servers, and removable media on the desktop
 		defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool false
 		defaults write com.apple.finder ShowHardDrivesOnDesktop -bool false
 		defaults write com.apple.finder ShowMountedServersOnDesktop -bool false
 		defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool false
 
-		# Hide hidden files by default
+		# Finder: hide hidden files by default
 		defaults write com.apple.finder AppleShowAllFiles -bool false
 
-		# Show all filename extensions
+		# Finder: show all filename extensions
 		defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 
-		# Show status bar
+		# Finder: show status bar
 		defaults write com.apple.finder ShowStatusBar -bool true
 
-		# Show path bar
+		# Finder: show path bar
 		defaults write com.apple.finder ShowPathbar -bool true
 
-		# Allow text selection in Quick Look
+		# Finder: allow text selection in Quick Look
 		defaults write com.apple.finder QLEnableTextSelection -bool true
 
-		# Display full POSIX path as Finder window title
+		# Finder: display full POSIX path as Finder window title
 		defaults write com.apple.finder _FXShowPosixPathInTitle -bool false
 
-		# When performing a search, search the current folder by default
+		# Finder: when performing a search, search the current folder by default
 		defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
 
-		# Disable the warning when changing a file extension
+		# Finder: disable the warning when changing a file extension
 		defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 
-		# Enable spring loading for directories
+		# Finder: enable spring loading for directories
 		defaults write NSGlobalDomain com.apple.springing.enabled -bool true
 
-		# Remove the spring loading delay for directories
+		# Finder: remove the spring loading delay for directories
 		defaults write NSGlobalDomain com.apple.springing.delay -float 0
 
-		# Avoid creating .DS_Store files on network volumes
+		# Finder: avoid creating .DS_Store files on network volumes
 		#defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 
-		# Enable disk image verification
+		# Finder: enable disk image verification
 		defaults write com.apple.frameworks.diskimages skip-verify -bool false
 		defaults write com.apple.frameworks.diskimages skip-verify-locked -bool false
 		defaults write com.apple.frameworks.diskimages skip-verify-remote -bool false
 
-		# Disable automatically open a new Finder window when a volume is mounted
+		# Finder: disable automatically open a new Finder window when a volume is mounted
 		defaults write com.apple.frameworks.diskimages auto-open-ro-root -bool false
 		defaults write com.apple.frameworks.diskimages auto-open-rw-root -bool false
 		defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool false
 
-		# Enable snap-to-grid for icons on the desktop and in other icon views
+		# Finder: enable snap-to-grid for icons on the desktop and in other icon views
 		/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
 		/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
 		/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
 
-		# Decrease grid spacing for icons on the desktop and in other icon views
+		# Finder: decrease grid spacing for icons on the desktop and in other icon views
 		/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:gridSpacing 54" ~/Library/Preferences/com.apple.finder.plist
 		/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:gridSpacing 54" ~/Library/Preferences/com.apple.finder.plist
 		/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:gridSpacing 54" ~/Library/Preferences/com.apple.finder.plist
 
-		# Decrease the size of icons on the desktop and in other icon views
+		# Finder: decrease the size of icons on the desktop and in other icon views
 		/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:iconSize 32" ~/Library/Preferences/com.apple.finder.plist
 		/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:iconSize 32" ~/Library/Preferences/com.apple.finder.plist
 		/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:iconSize 32" ~/Library/Preferences/com.apple.finder.plist
 
-		# Use list view in all Finder windows by default
-		# Four-letter codes for the other view modes: `icnv`, `clmv`, `Flwv`
+		# Finder: use list view in all Finder windows by default. Four-letter codes for the other view modes: `icnv`, `clmv`, `Flwv`
 		defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
 
-		# Enable the warning before emptying the Trash
+		# Finder: enable the warning before emptying the Trash
 		defaults write com.apple.finder WarnOnEmptyTrash -bool true
 
-		# Disable Empty Trash securely
+		# Finder: disable Empty Trash securely
 		#defaults write com.apple.finder EmptyTrashSecurely -bool false
 
-		# Enable AirDrop over Ethernet and on unsupported Macs running Lion
+		# macOS: enable AirDrop over Ethernet and on unsupported Macs running Lion
 		#defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
 
-		# Expand the following File Info panes:
+		# Finder: expand the following File Info panes:
 		defaults write com.apple.finder FXInfoPanesExpanded -dict Comments -bool false Preview -bool false General -bool true OpenWith -bool true Privileges -bool false
-
-		# Trackpad
-		defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -int 0
-		defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 0
-		defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 0
-
-		# Trackpad: Double finger click
-		defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadTwoFingerDoubleTapGesture -int 1
-		defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -int 1
-
-		# Trackpad: map bottom right corner to right-click
-		#defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadCornerSecondaryClick -int 2
-		#defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
-		#defaults -currentHost write NSGlobalDomain com.apple.trackpad.trackpadCornerClickBehavior -int 1
-		#defaults -currentHost write NSGlobalDomain com.apple.trackpad.enableSecondaryClick -bool true
 
 		# Trackpad: enable “natural” scrolling
 		defaults write NSGlobalDomain com.apple.swipescrolldirection -bool true
@@ -296,20 +283,17 @@ _set_desktop() {
 		# Keyboard: enable press-and-hold for keys in favor of key repeat
 		defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
-		# Keyboard: set a blazingly fast keyboard repeat rate
-		#defaults write NSGlobalDomain KeyRepeat -int 2
-
 		# Keyboard: set language and text formats
 		# Note: if you’re in the US, replace `EUR` with `USD`, `Centimeters` with `Inches`, `en_GB` with `en_US`, and `true` with `false`.
 		defaults write NSGlobalDomain AppleLanguages -array "en-GB" "en" "uk"
-		defaults write NSGlobalDomain AppleLocale -string "uk@currency=UAH"
+		#defaults write NSGlobalDomain AppleLocale -string "uk@currency=UAH"
 		defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"
 		defaults write NSGlobalDomain AppleMetricUnits -bool true
 
 		# Keyboard: enable auto-correct
 		defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool true
 
-		# Mail: disable send and reply animations in Mail.app
+		# Mail: disable send and reply animations
 		defaults write com.apple.mail DisableReplyAnimations -bool true
 		defaults write com.apple.mail DisableSendAnimations -bool true
 
@@ -317,11 +301,11 @@ _set_desktop() {
 		defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool true
 
 		# Mail: display emails in threaded mode, sorted by date (oldest at the top)
-		defaults write com.apple.mail DraftsViewerAttributes -dict-add "DisplayInThreadedMode" -string "no"
-		defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortedDescending" -string "YES"
-		defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortOrder" -string "last-saved-date"
-		defaults write com.apple.mail DraftsViewerAttributes -dict-add "SearchSortDescending" -string "YES"
-		defaults write com.apple.mail DraftsViewerAttributes -dict-add "SearchSortOrder" -string "rank"
+		#defaults write com.apple.mail DraftsViewerAttributes -dict-add "DisplayInThreadedMode" -string "no"
+		#defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortedDescending" -string "YES"
+		#defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortOrder" -string "last-saved-date"
+		#defaults write com.apple.mail DraftsViewerAttributes -dict-add "SearchSortDescending" -string "YES"
+		#defaults write com.apple.mail DraftsViewerAttributes -dict-add "SearchSortOrder" -string "rank"
 
 		# Mail: enable inline attachments
 		defaults write com.apple.mail DisableInlineAttachmentViewing -bool false
@@ -366,8 +350,8 @@ _set_desktop() {
 		# macOS: set highlight color to Red
 		defaults write NSGlobalDomain AppleHighlightColor -string "1.000000 0.733333 0.721569 Red"
 
-		# Finder: set sidebar icon size to small
-		defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 1
+		# Finder: set sidebar icon size to medium
+		defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 2
 
 		# macOS: scrollbars
 		# Possible values: `WhenScrolling`, `Automatic` and `Always`
@@ -391,7 +375,7 @@ _set_desktop() {
 		defaults write com.apple.systempreferences NSQuitAlwaysKeepsWindows -bool true
 
 		# macOS: enable automatic termination of inactive apps
-		defaults write NSGlobalDomain NSDisableAutomaticTermination -bool false
+		defaults write NSGlobalDomain NSDisableAutomaticTermination -bool true
 
 		# macOS: switch the Crash Reporter to use NC
 		defaults write com.apple.CrashReporter UseUNC -int 1

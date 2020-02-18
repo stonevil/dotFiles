@@ -1,6 +1,0 @@
-#!/bin/bash
-# vim:ft=sh :
-
-# Customize PATH
-export PATH=$DOTFILES/bin:$PATH
-export MANPATH=/usr/local/share/man:$MANPATH

@@ -1,6 +1,0 @@
-# vim:ft=sh :
-
-# Speed Test. Requires wget
-if command -v wget >/dev/null; then
-	function speed-test() { wget -O /dev/null http://speedtest.wdc01.softlayer\.com/downloads/test10.zip; }
-fi

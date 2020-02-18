@@ -1,12 +1,10 @@
 ### dotFIles in full redevelopment right now. Use for you own risk.
 
-
-dotFiles
----
+## dotFiles
 
 My collection of dot and config files.
 
-Highly optimised for macOS 10.14 and higher. In progress optimisation for Alpine Linux sandbox for incredible app iSH for iOS  created by [Theodore Dubois](https://github.com/tbodt).
+Highly optimised for macOS 10.14 and higher. In progress optimisation for Alpine Linux sandbox for incredible app iSH for iOS created by [Theodore Dubois](https://github.com/tbodt).
 
 [iSH GitHub](https://github.com/tbodt/ish)
 
@@ -24,19 +22,12 @@ Highly optimised for macOS 10.14 and higher. In progress optimisation for Alpine
 - Python 3
 - Go (!)
 
-
-Installation (currently broken)
----
+## Installation (currently broken)
 
 ```
 curl -L https://raw.githubusercontent.com/stonevil/dotFiles/master/install.sh | /bin/bash -s --
 ```
 
+## TODO
 
-TODO
----
-
-- rebuild installation and update procedure
-	- macOS
-	- Alpine Linux Docker container
-	- Alpine Linux iSH sandbox
+- rebuild installation and update procedure - macOS - Alpine Linux Docker container - Alpine Linux iSH sandbox

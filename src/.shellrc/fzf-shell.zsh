@@ -1,13 +1,6 @@
-# vim:ft=sh :
+# vim:ft=zsh :
 
 if command -v fzf >/dev/null; then
-	if [ -d "$HOMEBREW"/Cellar/fzf ]; then
-		[[ $- == *i* ]] && source $HOMEBREW/Cellar/fzf/*/shell/completion.zsh 2>/dev/null
-		source $HOMEBREW/Cellar/fzf/*/shell/key-bindings.zsh 2>/dev/null
-	fi
-
-	export BAT_THEME="TwoDark"
-
 	export FZF_DEFAULT_COMMAND_IGNORE="--glob '!.git/*' --glob '!.svn/*' --glob '!node_modules/*' --glob '!.undodir/*' --glob '!.session.vim' --glob '!.DS_Store'"
 
 	export FZF_DEFAULT_COMMAND="rg --files --no-ignore --hidden --follow --ignore-case $FZF_DEFAULT_COMMAND_IGNORE"
@@ -26,14 +19,60 @@ if command -v fzf >/dev/null; then
 	# Enter key to select the item, CTRL-C / CTRL-G / ESC to exit
 	# On multi-select mode (-m), TAB and Shift-TAB to mark multiple items
 
-	# fe - edit selected file(s)
-	fe() {
+	# CTRL-f - Edit selected file(s)
+	fzf-file-edit-widget() {
 		local files
 		IFS=$'\n' files=($(fzf --query="$1" --multi --select-1 --exit-0))
 		[[ ${#files[@]} -ne 0 ]] && vim "${files[@]}"
 	}
-	zle -N fe
-	bindkey -s '^f' 'fe^M'
+	zle -N fzf-file-edit-widget
+	bindkey -s '^f' 'fzf-file-edit-widget^M'
+
+	__fsel() {
+		local cmd="${FZF_CTRL_T_COMMAND:-"command find -L . -mindepth 1 \\( -path '*/\\.*' -o -fstype 'sysfs' -o -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \\) -prune -o -type f -print -o -type d -print -o -type l -print 2> /dev/null | cut -b3-"}"
+		setopt localoptions pipefail no_aliases 2> /dev/null
+		eval "$cmd" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse $FZF_DEFAULT_OPTS $FZF_CTRL_T_OPTS" $(__fzfcmd) -m "$@" | while read item; do
+			echo -n "${(q)item} "
+		done
+		local ret=$?
+		echo
+		return $ret
+	}
+	__fzf_use_tmux__() {
+		[ -n "$TMUX_PANE" ] && [ "${FZF_TMUX:-0}" != 0 ] && [ ${LINES:-40} -gt 15 ]
+	}
+	__fzfcmd() {
+		__fzf_use_tmux__ && echo "fzf-tmux -d${FZF_TMUX_HEIGHT:-40%}" || echo "fzf"
+	}
+	# CTRL-t - Edit selected file(s)
+	fzf-file-widget() {
+		LBUFFER="${LBUFFER}$(__fsel)"
+		local ret=$?
+		zle reset-prompt
+		return $ret
+	}
+	zle -N fzf-file-widget
+	bindkey '^t' fzf-file-widget
+
+	# CTRL-r - Paste the selected command from history into the command line
+	fzf-history-widget() {
+		local selected num
+		setopt localoptions noglobsubst noposixbuiltins pipefail no_aliases 2> /dev/null
+		selected=( $(fc -rl 1 |
+		FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS -n2..,.. --tiebreak=index --bind=ctrl-r:toggle-sort $FZF_CTRL_R_OPTS --query=${(qqq)LBUFFER} +m" $(__fzfcmd)) )
+		local ret=$?
+		if [ -n "$selected" ]; then
+			num=$selected[1]
+			if [ -n "$num" ]; then
+				zle vi-fetch-history -n $num
+			fi
+		fi
+		zle reset-prompt
+		return $ret
+	}
+	zle -N fzf-history-widget
+	bindkey '^r' fzf-history-widget
+
 
 	# fce [FUZZY PATTERN] - Search by content and edit selected file(s)
 	fce() {
@@ -60,48 +99,5 @@ if command -v fzf >/dev/null; then
 		if [ "x$pid" != "x" ]; then
 			echo "$pid" | xargs kill -"${1:-9}"
 		fi
-	}
-
-	# ts [FUZZY PATTERN] - switch to selected tmux session
-	ts() {
-		local session
-		session=$(tmux list-sessions -F "#{session_name}" | fzf --query="$1" --select-1 --exit-0) && tmux switch-client -t "$session"
-	}
-
-	# tp - switch to selected tmux pane
-	tp() {
-		local panes current_window current_pane target target_window target_pane
-		panes=$(tmux list-panes -s -F '#I:#P - #{pane_current_path} #{pane_current_command}')
-		current_pane=$(tmux display-message -p '#I:#P')
-		current_window=$(tmux display-message -p '#I')
-
-		target=$(echo "$panes" | grep -v "$current_pane" | fzf +m --reverse) || return
-
-		target_window=$(echo "$target" | awk 'BEGIN{FS=":|-"} {print$1}')
-		target_pane=$(echo "$target" | awk 'BEGIN{FS=":|-"} {print$2}' | cut -c 1)
-
-		if [[ $current_window -eq $target_window ]]; then
-			tmux select-pane -t "${target_window}"."${target_pane}"
-		else
-			tmux select-pane -t "${target_window}"."${target_pane}" && tmux select-window -t "$target_window"
-		fi
-	}
-
-	# Check if git repo
-	is_in_git_repo() {
-		git rev-parse HEAD >/dev/null 2>&1
-	}
-
-	# fgshow - git commit browser
-	fshow() {
-		is_in_git_repo || return
-
-		git log --pretty=oneline --abbrev-commit | fzf --height 100% --preview-window down:90% --preview 'echo {} | cut -f 1 -d " " | xargs git show --color=always'
-	}
-
-	fad() {
-		is_in_git_repo || return
-
-		git ls-files -m -o --exclude-standard | fzf --print0 -m --height 100% --preview-window down:90% --preview "(git diff --color=always {+1} | bat --style=numbers,changes --color=always) 2> /dev/null" | xargs -0 -t -o git add
 	}
 fi
