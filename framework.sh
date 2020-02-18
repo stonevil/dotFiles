@@ -52,9 +52,9 @@ _install_packages() {
 			if [ -d "$HOME"/.homebrew ]; then
 				rm -Rf "$HOME"/.homebrew
 			fi
-			git clone https://github.com/Homebrew/homebrew.git "$HOME"/.homebrew && brew update && brew upgrade && brew cask upgrade
+			git clone https://github.com/Homebrew/homebrew.git "$HOME"/.homebrew && "$HOME"/.homebrew/brew update && "$HOME"/.homebrew/brew upgrade && "$HOME"/.homebrew/brew cask upgrade
 			cd "$HOME"/.Files || exit
-			brew bundle install && brew bundle cleanup
+			"$HOME"/.homebrew/brew bundle install && "$HOME"/.homebrew/brew bundle cleanup
 			cd "$HOME" || exit
 		fi
 		if [ "$(uname)" = "Linux" ]; then
