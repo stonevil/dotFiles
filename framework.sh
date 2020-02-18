@@ -37,9 +37,9 @@ _check_env() {
 			_add_repository
 			# Set shell to zsh
 			apk --update add git curl zsh shadow && usermod -s /bin/zsh "$(id -u -n)"
+		else
+			echo "Unsupported Linux. Only Alpine Linux is currently supported" && exit 1
 		fi
-	else
-		echo "Unsupported Linux. Only Alpine Linux is currently supported" && exit 1
 	fi
 }
 
