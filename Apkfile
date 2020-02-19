@@ -24,13 +24,12 @@ lua5.3
 lua5.3-dev
 luarocks5.3
 the_silver_searcher
-shellcheck
 ripgrep
 libffi
 libffi-dev
 openssl
 openssl-dev
+musl
 musl-dev
 gcc
-build-base
---virtual build-dependencies
+libgcc
