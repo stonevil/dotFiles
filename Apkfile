@@ -24,7 +24,6 @@ lua5.3
 lua5.3-dev
 luarocks5.3
 the_silver_searcher
-ripgrep
 libffi
 libffi-dev
 openssl
