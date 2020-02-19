@@ -59,7 +59,7 @@ _install_packages() {
 		fi
 		if [ "$(uname)" = "Linux" ]; then
 			cd "$HOME"/.Files || exit
-			apk update && apk upgrade && apk --update add $(paste -s -d ' ' Apkfile)
+			apk update && apk upgrade && apk --update add $(paste -s -d ' ' Apkfile) || exit 1
 			cd "$HOME" || exit
 		fi
 		if command -v pip3 >/dev/null; then
