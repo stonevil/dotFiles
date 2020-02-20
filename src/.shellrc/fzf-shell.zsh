@@ -1,5 +1,8 @@
 # vim:ft=zsh :
 
+# TODO
+# 1. Switch to ag over rg. rg is not available for i86 on Alpine and basically not available for iSH
+
 if command -v fzf >/dev/null; then
 	export FZF_DEFAULT_COMMAND_IGNORE="--glob '!.git/*' --glob '!.svn/*' --glob '!node_modules/*' --glob '!.undodir/*' --glob '!.session.vim' --glob '!.DS_Store'"
 
