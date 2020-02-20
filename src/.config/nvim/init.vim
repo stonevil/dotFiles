@@ -5,6 +5,10 @@
 
 if 0 | endif
 
+if has("gui_vimr")
+	:cd ~/Documents
+endif
+
 if has('nvim')
 	let vimplug_exists=expand('~/.config/nvim/autoload/plug.vim')
 else
@@ -52,7 +56,6 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	endif
 	let g:deoplete#enable_at_startup = 1
 	Plug 'deoplete-plugins/deoplete-go', { 'do': 'make'}
-	Plug 'deoplete-plugins/deoplete-jedi'
 
 	" UI/UX
 	" Still not decided between FZF and Clap.
@@ -641,7 +644,8 @@ nnoremap <silent> <leader>c  :Commits<CR>
 nnoremap <silent> <leader>bc :BCommits<CR>
 
 " Search open buffers
-nnoremap <silent> <leader>b :Buffers<CR>
+nnoremap <silent> <leader><leader> :Buffers<CR>
+"nnoremap <silent> <leader>b :Buffers<CR>
 
 " Similar to MRU
 nnoremap <silent> <leader>r :FZFMru<CR>
@@ -871,7 +875,7 @@ noremap <leader>N :enew<CR>
 noremap <leader>c :bd<CR>
 noremap <leader>c! :bd!<CR>
 " Switch to last-active buffer
-nnoremap <leader><leader> <C-^>
+nnoremap <leader>l <C-^>
 
 " :bd          - deletes the current buffer, error if there are unwritten changes
 " :bd!         - deletes the current buffer, no error if unwritten changes
