@@ -7,6 +7,7 @@
 # Add go get some packages
 # lazydock and lazygit for Alpine
 # Add edge and testing and community repo
+# Rewrite all this bs to zsh plugins
 
 _check_internet_connection() {
 	echo "Check Internet connection"
