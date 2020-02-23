@@ -25,6 +25,7 @@ setopt promptsubst
 
 zinit snippet OMZ::lib/git.zsh
 zinit snippet OMZ::lib/history.zsh
+zinit snippet OMZ::lib/directories.zsh
 zinit snippet OMZ::lib/theme-and-appearance.zsh
 
 zinit light zpm-zsh/colors
