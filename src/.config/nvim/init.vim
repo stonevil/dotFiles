@@ -317,39 +317,7 @@ function! OpenFloatingWindow()
 	au BufWipeout <buffer> exe 'bw '.s:buf
 endfunction
 
-" Open autoclosing terminal, with optional size and orientation
-function! LayoutTermWindow(size, orientation) abort
-	let timeout = 16.0
-	let animation_total = 150.0
-	let timer = { 'size': a:size, 'step': 1, 'steps': animation_total / timeout }
-
-	if a:orientation == 'horizontal'
-		resize 1
-		function! timer.f(timer)
-			execute 'resize ' . string(&lines * self.size * (self.step / self.steps))
-			let self.step += 1
-		endfunction
-	else
-		vertical resize 1
-		function! timer.f(timer)
-			execute 'vertical resize ' . string(&columns * self.size * (self.step / self.steps))
-			let self.step += 1
-		endfunction
-	endif
-	call timer_start(float2nr(timeout), timer.f, {'repeat': float2nr(timer.steps)})
-endfunction
-
-function! OpenTermWindow(cmd, ...) abort
-	let orientation = get(a:, 2, 'horizontal')
-	if orientation == 'horizontal'
-		new | wincmd J
-	else
-		vnew | wincmd L
-	endif
-	call LayoutTermWindow(get(a:, 1, 0.5), orientation)
-	call termopen(a:cmd, {'on_exit': {j,c,e -> execute('if c == 0 | close | endif')}})
-endfunction
-
+" Hunk stage and stage commit
 function! HunkStageAndCommit() abort
 	:GitGutterStageHunk
 	:Gcommit
