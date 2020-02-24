@@ -101,41 +101,39 @@ _packages_install() {
 }
 
 _packages_update() {
-	if _connection_internet_check; then
-		if [ "$(uname)" = "Darwin" ]; then
-			cd "$HOME"/.Files || exit
-			brew bundle update && brew bundle cleanup
-			cd "$HOME" || exit
-		fi
-		if [ "$(uname)" = "Linux" ]; then
-			cd "$HOME"/.Files || exit
-			apk update && apk upgrade
-			cd "$HOME" || exit
-		fi
+	if [ "$(uname)" = "Darwin" ]; then
+		cd "$HOME"/.Files || exit
+		brew bundle update && brew bundle cleanup
+		cd "$HOME" || exit
+	fi
+	if [ "$(uname)" = "Linux" ]; then
+		cd "$HOME"/.Files || exit
+		apk update && apk upgrade
+		cd "$HOME" || exit
+	fi
 
-		if command -v nvim >/dev/null; then
-			nvim +PlugUpdate +qall
-			nvim +UpdateRemotePlugins +qall
-		fi
+	if command -v nvim >/dev/null; then
+		nvim +PlugUpdate +qall
+		nvim +UpdateRemotePlugins +qall
+	fi
 
-		if command -v gcloud >/dev/null; then
-			yes Y | gcloud components update
-		fi
+	if command -v gcloud >/dev/null; then
+		yes Y | gcloud components update
+	fi
 
-		if command -v pip3 >/dev/null; then
-			pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U
-		fi
+	if command -v pip3 >/dev/null; then
+		pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U
+	fi
 
-		if [ -d "$HOME"/.tmux/plugins ]; then
-			for plugin in "$HOME"/.tmux/plugins/*; do
-				if [ -d "$plugin" ]; then
-					cd "$plugin" || exit
-					if [ -d '.git' ]; then
-						git pull
-					fi
+	if [ -d "$HOME"/.tmux/plugins ]; then
+		for plugin in "$HOME"/.tmux/plugins/*; do
+			if [ -d "$plugin" ]; then
+				cd "$plugin" || exit
+				if [ -d '.git' ]; then
+					git pull
 				fi
-			done
-		fi
+			fi
+		done
 
 		cd "$HOME" || exit
 	fi
