@@ -3,20 +3,7 @@
 # shellcheck source=/dev/null
 
 . "$HOME"/.Files/framework.sh || exit 1
-_install_zinit
-
-#zle && { zle reset-prompt; zle -R }
-
-# Load rc plugins
-if [ -d "$HOME"/.shellrc ]; then
-	if [ "$(ls -A "$HOME"/.shellrc)" ]; then
-		for file in "$HOME"/.shellrc/[0-9]*; do
-			source "$file"
-		done
-	fi
-else
-	echo "404: ~/.shellrc folder not found"
-fi
+_zinit_install
 
 # ZPM
 source $HOME/.zinit/bin/zinit.zsh

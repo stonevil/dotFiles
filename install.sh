@@ -9,7 +9,7 @@
 # Add edge and testing and community repo
 # Rewrite all this bs to zsh plugins
 
-_check_internet_connection() {
+_connection_internet_check() {
 	echo "Check Internet connection"
 	if command -v curl >/dev/null; then
 		"$(curl -sL -w "%{http_code}\n" "http://www.github.com/" -o /dev/null)" -eq 200 && return 0
@@ -18,9 +18,9 @@ _check_internet_connection() {
 	fi
 }
 
-_check_dev_tools() {
+_tools_dev_check() {
 	if ! command -v git >/dev/null; then
-		if _check_internet_connection; then
+		if _connection_internet_check; then
 			if [ "$(uname)" = "Darwin" ]; then
 				xcode-select --install || exit 1
 			fi
@@ -31,7 +31,7 @@ _check_dev_tools() {
 	fi
 }
 
-_clone_dot_files_repo() {
+_files_dot_repo_clone() {
 	if [ ! -d "$HOME"/.Files ]; then
 		if _check_internet_connection; then
 			cd "$HOME" || exit 1
@@ -41,9 +41,9 @@ _clone_dot_files_repo() {
 }
 
 # Preflight check
-_check_dev_tools
+_tools_dev_check
 if [ ! -f "$HOME"/.Files/framework.sh ]; then
-	_clone_dot_files_repo
+	_files_dot_repo_clone
 else
 	. "$HOME"/.Files/framework.sh || exit 1
 fi
@@ -52,17 +52,21 @@ fi
 if [ -d "$HOME"/.Files ]; then
 	case "$1" in
 	dump)
-		_dump_packages
+		_packages_dump_list
 		;;
 	pkgs)
-		_install_toolset
+		_toolset_install
 		;;
 	dot)
-		_install_dot_files
+		_files_dot_install
+		;;
+	update)
+		_files_dot_update
+		_toolset_update
 		;;
 	*)
-		_install_dot_files
-		_install_toolset
+		_files_dot_install
+		_toolset_install
 		;;
 	esac
 fi

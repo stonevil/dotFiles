@@ -2,7 +2,7 @@
 # vim:ft=sh
 # shellcheck source=/dev/null
 
-_set_timezone() {
+_timezone_alpine_set() {
 	TIMEZONE="US/Pacific"
 
 	if command -v apk >/dev/null; then
@@ -16,31 +16,34 @@ _set_timezone() {
 	fi
 }
 
-_install_dot_files() {
+_files_dot_install() {
 	echo "Installing dotFiles into system"
 	cp -Rf "$HOME"/.Files/src/.[a-zA-Z0-9]* "$HOME"/
 }
 
-_install_toolset() {
-	_install_zinit
-	_install_packages
+_toolset_install() {
+	_zinit_install
+	_packages_install
 }
 
-_install_zpm() {
-	if [ ! -f ~/.zpm/zpm.zsh ]; then
-		cd "$HOME" || exit
-		git clone --recursive https://github.com/zpm-zsh/zpm "$HOME"/.zpm
-	fi
+_toolset_update() {
+	_zinit_update
+	_packages_update
 }
 
-_install_zinit() {
+_zinit_install() {
 	if [ ! -f "$HOME"/.zinit/bin/zinit.zsh ]; then
 		cd "$HOME" || exit
 		git clone https://github.com/zdharma/zinit.git "$HOME"/.zinit/bin
 	fi
 }
 
-_check_env() {
+_zinit_update() {
+	zinit self-update
+	zinit update
+}
+
+_env_check() {
 	if [ "$(uname)" = "Darwin" ] && [ -d "$HOME"/.homebrew ]; then
 		export PATH=$HOME/.homebrew/bin:$PATH
 		# Set shell to zsh
@@ -48,7 +51,7 @@ _check_env() {
 	fi
 	if [ "$(uname)" = "Linux" ]; then
 		if command -v apk >/dev/null; then
-			_add_repository
+			_repository_alpine_add
 			# Set shell to zsh
 			apk --update add git curl zsh shadow && usermod -s /bin/zsh "$(id -u -n)"
 		else
@@ -57,8 +60,8 @@ _check_env() {
 	fi
 }
 
-_install_packages() {
-	_check_env
+_packages_install() {
+	_env_check
 	echo "Installing packages..."
 	if [ -d "$HOME"/.Files ]; then
 		if [ "$(uname)" = "Darwin" ]; then
@@ -97,9 +100,50 @@ _install_packages() {
 	fi
 }
 
-_dump_packages() {
-	_check_dev_tools
-	_check_env
+_packages_update() {
+	if _connection_internet_check; then
+		if [ "$(uname)" = "Darwin" ]; then
+			cd "$HOME"/.Files || exit
+			brew bundle update && brew bundle cleanup
+			cd "$HOME" || exit
+		fi
+		if [ "$(uname)" = "Linux" ]; then
+			cd "$HOME"/.Files || exit
+			apk update && apk upgrade
+			cd "$HOME" || exit
+		fi
+
+		if command -v nvim >/dev/null; then
+			nvim +PlugUpdate +qall
+			nvim +UpdateRemotePlugins +qall
+		fi
+
+		if command -v gcloud >/dev/null; then
+			yes Y | gcloud components update
+		fi
+
+		if command -v pip3 >/dev/null; then
+			pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U
+		fi
+
+		if [ -d "$HOME"/.tmux/plugins ]; then
+			for plugin in "$HOME"/.tmux/plugins/*; do
+				if [ -d "$plugin" ]; then
+					cd "$plugin" || exit
+					if [ -d '.git' ]; then
+						git pull
+					fi
+				fi
+			done
+		fi
+
+		cd "$HOME" || exit
+	fi
+}
+
+_packages_dump_list() {
+	_tools_dev_check
+	_env_check
 	echo "Dumping list of installed packages"
 	if [ -d "$HOME"/.Files ]; then
 		cd "$HOME"/.Files || exit
@@ -126,13 +170,13 @@ _dump_packages() {
 	fi
 }
 
-_add_repository() {
+_repository_alpine_add() {
 	for reponame in "main" "community" "testing"; do
 		grep -qF "http://dl-cdn.alpinelinux.org/alpine/edge/$reponame" /etc/apk/repositories || echo "http://dl-cdn.alpinelinux.org/alpine/edge/$reponame" >>/etc/apk/repositories
 	done
 }
 
-_set_desktop() {
+_desktop_macos_set() {
 	if [ "$(uname)" = "Darwin" ]; then
 		# Activity Monitor
 		defaults write com.apple.ActivityMonitor OpenMainWindow -bool true

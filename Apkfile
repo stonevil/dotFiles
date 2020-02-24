@@ -7,6 +7,8 @@ wget
 neovim
 tmux
 fzf
+ripgrep
+the_silver_searcher
 ctags
 ncurses
 tzdata
@@ -24,7 +26,6 @@ linux-headers
 lua5.3
 lua5.3-dev
 luarocks5.3
-the_silver_searcher
 libffi
 libffi-dev
 openssl

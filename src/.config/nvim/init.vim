@@ -63,6 +63,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	" But not very stable and search pretty limited
 
 	" FZF
+	Plug '~/.homebrew/opt/fzf'
 	Plug 'junegunn/fzf.vim'
 	Plug 'pbogut/fzf-mru.vim'
 

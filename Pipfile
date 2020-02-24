@@ -6,7 +6,6 @@ fasteners==0.15
 google-oauth2l==1.0.2
 greenlet==0.4.15
 httplib2==0.17.0
-jedi==0.16.0
 Jinja2==2.11.1
 MarkupSafe==1.1.1
 meson==0.53.1
