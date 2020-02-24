@@ -9,6 +9,7 @@ tmux
 fzf
 ctags
 ncurses
+tzdata
 perl
 python3
 python3-dev
