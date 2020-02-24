@@ -2,6 +2,20 @@
 # vim:ft=sh
 # shellcheck source=/dev/null
 
+_set_timezone() {
+	TIMEZONE="US/Pacific"
+
+	if command -v apk >/dev/null; then
+		if [ "$(uname)" = "Linux" ]; then
+			apk update && apk upgrade && apk --update add tzdata
+			cp /usr/share/zoneinfo/$TIMEZONE /etc/localtime
+			echo $TIMEZONE >/etc/timezone
+		fi
+	else
+		echo "Unsupported Linux. Only Alpine Linux is currently supported" && exit 1
+	fi
+}
+
 _install_dot_files() {
 	echo "Installing dotFiles into system"
 	cp -Rf "$HOME"/.Files/src/.[a-zA-Z0-9]* "$HOME"/
