@@ -2,6 +2,11 @@
 # vim:ft=zsh :
 # shellcheck source=/dev/null
 
+# Enforce Homebrew to the PATH
+HOMEBREW="$HOME/.homebrew"
+PATH="$HOMEBREW/bin:$PATH"
+MANPATH="$HOMEBREW/share/man:$MANPATH"
+
 . "$HOME"/.Files/framework.sh || exit 1
 _zinit_install
 

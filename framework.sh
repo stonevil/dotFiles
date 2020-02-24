@@ -103,7 +103,7 @@ _packages_install() {
 _packages_update() {
 	if [ "$(uname)" = "Darwin" ]; then
 		cd "$HOME"/.Files || exit
-		brew bundle update && brew bundle cleanup
+		brew update && brew upgrade && brew cask upgrade
 		cd "$HOME" || exit
 	fi
 	if [ "$(uname)" = "Linux" ]; then

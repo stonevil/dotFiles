@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 # vim:ft=sh
+# shellcheck source=/dev/null
+
+# Enforce Homebrew to the PATH
+HOMEBREW="$HOME/.homebrew"
+PATH="$HOMEBREW/bin:$PATH"
+MANPATH="$HOMEBREW/share/man:$MANPATH"
 
 # shellcheck source=/dev/null
 if [ -d "$HOME"/.shellrc ]; then
