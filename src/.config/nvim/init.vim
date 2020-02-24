@@ -63,31 +63,26 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	" But not very stable and search pretty limited
 
 	" FZF
-	Plug '~/.homebrew/opt/fzf'
 	Plug 'junegunn/fzf.vim'
 	Plug 'pbogut/fzf-mru.vim'
-	" Clap. Generic interactive finder and dispatcher
-	"Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
 
 	" TMUX integration
 	Plug 'christoomey/vim-tmux-navigator'
 	Plug 'tmux-plugins/vim-tmux-focus-events'
 	Plug 'roxma/vim-tmux-clipboard'
-	"Plug 'blueyed/vim-diminactive'
 	Plug 'wellle/tmux-complete.vim'
 
 	" Workspaces support
 	Plug 'thaerkh/vim-workspace'
 
 	" Floating terminal
-	"Plug 'voldikss/vim-floaterm'
+	Plug 'voldikss/vim-floaterm'
 
 	" Undo tree
 	Plug 'simnalamburt/vim-mundo'
 
 	" Asynchronous linting/fixing for Vim and Language Server Protocol (LSP) integration
 	Plug 'dense-analysis/ale'
-	"Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 	" Viewer & Finder for LSP symbols and tags
 	Plug 'liuchengxu/vista.vim'
@@ -118,11 +113,6 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	" Tabulation
 	"Plug 'godlygeek/tabular'
 
-	" Simplifies the transition between multiline and single-line cod
-	Plug 'AndrewRadev/splitjoin.vim'
-	" gS to split a one-liner into multiple lines
-	" gJ (with the cursor on the first line of a block) to join a block into a single-line statement.
-
 	" Provides insert mode auto-completion for quotes, parens, brackets
 	Plug 'Raimondi/delimitMate'
 
@@ -142,7 +132,6 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 
 	" Ansible Bundle
 	Plug 'pearofducks/ansible-vim'
-	"Plug 'phenomenes/ansible-snippets'
 
 	" Helm Bundle
 	Plug 'towolf/vim-helm'
@@ -152,9 +141,6 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	"Plug 'mhinz/vim-signify'
 	Plug 'airblade/vim-gitgutter'
 
-	" Logstash Bundle
-	Plug 'robbles/logstash.vim'
-
 	" HashiCorp Bundle
 	Plug 'hashivim/vim-hashicorp-tools'
 
@@ -163,9 +149,6 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 
 	" Polyglot
 	Plug 'sheerun/vim-polyglot'
-
-	" Enable clipboard over network connection. https://github.com/wincent/clipper is required
-	"Plug 'wincent/vim-clipper'
 call plug#end()
 
 
@@ -357,11 +340,6 @@ augroup FileType go
 	let g:go_auto_type_info = 1
 augroup END
 
-augroup myvimrc
-	au!
-	au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc,init.vim so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
-augroup END
-
 augroup sshconfig
 	au!
 	au BufRead,BufNewFile  *.sshconfig set syntax=sshconfig
@@ -369,14 +347,14 @@ augroup END
 
 augroup shellfile
 	au!
-	au FileType sh nnoremap <leader><F12> :terminal shellcheck %<CR>
+	au FileType sh nnoremap <leader><F12> :FloatermNew shellcheck %<CR>
 augroup END
 
 augroup vagrantfile
 	au!
 	au BufRead,BufNewFile Vagrantfile set filetype=ruby
-	au FileType ruby nnoremap <leader><F9> :terminal vagrant up<CR>
-	au FileType ruby nnoremap <leader><F12> :terminal vagrant validate<CR>
+	au FileType ruby nnoremap <leader><F9> :FloatermNew vagrant up<CR>
+	au FileType ruby nnoremap <leader><F12> :FloatermNew vagrant validate<CR>
 augroup END
 
 augroup dockerfile
@@ -441,7 +419,7 @@ let g:ansible_template_syntaxes = { '*.rb.j2': 'ruby' }
 " preview the hunk, e.g. <leader>hp
 " move to the preview window, e.g. :wincmd P
 " delete the lines you do not want to stage;
-" stage the remaining lines: either write (:w) the window or stage via <Leader>hs or :GitGutterStageHunk
+" stage the remaining lines: either write (:w) the window or stage via <leader>hs or :GitGutterStageHunk
 "
 " ic operates on all lines in the current hunk.
 " ac operates on all lines in the current hunk and any trailing empty lines.
@@ -468,13 +446,15 @@ nnoremap <silent> <F1> :Vista!!<CR>
 
 """"""""""
 "" vim-floaterm
-"let g:floaterm_keymap_new = '<F9>'
-"let g:floaterm_keymap_prev = '<F10>'
-"let g:floaterm_keymap_next = '<F11>'
-"let g:floaterm_keymap_toggle = '<F12>'
+let g:floaterm_keymap_new = '<leader>{'
+let g:floaterm_keymap_prev = '<leader>['
+let g:floaterm_keymap_next = '<leader>]'
+let g:floaterm_keymap_toggle = '<leader>}'
 
-"let g:floaterm_width = 0.8
-"let g:floaterm_height = 0.8
+let g:floaterm_position = 'center'
+let g:floaterm_type = 'floating'
+let g:floaterm_width = 0.9
+let g:floaterm_height = 0.9
 
 
 """"""""""
@@ -547,16 +527,6 @@ let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'
 " <leader>cA
 " Uncomments the selected line(s)
 " [count]<leader>cu
-
-
-""""""""""
-"" vim-markdown
-let g:vim_markdown_folding_disabled = 1
-let g:vim_markdown_fenced_languages = ['go=go', 'viml=vim', 'bash=sh']
-let g:vim_markdown_toml_frontmatter = 1
-let g:vim_markdown_frontmatter = 1
-let g:vim_markdown_new_list_item_indent = 2
-let g:vim_markdown_no_extensions_in_markdown = 1
 
 
 """"""""""
@@ -679,7 +649,7 @@ let g:fzf_colors =
 	\ 'spinner':	['fg', 'Label'],
 	\ 'header':		['fg', 'Comment'] }
 
-let g:fzf_history_dir = '~/.local/share/fzf-history'
+let g:fzf_history_dir = '~/.cache/fzf-history'
 
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
@@ -692,17 +662,10 @@ let g:fzf_commands_expect = 'alt-enter,ctrl-x'
 
 
 """"""""""
-"" lazy tools
-" Open lazygit
-nnoremap <silent> <leader><leader>' :call OpenTermWindow('lazygit', 0.8)<CR>
-" Open lazydocker
-nnoremap <silent> <leader><leader>; :call OpenTermWindow('lazydocker', 0.8)<CR>
-
-
-""""""""""
 "" tpope/vim-fugitive
 " https://github.com/tpope/vim-fugitive/blob/master/doc/fugitive.txt
-noremap <leader>gad :Gwrite<CR> "Write to the current file's path and stage the results. When run in a work tree file, it is effectively git add. Elsewhere, it is effectively git-checkout. A great deal of effort is expended to behave sensibly when the work tree or index version of the file is open in another buffer.
+" Write to the current file's path and stage the results. When run in a work tree file, it is effectively git add. Elsewhere, it is effectively git-checkout. A great deal of effort is expended to behave sensibly when the work tree or index version of the file is open in another buffer.
+noremap <leader>gad :Gwrite<CR>
 
 noremap <leader>gpu :Gpush<CR>
 noremap <leader>gpl :Gpull<CR>
@@ -710,7 +673,8 @@ noremap <leader>gpl :Gpull<CR>
 noremap <leader>gdf :Gvdiff<CR>
 noremap <leader>ggr :Ggrep<CR>
 
-noremap <leader>gst :Gstatus<CR> "Press - to add/reset a file's changes, or p to add/reset --patch.
+" Press - to add/reset a file's changes, or p to add/reset --patch.
+noremap <leader>gst :Gstatus<CR>
 noremap <leader>gad :Gwrite<CR>
 noremap <leader>gco :Gcommit<CR>
 
