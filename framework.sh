@@ -79,12 +79,21 @@ _packages_install() {
 			apk update && apk upgrade && apk --update add $(paste -s -d ' ' Apkfile) || exit 1
 			cd "$HOME" || exit
 		fi
+
+		export STANDARD_CACHE_DIR="${XDG_CACHE_HOME:-${HOME}/.cache}/pip"
+		export WHEELHOUSE="${STANDARD_CACHE_DIR}/wheelhouse"
+		export PIP_FIND_LINKS="file://${WHEELHOUSE}"
+		export PIP_WHEEL_DIR="${WHEELHOUSE}"
+		if command -v pip3 >/dev/null; then
+			pip3 wheel numpy
+		fi
 		if command -v pip3 >/dev/null; then
 			cd "$HOME"/.Files || exit
 			pip3 install --upgrade pip
 			pip3 install --upgrade --force-reinstall --no-cache-dir -r Pipfile
 			cd "$HOME" || exit
 		fi
+
 		if command -v go >/dev/null; then
 			cd "$HOME"/.Files || exit
 			if [ -f "$HOME"/.shellrc/golang ]; then
