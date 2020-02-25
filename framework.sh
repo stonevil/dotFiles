@@ -83,7 +83,7 @@ _packages_install() {
 		if command -v pip3 >/dev/null; then
 			cd "$HOME"/.Files || exit
 			pip3 install --upgrade pip
-			pip3 install --upgrade --force-reinstall --no-cache-dir -r Pipfile
+			pip3 install --upgrade --force-reinstall -r Pipfile
 			cd "$HOME" || exit
 		fi
 
