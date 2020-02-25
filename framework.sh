@@ -80,13 +80,6 @@ _packages_install() {
 			cd "$HOME" || exit
 		fi
 
-		export STANDARD_CACHE_DIR="${XDG_CACHE_HOME:-${HOME}/.cache}/pip"
-		export WHEELHOUSE="${STANDARD_CACHE_DIR}/wheelhouse"
-		export PIP_FIND_LINKS="file://${WHEELHOUSE}"
-		export PIP_WHEEL_DIR="${WHEELHOUSE}"
-		if command -v pip3 >/dev/null; then
-			pip3 wheel numpy
-		fi
 		if command -v pip3 >/dev/null; then
 			cd "$HOME"/.Files || exit
 			pip3 install --upgrade pip
