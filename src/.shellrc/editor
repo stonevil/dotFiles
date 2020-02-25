@@ -14,12 +14,8 @@ export VIM_SESSION_FILENAME=".session.vim"
 # ENV Variables
 export GIT_EDITOR=$EDITOR
 export VISUAL=$EDITOR
-export EDITOR=$EDITOR
 
 # Aliases
 alias v='$EDITOR'
 alias vi='$EDITOR'
 alias vim='$EDITOR'
-
-# Open files with Vim
-alias -s '{yml,yaml,cfg,go}'=vim

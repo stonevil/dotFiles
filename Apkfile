@@ -7,7 +7,6 @@ wget
 neovim
 tmux
 fzf
-ripgrep
 the_silver_searcher
 ctags
 ncurses
