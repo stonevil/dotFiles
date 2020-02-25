@@ -1,13 +1,12 @@
 # vim:ft=sh :
 
-# Setup EDITOR
-if [ -f "$HOMEBREW"/bin/nvim ]; then
-	export EDITOR="$HOMEBREW/bin/nvim"
+# EDITOR
+if command -v nvim >/dev/null; then
+	EDITOR="$(command -v nvim)"
 else
-	if [ -f /usr/bin/vim ]; then
-		export EDITOR="/usr/bin/vim"
-	fi
+	EDITOR="$(command -v vim)"
 fi
+export EDITOR
 
 # VIM/NVIM session file
 export VIM_SESSION_FILENAME=".session.vim"
