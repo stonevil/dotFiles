@@ -132,10 +132,10 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'godoctor/godoctor.vim', { 'for': 'golang' }
 
 	" Ansible Bundle
-	Plug 'pearofducks/ansible-vim'
+	Plug 'pearofducks/ansible-vim', {'for': 'ansible'}
 
 	" Helm Bundle
-	Plug 'towolf/vim-helm'
+	Plug 'towolf/vim-helm', {'for': 'helm'}
 
 	" Git Bundle
 	Plug 'tpope/vim-fugitive'
@@ -143,10 +143,10 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'airblade/vim-gitgutter'
 
 	" HashiCorp Bundle
-	Plug 'hashivim/vim-hashicorp-tools'
+	Plug 'hashivim/vim-hashicorp-tools', {'for': 'terraform'}
 
 	" Logrotate Bundle
-	Plug 'moon-musick/vim-logrotate'
+	Plug 'moon-musick/vim-logrotate', {'for': 'logrotate'}
 
 	" Polyglot
 	Plug 'sheerun/vim-polyglot'
