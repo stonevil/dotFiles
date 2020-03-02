@@ -29,13 +29,14 @@ function! InstallPlug(plugpath)
 	endif
 endfunction
 
-" :PlugInstall [name ...] [#threads] - Install plugins
-" :PlugUpdate [name ...] [#threads] - Install or update plugins
-" :PlugClean[!] - Remove unused directories (bang version will clean without prompt)
-" :PlugUpgrade	- Upgrade vim-plug itself
-" :PlugStatus - Check the status of plugins
-" :PlugDiff - Examine changes from the previous update and the pending changes
-" :PlugSnapshot[!] [output path] - Generate script for restoring the current snapshot of the plugins
+" :PlugInstall [name ...] [#threads]	- Install plugins
+" :PlugUpdate [name ...] [#threads]		- Install or update plugins
+" :PlugClean[!]												- Remove unused directories (bang version will clean without prompt)
+" :PlugUpgrade												- Upgrade vim-plug itself
+" :PlugStatus													- Check the status of plugins
+" :PlugDiff														- Examine changes from the previous update and the pending changes
+" :PlugSnapshot[!] [output path]			- Generate script for restoring the current snapshot of the plugins
+
 call InstallPlug(vimplug_exists)
 
 "" Install vim-plug if required
@@ -92,27 +93,58 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'scrooloose/nerdcommenter'
 
 	" Displaying thin vertical lines at each indentation level for code indented with spaces
-	Plug 'Yggdroot/indentLine'
+	"Plug 'Yggdroot/indentLine'
+	Plug 'thaerkh/vim-indentguides'
+
+	" Better % navigate and highlight matching words modern matchit and matchparen replacement
+	"Plug 'andymass/vim-matchup'
+	" adds motions g%, [%, ]%, and z%
+
+	" Plug 'kshenoy/vim-signature'
+	" mx         - Toggle mark 'x' and display it in the leftmost column
+	" dmx        - Remove mark 'x' where x is a-zA-Z
+
+	" m,         - Place the next available mark
+	" m.         - If no mark on line, place the next available mark. Otherwise, remove (first) existing mark.
+	" m-         - Delete all marks from the current line
+	" m<Space>   - Delete all marks from the current buffer
+	" ]`         - Jump to next mark
+	" [`         - Jump to prev mark
+	" ]'         - Jump to start of next line containing a mark
+	" ['         - Jump to start of prev line containing a mark
+	" `]         - Jump by alphabetical order to next mark
+	" `[         - Jump by alphabetical order to prev mark
+	" ']         - Jump by alphabetical order to start of next line having a mark
+	" '[         - Jump by alphabetical order to start of prev line having a mark
+	" m/         - Open location list and display marks from current buffer
+
+	" m[0-9]     - Toggle the corresponding marker !@#$%^&*()
+	" m<S-[0-9]> - Remove all markers of the same type
+	" ]-         - Jump to next line having a marker of the same type
+	" [-         - Jump to prev line having a marker of the same type
+	" ]=         - Jump to next line having a marker of any type
+	" [=         - Jump to prev line having a marker of any type
+	" m?         - Open location list and display markers from current buffer
+	" m<BS>      - Remove all markers
 
 	" Vim sugar for the UNIX shell commands
 	Plug 'tpope/vim-eunuch'
-	":Delete: Delete a buffer and the file on disk simultaneously.
-	":Unlink: Like :Delete, but keeps the now empty buffer.
-	":Move: Rename a buffer and the file on disk simultaneously.
-	":Rename: Like :Move, but relative to the current file's containing directory.
-	":Chmod: Change the permissions of the current file.
-	":Mkdir: Create a directory, defaulting to the parent of the current file.
-	":Cfind: Run find and load the results into the quickfix list.
-	":Clocate: Run locate and load the results into the quickfix list.
-	":Lfind/:Llocate: Like above, but use the location list.
-	":Wall: Write every open window. Handy for kicking off tools like guard.
-	":SudoWrite: Write a privileged file with sudo.
-	":SudoEdit: Edit a privileged file with sudo.
+	" :Delete         - Delete a buffer and the file on disk simultaneously.
+	" :Unlink         - Like :Delete, but keeps the now empty buffer.
+	" :Move           - Rename a buffer and the file on disk simultaneously.
+	" :Rename         - Like :Move, but relative to the current file's containing directory.
+	" :Chmod          - Change the permissions of the current file.
+	" :Mkdir          - Create a directory, defaulting to the parent of the current file.
+	" :Cfind          - Run find and load the results into the quickfix list.
+	" :Clocate        - Run locate and load the results into the quickfix list.
+	" :Lfind/:Llocate - Like above, but use the location list.
+	" :Wall           - Write every open window. Handy for kicking off tools like guard.
+	" :SudoWrite      - Write a privileged file with sudo.
+	" :SudoEdit       - Edit a privileged file with sudo.
 
-	"Plug 'junegunn/vim-easy-align'
-
-	" Tabulation
-	"Plug 'godlygeek/tabular'
+	" A Vim alignment plugin
+	Plug 'junegunn/vim-easy-align'
+	" https://github.com/junegunn/vim-easy-align
 
 	" Provides insert mode auto-completion for quotes, parens, brackets
 	Plug 'Raimondi/delimitMate'
@@ -123,9 +155,6 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 
 	" Enable repeating supported plugin maps with "."
 	Plug 'tpope/vim-repeat'
-
-	" EnhancedDiff
-	"Plug 'chrisbra/vim-diff-enhanced'
 
 	" Go Bundle
 	Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'golang' }
@@ -147,6 +176,9 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 
 	" Logrotate Bundle
 	Plug 'moon-musick/vim-logrotate', {'for': 'logrotate'}
+
+	" Hugo Bundle
+	Plug 'robertbasic/vim-hugo-helper'
 
 	" Polyglot
 	Plug 'sheerun/vim-polyglot'
@@ -406,24 +438,24 @@ let g:ansible_template_syntaxes = { '*.rb.j2': 'ruby' }
 
 "" Yggdroot/indentLine
 "let g:indentLine_setColors = 0
-":IndentLinesToggle
+" :IndentLinesToggle
 
 
 """"""""""
 "" airblade/vim-gitgutter
-" jump to next hunk (change): ]c
-" jump to previous hunk (change): [c
-" stage the hunk with <leader>hs
-" undo it with <leader>hu
-"
+" ]c					- jump to next hunk (change)
+" [c					- jump to previous hunk (change)
+" <leader>hs	- stage the hunk with
+" <leader>hu	- undo it with
+
 " To stage part of any hunk:
-" preview the hunk, e.g. <leader>hp
-" move to the preview window, e.g. :wincmd P
+" <leader>hp	- preview the hunk
+" :wincmd P		- move to the preview window
 " delete the lines you do not want to stage;
 " stage the remaining lines: either write (:w) the window or stage via <leader>hs or :GitGutterStageHunk
-"
-" ic operates on all lines in the current hunk.
-" ac operates on all lines in the current hunk and any trailing empty lines.
+
+" ic					- operates on all lines in the current hunk.
+" ac					- operates on all lines in the current hunk and any trailing empty lines.
 
 
 """"""""""
@@ -467,11 +499,11 @@ let g:floaterm_height = 0.9
 
 """"""""""
 "" vim-tmux-navigator
-"	<ctrl-h> Left
-"	<ctrl-j> Down
-"	<ctrl-k> Up
-"	<ctrl-l> Right
-"	<ctrl-\> Previous split
+" <ctrl-h>	- Left
+" <ctrl-j>	- Down
+" <ctrl-k>	- Up
+" <ctrl-l>	- Right
+" <ctrl-\>	- Previous split
 let g:tmux_navigator_disable_when_zoomed = 1
 
 
@@ -604,7 +636,7 @@ nnoremap <silent> <leader>f :BLines<CR>
 nnoremap <silent> <leader>F :Lines<CR>
 
 " Search for marked lines
-nnoremap <silent> <leader>' :Marks<CR>
+nnoremap <silent> <leader>` :Marks<CR>
 
 nnoremap <silent> <leader>t :Tags<CR>
 nnoremap <silent> <leader>T :BTags<CR>
