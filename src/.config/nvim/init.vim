@@ -58,15 +58,12 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	let g:deoplete#enable_at_startup = 1
 	Plug 'deoplete-plugins/deoplete-go', { 'do': 'make'}
 
-	" UI/UX
-	" Still not decided between FZF and Clap.
-	" CLap works faster and using popup window.
-	" But not very stable and search pretty limited
-
 	" FZF
 	Plug '~/.homebrew/opt/fzf'
 	Plug 'junegunn/fzf.vim'
 	Plug 'pbogut/fzf-mru.vim'
+
+	"Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
 	" TMUX integration
 	Plug 'christoomey/vim-tmux-navigator'
@@ -93,8 +90,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'scrooloose/nerdcommenter'
 
 	" Displaying thin vertical lines at each indentation level for code indented with spaces
-	"Plug 'Yggdroot/indentLine'
-	Plug 'thaerkh/vim-indentguides'
+	Plug 'Yggdroot/indentLine'
 
 	" Better % navigate and highlight matching words modern matchit and matchparen replacement
 	"Plug 'andymass/vim-matchup'
@@ -436,9 +432,18 @@ let g:ansible_unindent_after_newline = 1
 let g:ansible_attribute_highlight = 'ob'
 let g:ansible_template_syntaxes = { '*.rb.j2': 'ruby' }
 
+
+""""""""""
 "" Yggdroot/indentLine
-"let g:indentLine_setColors = 0
+let g:indentLine_setColors = 0
 " :IndentLinesToggle
+
+
+""""""""""
+"" Yggdroot/LeaderF
+let g:Lf_WindowPosition = 'popup'
+let g:Lf_PreviewInPopup = 1
+let g:Lf_CommandMap = {'<C-K>': ['<Up>'], '<C-J>': ['<Down>']}
 
 
 """"""""""
