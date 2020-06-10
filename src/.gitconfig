@@ -180,3 +180,5 @@
 	required = true
 [http]
 	cookiefile = /Users/stone/.gitcookies
+[pull]
+	rebase = false
