@@ -59,11 +59,18 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'deoplete-plugins/deoplete-go', { 'do': 'make'}
 
 	" FZF
-	Plug '~/.homebrew/opt/fzf'
-	Plug 'junegunn/fzf.vim'
-	Plug 'pbogut/fzf-mru.vim'
+	"Plug '~/.homebrew/opt/fzf'
+	"Plug 'junegunn/fzf.vim'
+	"Plug 'pbogut/fzf-mru.vim'
 
-	"Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+	"Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
+
+	Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+	Plug 'Yggdroot/LeaderF-marks'
+	Plug 'tamago324/LeaderF-filer'
+
+	"set  runtimepath+=~/.homebrew/opt/fzf
+	"Plug 'yuki-ycino/fzf-preview.vim'
 
 	" TMUX integration
 	Plug 'christoomey/vim-tmux-navigator'
@@ -158,6 +165,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 
 	" Ansible Bundle
 	Plug 'pearofducks/ansible-vim', {'for': 'ansible'}
+	Plug 'danihodovic/vim-ansible-vault'
 
 	" Helm Bundle
 	Plug 'towolf/vim-helm', {'for': 'helm'}
@@ -264,7 +272,7 @@ set confirm											" Confirm changes (Yes, No, Cancel) instead of error
 
 " Turn off search highlight
 nnoremap <leader><space> :nohlsearch<CR>
-" Toggle line numbering
+" Create new buffer
 nnoremap <leader>N :exec &nu==&rnu? "se nu!" : "se rnu!"<CR>
 
 """"""""""
@@ -306,7 +314,7 @@ endfunction
 nnoremap <leader>gb :call ToggleSpell("en_gb")<CR> "Toggle English spell
 nnoremap <leader>uk :call ToggleSpell("uk_ua")<CR> "Toggle Ukraine spell
 
-" Floating fzf window with borders
+" Floating window with borders
 function! OpenFloatingWindow()
 	let width = min([&columns - 4, max([80, &columns - 20])])
 	let height = min([&lines - 4, max([20, &lines - 10])])
@@ -422,6 +430,8 @@ augroup END
 
 """"""""""
 "" liuchengxu/vim-clap
+"let g:clap_layout = { 'width': '67%', 'height': '33%', 'row': '33%', 'col': '17%' }
+"let g:clap_theme = 'material_design_dark'
 "nnoremap <F4> :Clap files --hidden<CR>
 "nnoremap <leader><F4> :Clap <CR>
 
@@ -440,18 +450,86 @@ let g:indentLine_setColors = 0
 
 
 """"""""""
+"" yuki-ycino/fzf-preview.vim
+
+
+""""""""""
 "" Yggdroot/LeaderF
 let g:Lf_WindowPosition = 'popup'
 let g:Lf_PreviewInPopup = 1
-let g:Lf_CommandMap = {'<C-K>': ['<Up>'], '<C-J>': ['<Down>']}
+let g:Lf_CommandMap = {'<C-S>': ['<Tab>']}
+let g:Lf_ShowDevIcons = 0
+
+" Search files
+nnoremap <silent> <leader>e :Leaderf file<CR>
+nnoremap <silent> <leader>ee :Leaderf file --cword<CR>
+" Similar to MRU
+nnoremap <silent> <leader>r :Leaderf mru<CR>
+nnoremap <silent> <leader>r :Leaderf mru --cword<CR>
+
+" Search open buffers
+nnoremap <silent> <leader><leader> :Leaderf buffer<CR>
+nnoremap <silent> <leader><leader><leader> :Leaderf buffer --cword<CR>
+
+" Search windows
+nnoremap <silent> <leader>ww :Leaderf window<CR>
+nnoremap <silent> <leader><leader>www :Leaderf window --cword<CR>
+
+" Search for marked lines
+nnoremap <silent> <leader>` :Leaderf marks<CR>
+nnoremap <silent> <leader>`` :Leaderf marks --cword<CR>
+
+" Search for lines in current buffer
+nnoremap <silent> <leader>f :Leaderf line<CR>
+nnoremap <silent> <leader>ff :Leaderf line --cword<CR>
+
+" Search command history
+nnoremap <silent> <leader>ch :Leaderf cmdHistory<CR>
+
+" Search in search history
+nnoremap <silent> <leader>sh :Leaderf searchHistory<CR>
+
+" Search built-in/user-defined Ex commands
+nnoremap <silent> <leader>co :Leaderf command<CR>
+
+" Search functions
+nnoremap <silent> <leader>fu :Leaderf function<CR>
+nnoremap <silent> <leader>ffu :Leaderf function --cword<CR>
+
+" <C-R>	switch between fuzzy search mode and regex mode
+" <C-F>	switch between full path search mode and name only search mode
+" <C-V> OR <S-Insert>	paste from clipboard
+" <C-U>	clear the prompt
+" <C-W>	delete the word before the cursor in the prompt
+" <C-J>	move the cursor downward in the result window
+" <C-K>	move the cursor upward in the result window
+" <Up>/<Down>	recall last/next input pattern from history
+" <2-LeftMouse> OR <CR>	open the file under cursor or selected(when multiple files are selected)
+" <C-X>	open in horizontal split window
+" <C-]>	open in vertical split window
+" <C-T>	open in new tabpage
+" <F5>	refresh the cache
+" <C-LeftMouse> OR <S-LeftMouse>	select consecutive multiple files
+" <C-A>	select all files
+" <C-L>	clear all selections
+" <BS>	delete the preceding character in the prompt
+" <Del>	delete the current character in the prompt
+" <Home>	move the cursor to the begin of the prompt
+" <End>	move the cursor to the end of the prompt
+" <Left>	move the cursor one character to the left in the prompt
+" <Right>	move the cursor one character to the right in the prompt
+" <C-P>	preview the result
+" <C-Up>	scroll up in the popup preview window
+" <C-Down>	scroll down in the popup preview window
 
 
 """"""""""
 "" airblade/vim-gitgutter
 " ]c					- jump to next hunk (change)
 " [c					- jump to previous hunk (change)
-" <leader>hs	- stage the hunk with
-" <leader>hu	- undo it with
+" <leader>hs	- stage the hunk
+" <leader>hu	- undo it
+" <leader>hc	- stage the hunk and commit
 
 " To stage part of any hunk:
 " <leader>hp	- preview the hunk
@@ -599,104 +677,6 @@ nmap <silent> <leader>]g <Plug>(ale_next_wrap)
 "" vim-mundo
 nnoremap <silent> <leader>mt :MundoToggle<CR>
 let g:mundo_close_on_revert = 1
-
-
-""""""""""
-"" vim-fzf
-" Files (similar to :FZF)
-nnoremap <silent> <leader>e :Files<CR>
-
-" Git files (git ls-files)
-nnoremap <silent> <leader>g :GFiles<CR>
-" Git files (git status)
-nnoremap <silent> <leader>G :GFiles?<CR>
-
-" Search Git commits (requires fugitive.vim)
-nnoremap <silent> <leader>c  :Commits<CR>
-" Search Git commits for the current buffer
-nnoremap <silent> <leader>bc :BCommits<CR>
-
-" Search open buffers
-nnoremap <silent> <leader><leader> :Buffers<CR>
-"nnoremap <silent> <leader>b :Buffers<CR>
-
-" Similar to MRU
-nnoremap <silent> <leader>r :FZFMru<CR>
-
-" Search v:oldfiles and open buffers
-nnoremap <silent> <leader>h :History<CR>
-
-" Search in windows
-nnoremap <silent> <leader>win :Windows<CR>
-
-" Search in command history
-nnoremap <silent> <leader>H :History:<CR>
-
-" Search in commands
-nnoremap <silent> <leader>com :Commands<CR>
-
-" Search for lines in current buffer
-nnoremap <silent> <leader>f :BLines<CR>
-" Search for lines in loaded buffers
-nnoremap <silent> <leader>F :Lines<CR>
-
-" Search for marked lines
-nnoremap <silent> <leader>` :Marks<CR>
-
-nnoremap <silent> <leader>t :Tags<CR>
-nnoremap <silent> <leader>T :BTags<CR>
-
-nnoremap <silent> <leader>rg :Rg<Space>
-nnoremap <silent> <leader>! :Rg!<Space>
-
-nnoremap <silent> <leader>ft :Filetypes<CR>
-
-nnoremap <silent> <leader>s :Snippets<CR>
-
-
-""""""""""
-"" fzf
-let g:fzf_action = { 'ctrl-t': 'tab split', 'ctrl-x': 'split', 'ctrl-v': 'vsplit', 'ctrl-y': {lines -> setreg('*', join(lines, "\n"))}}
-
-"let g:fzf_layout = { 'up': '~60%' }
-let g:fzf_layout = { 'window': 'call OpenFloatingWindow()' }
-
-" Command for git grep
-if executable('git')
-	command! -bang -nargs=* GGrep call fzf#vim#grep('git grep --line-number '.shellescape(<q-args>), 0, { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
-endif
-
-" Command for string search
-if executable('rg')
-	command! -bang -nargs=* Find call fzf#vim#grep('rg --no-ignore --hidden --follow --ignore-case --column --no-heading --line-number --color=always --glob "!.git/*" --glob "!.svn/*" --glob "!node_modules/*" --glob "!.undodir/*" --glob "!.session.vim" '.shellescape(<q-args>), 1, fzf#vim#with_preview(), <bang>0)
-endif
-
-" Customize fzf colors to match your color scheme
-let g:fzf_colors =
-\ { 'fg':				['fg', 'Normal'],
-	\ 'bg':				['bg', 'Normal'],
-	\ 'hl':				['fg', 'Comment'],
-	\ 'fg+':			['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-	\ 'bg+':			['bg', 'CursorLine', 'CursorColumn'],
-	\ 'hl+':			['fg', 'Statement'],
-	\ 'info':			['fg', 'PreProc'],
-	\ 'border':		['fg', 'Ignore'],
-	\ 'prompt':		['fg', 'Conditional'],
-	\ 'pointer':	['fg', 'Exception'],
-	\ 'marker':		['fg', 'Keyword'],
-	\ 'spinner':	['fg', 'Label'],
-	\ 'header':		['fg', 'Comment'] }
-
-let g:fzf_history_dir = '~/.cache/fzf-history'
-
-" [Buffers] Jump to the existing window if possible
-let g:fzf_buffers_jump = 1
-" [[B]Commits] Customize the options used by 'git log':
-let g:fzf_commits_log_options = '--graph --color=always --format="%C(yellow)%h%C(red)%d%C(reset) - %C(bold green)(%ar)%C(reset) %s %C(blue)<%an>%C(reset)"'
-" [Tags] Command to generate tags file
-let g:fzf_tags_command = 'ctags -R'
-" [Commands] --expect expression for directly executing the command
-let g:fzf_commands_expect = 'alt-enter,ctrl-x'
 
 
 """"""""""
