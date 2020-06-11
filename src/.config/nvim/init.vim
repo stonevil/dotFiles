@@ -82,7 +82,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'thaerkh/vim-workspace'
 
 	" Floating terminal
-	Plug 'voldikss/vim-floaterm'
+	"Plug 'voldikss/vim-floaterm'
 
 	" Undo tree
 	Plug 'simnalamburt/vim-mundo'
@@ -523,6 +523,9 @@ nnoremap <silent> <leader>`` :FzfPreviewBufferTags<CR>
 
 " Search for ctags
 nnoremap <silent> <leader>ct :FzfPreviewCtags<CR>
+
+" Grep
+nnoremap <silent> <leader>fg :FzfPreviewProjectCommandGrep<CR>
 
 " Search for lines in buffers
 nnoremap <silent> <leader>f :FzfPreviewLines<CR>
