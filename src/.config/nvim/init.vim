@@ -65,12 +65,12 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 
 	"Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
 
-	Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-	Plug 'Yggdroot/LeaderF-marks'
-	Plug 'tamago324/LeaderF-filer'
+	"Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+	"Plug 'Yggdroot/LeaderF-marks'
+	"Plug 'tamago324/LeaderF-filer'
 
-	"set  runtimepath+=~/.homebrew/opt/fzf
-	"Plug 'yuki-ycino/fzf-preview.vim'
+	set  runtimepath+=~/.homebrew/opt/fzf
+	Plug 'yuki-ycino/fzf-preview.vim'
 
 	" TMUX integration
 	Plug 'christoomey/vim-tmux-navigator'
@@ -275,6 +275,7 @@ nnoremap <leader><space> :nohlsearch<CR>
 " Create new buffer
 nnoremap <leader>N :exec &nu==&rnu? "se nu!" : "se rnu!"<CR>
 
+
 """"""""""
 "" Functions
 " toggle between number and relativenumber
@@ -430,10 +431,7 @@ augroup END
 
 """"""""""
 "" liuchengxu/vim-clap
-"let g:clap_layout = { 'width': '67%', 'height': '33%', 'row': '33%', 'col': '17%' }
-"let g:clap_theme = 'material_design_dark'
-"nnoremap <F4> :Clap files --hidden<CR>
-"nnoremap <leader><F4> :Clap <CR>
+"let g:clap_layout = { 'width': '80%', 'height': '60%', 'row': '10%', 'col': '10%' }
 
 
 """"""""""
@@ -450,51 +448,141 @@ let g:indentLine_setColors = 0
 
 
 """"""""""
-"" yuki-ycino/fzf-preview.vim
+"" junegunn/fzf.vim
+"" Search files
+"nnoremap <silent> <leader>e :Files<CR>
+"nnoremap <silent> <leader>ee :History<CR>
+"" Similar to MRU
+"nnoremap <silent> <leader>r :FZFMru<CR>
+
+"" Search in git files
+"nnoremap <silent> <leader>g :GFiles<CR>
+"nnoremap <silent> <leader>gf :GFiles?<CR>
+
+"" Search in git commits
+"nnoremap <silent> <leader>cc :BCommits<CR>
+"nnoremap <silent> <leader>gc :Commits<CR>
+
+"" Search buffers
+"nnoremap <silent> <leader><leader> :Buffers<CR>
+
+"" Search windows
+"nnoremap <silent> <leader><leader><leader> :Windows<CR>
+
+"" Search mapps
+"nnoremap <silent> <leader>mm :Maps<CR>
+
+"" Search for marked lines
+"nnoremap <silent> <leader>` :Marks<CR>
+
+"" Search for ctags
+"nnoremap <silent> <leader>`` :BTags<CR>
+"nnoremap <silent> <leader>``` :Tags<CR>
+
+"" Search for lines in buffers
+"nnoremap <silent> <leader>f :BLines<CR>
+"nnoremap <silent> <leader>ff :Lines<CR>
+
+"" Search command and command history
+"nnoremap <silent> <leader>co :Commands<CR>
+"nnoremap <silent> <leader>ch :History:<CR>
+
+"" Search in search history
+"nnoremap <silent> <leader>sh :History/<CR>
+
+"" Search in snippets
+"nnoremap <silent> <leader>ss :Snippets<CR>
+
+"" Search with Ag
+"nnoremap <silent> <leader>ag :Ag<CR>
+
+"" Search with Rg
+"nnoremap <silent> <leader>rg :Rg<CR>
 
 
 """"""""""
-"" Yggdroot/LeaderF
-let g:Lf_WindowPosition = 'popup'
-let g:Lf_PreviewInPopup = 1
-let g:Lf_CommandMap = {'<C-S>': ['<Tab>']}
-let g:Lf_ShowDevIcons = 0
-
+"" yuki-ycino/fzf-preview.vim
 " Search files
-nnoremap <silent> <leader>e :Leaderf file<CR>
-nnoremap <silent> <leader>ee :Leaderf file --cword<CR>
+nnoremap <silent> <leader>e :FzfPreviewDirectoryFiles<CR>
+nnoremap <silent> <leader><leader>e :<C-u>FzfPreviewDirectoryFiles -add-fzf-arg=--no-sort -add-fzf-arg=--query="<C-r>=expand('<cword>')<CR>"<CR>
+nnoremap <silent> <leader>ee :FzfPreviewProjectFiles<CR>
+
 " Similar to MRU
-nnoremap <silent> <leader>r :Leaderf mru<CR>
-nnoremap <silent> <leader>r :Leaderf mru --cword<CR>
+nnoremap <silent> <leader>r :FzfPreviewMruFiles<CR>
+nnoremap <silent> <leader><leader>r :<C-u>FzfPreviewMruFiles -add-fzf-arg=--no-sort -add-fzf-arg=--query="<C-r>=expand('<cword>')<CR>"<CR>
+nnoremap <silent> <leader>rr :FzfPreviewProjectMrwFiles<CR>
 
-" Search open buffers
-nnoremap <silent> <leader><leader> :Leaderf buffer<CR>
-nnoremap <silent> <leader><leader><leader> :Leaderf buffer --cword<CR>
-
-" Search windows
-nnoremap <silent> <leader>ww :Leaderf window<CR>
-nnoremap <silent> <leader><leader>www :Leaderf window --cword<CR>
+" Search buffers
+nnoremap <silent> <leader><leader> :FzfPreviewBuffers<CR>
+nnoremap <silent> <leader><leader><leader> :FzfPreviewAllBuffers<CR>
 
 " Search for marked lines
-nnoremap <silent> <leader>` :Leaderf marks<CR>
-nnoremap <silent> <leader>`` :Leaderf marks --cword<CR>
+nnoremap <silent> <leader>` :FzfPreviewMarks<CR>
+" Search for buffer tags
+nnoremap <silent> <leader>`` :FzfPreviewBufferTags<CR>
 
-" Search for lines in current buffer
-nnoremap <silent> <leader>f :Leaderf line<CR>
-nnoremap <silent> <leader>ff :Leaderf line --cword<CR>
+" Search for ctags
+nnoremap <silent> <leader>ct :FzfPreviewCtags<CR>
 
-" Search command history
-nnoremap <silent> <leader>ch :Leaderf cmdHistory<CR>
+" Search for lines in buffers
+nnoremap <silent> <leader>f :FzfPreviewLines<CR>
+nnoremap <silent> <leader><leader>f :<C-u>FzfPreviewLines -add-fzf-arg=--no-sort -add-fzf-arg=--query="<C-r>=expand('<cword>')<CR>"<CR>
+nnoremap <silent> <leader>ff :FzfPreviewBufferLines<CR>
+nnoremap <silent> <leader><leader>ff :<C-u>FzfPreviewBufferLines -add-fzf-arg=--no-sort -add-fzf-arg=--query="<C-r>=expand('<cword>')<CR>"<CR>
 
-" Search in search history
-nnoremap <silent> <leader>sh :Leaderf searchHistory<CR>
+" Search in git changes
+nnoremap <silent> <leader>gc :FzfPreviewChanges<CR>
 
-" Search built-in/user-defined Ex commands
-nnoremap <silent> <leader>co :Leaderf command<CR>
+" Search in git files
+nnoremap <silent> <leader>g :FzfPreviewGitFiles<CR>
+nnoremap <silent> <leader><leader>g :<C-u>FzfPreviewGitFiles -add-fzf-arg=--no-sort -add-fzf-arg=--query="<C-r>=expand('<cword>')<CR>"<CR>
 
-" Search functions
-nnoremap <silent> <leader>fu :Leaderf function<CR>
-nnoremap <silent> <leader>ffu :Leaderf function --cword<CR>
+" Search in git status
+nnoremap <silent> <leader>gs :FzfPreviewGitStatus<CR>
+
+
+""""""""""
+" Yggdroot/LeaderF
+"let g:Lf_WindowPosition = 'popup'
+"let g:Lf_PreviewInPopup = 1
+"let g:Lf_CommandMap = {'<C-S>': ['<Tab>']}
+"let g:Lf_ShowDevIcons = 0
+
+"" Search files
+"nnoremap <silent> <leader>e :Leaderf file<CR>
+"nnoremap <silent> <leader>ee :Leaderf file --cword<CR>
+"" Similar to MRU
+"nnoremap <silent> <leader>r :Leaderf mru<CR>
+"nnoremap <silent> <leader>r :Leaderf mru --cword<CR>
+
+"" Search open buffers
+"nnoremap <silent> <leader><leader> :Leaderf buffer<CR>
+"nnoremap <silent> <leader><leader><leader> :Leaderf buffer --cword<CR>
+
+"" Search windows
+"nnoremap <silent> <leader>ww :Leaderf window<CR>
+"nnoremap <silent> <leader><leader>www :Leaderf window --cword<CR>
+
+"" Search for marked lines
+"nnoremap <silent> <leader>` :Leaderf marks<CR>
+"nnoremap <silent> <leader>`` :Leaderf marks --cword<CR>
+
+"" Search for lines in current buffer
+"nnoremap <silent> <leader>f :Leaderf line<CR>
+"nnoremap <silent> <leader>ff :Leaderf line --cword<CR>
+
+"" Search command history
+"nnoremap <silent> <leader>ch :Leaderf cmdHistory<CR>
+
+"" Search in search history
+"nnoremap <silent> <leader>sh :Leaderf searchHistory<CR>
+
+"" Search built-in/user-defined Ex commands
+"nnoremap <silent> <leader>co :Leaderf command<CR>
+
+"" Search functions
+"nnoremap <silent> <leader>fu :Leaderf function<CR>
+"nnoremap <silent> <leader>ffu :Leaderf function --cword<CR>
 
 " <C-R>	switch between fuzzy search mode and regex mode
 " <C-F>	switch between full path search mode and name only search mode
