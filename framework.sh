@@ -45,7 +45,7 @@ _zinit_update() {
 
 _env_check() {
 	if [ "$(uname)" = "Darwin" ] && [ -d "$HOME"/.homebrew ]; then
-		export PATH=$HOME/.homebrew/bin:$PATH
+		export PATH=$HOME/.homebrew/bin:$HOME/.homebrew/sbin:$PATH
 		# Set shell to zsh
 		chsh -s /bin/zsh
 	fi
