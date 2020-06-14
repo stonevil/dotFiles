@@ -4,7 +4,7 @@
 
 # Enforce Homebrew to the PATH
 HOMEBREW="$HOME/.homebrew"
-PATH="$HOMEBREW/bin:$PATH"
+PATH="$HOMEBREW/bin:$HOMEBREW/sbin:$PATH"
 MANPATH="$HOMEBREW/share/man:$MANPATH"
 
 . "$HOME"/.Files/framework.sh || exit 1
