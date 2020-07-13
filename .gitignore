@@ -4,6 +4,7 @@
 
 # Brew artifacts
 Brewfile.lock.json
+package-lock.json
 
 # Ctags/tags artifacts
 tags
