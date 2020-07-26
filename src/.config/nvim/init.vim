@@ -59,9 +59,8 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'deoplete-plugins/deoplete-go', { 'do': 'make'}
 
 	" FZF
-	"Plug '~/.homebrew/opt/fzf'
-	"Plug 'junegunn/fzf.vim'
-	"Plug 'pbogut/fzf-mru.vim'
+	Plug '~/.homebrew/opt/fzf'
+	Plug 'junegunn/fzf.vim'
 
 	"Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
 
@@ -69,29 +68,20 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	"Plug 'Yggdroot/LeaderF-marks'
 	"Plug 'tamago324/LeaderF-filer'
 
-	set  runtimepath+=~/.homebrew/opt/fzf
-	Plug 'yuki-ycino/fzf-preview.vim'
-
 	" TMUX integration
 	Plug 'christoomey/vim-tmux-navigator'
 	Plug 'tmux-plugins/vim-tmux-focus-events'
 	Plug 'roxma/vim-tmux-clipboard'
 	Plug 'wellle/tmux-complete.vim'
 
-	" Workspaces support
-	Plug 'thaerkh/vim-workspace'
-
 	" Floating terminal
-	"Plug 'voldikss/vim-floaterm'
+	Plug 'voldikss/vim-floaterm'
 
 	" Undo tree
 	Plug 'simnalamburt/vim-mundo'
 
 	" Asynchronous linting/fixing for Vim and Language Server Protocol (LSP) integration
 	Plug 'dense-analysis/ale'
-
-	" Viewer & Finder for LSP symbols and tags
-	Plug 'liuchengxu/vista.vim'
 
 	" Comment stuff out. Use gcc to comment out a line (takes a count), gc to comment out the target of a motion
 	Plug 'scrooloose/nerdcommenter'
@@ -208,7 +198,7 @@ set mouse=a											" Enable proper mouse selection
 set history=1000
 set undolevels=1000
 
-set shell=/bin/zsh
+set shell=/bin/zsh\ -i					" -i to load profile files. Enables $PATH, etc.
 
 set encoding=utf-8							" Set default encoding to UTF-8
 set fileencoding=utf-8
@@ -378,27 +368,32 @@ augroup FileType go
 	let g:go_auto_type_info = 1
 augroup END
 
+augroup dotFiles
+	au!
+	au BufRead,BufNewFile ~/.Files/* nnoremap <leader><F9> :FloatermNew! --autoclose=1 _files_dot_install && exit <CR><CR> | source $MYVIMRC
+augroup END
+
 augroup sshconfig
 	au!
-	au BufRead,BufNewFile  *.sshconfig set syntax=sshconfig
+	au BufRead,BufNewFile *.sshconfig set syntax=sshconfig
 augroup END
 
 augroup shellfile
 	au!
-	au FileType sh nnoremap <leader><F12> :FloatermNew shellcheck %<CR>
+	au FileType sh nnoremap <leader><F12> :FloatermNew! --autoclose=1 shellcheck %<CR>
 augroup END
 
 augroup vagrantfile
 	au!
 	au BufRead,BufNewFile Vagrantfile set filetype=ruby
-	au FileType ruby nnoremap <leader><F9> :FloatermNew vagrant up<CR>
-	au FileType ruby nnoremap <leader><F12> :FloatermNew vagrant validate<CR>
+	au FileType ruby nnoremap <leader><F9> :FloatermNew! --autoclose=1 vagrant up<CR>
+	au FileType ruby nnoremap <leader><F12> :FloatermNew! --autoclose=0 vagrant validate<CR>
 augroup END
 
 augroup dockerfile
 	au!
-	au FileType Dockerfile nnoremap <leader><F9> :terminal CONTAINERNAME=`basename $PWD \| tr '[:upper:]' '[:lower:]'`; docker build -t $CONTAINERNAME -f % .<CR><CR>
-	au FileType Dockerfile nnoremap <leader><F12> :terminal hadolint %<CR>
+	au FileType Dockerfile nnoremap <leader><F9> :FloatermNew! --autoclose=1 CONTAINERNAME=`basename $PWD \| tr '[:upper:]' '[:lower:]'`; docker build -t $CONTAINERNAME -f % .<CR><CR>
+	au FileType Dockerfile nnoremap <leader><F12> :FloatermNew! --autoclose=0 hadolint %<CR>
 augroup END
 
 augroup arduinofile
@@ -408,14 +403,14 @@ augroup END
 
 augroup helmfile
 	au!
-	au FileType helm nnoremap <leader><F12> :terminal helm install --dry-run --debug .<CR><CR>
+	au FileType helm nnoremap <leader><F12> :FloatermNew! --autoclose=0 helm install --dry-run --debug .<CR><CR>
 augroup END
 
 augroup k8sfile
 	au!
 	au BufRead,BufNewFile */.kube/config set filetype=yaml
 	au BufRead,BufNewFile */templates/*.yaml,*/deployment/*.yaml,*/templates/*.tpl,*/deployment/*.tpl set filetype=yaml.gotexttmpl
-	au FileType yaml nnoremap <leader><F12> :terminal kubectl --dry-run -o yam %<CR>
+	au FileType yaml nnoremap <leader><F12> :FloatermNew! --autoclose=0 kubectl --dry-run -o yam %<CR>
 augroup END
 
 augroup markdownfile
@@ -425,7 +420,7 @@ augroup END
 
 augroup ansiblefile
 	au BufRead,BufNewFile */playbooks/*.yml set filetype=yaml.ansible
-	au FileType yaml.ansible nnoremap <leader><F12> :terminal ansible-lint .<CR>
+	au FileType yaml.ansible nnoremap <leader><F12> :FloatermNew! --autoclose=0 ansible-lint .<CR>
 augroup END
 
 
@@ -449,99 +444,101 @@ let g:indentLine_setColors = 0
 
 """"""""""
 "" junegunn/fzf.vim
-"" Search files
-"nnoremap <silent> <leader>e :Files<CR>
-"nnoremap <silent> <leader>ee :History<CR>
-"" Similar to MRU
-"nnoremap <silent> <leader>r :FZFMru<CR>
-
-"" Search in git files
-"nnoremap <silent> <leader>g :GFiles<CR>
-"nnoremap <silent> <leader>gf :GFiles?<CR>
-
-"" Search in git commits
-"nnoremap <silent> <leader>cc :BCommits<CR>
-"nnoremap <silent> <leader>gc :Commits<CR>
-
-"" Search buffers
-"nnoremap <silent> <leader><leader> :Buffers<CR>
-
-"" Search windows
-"nnoremap <silent> <leader><leader><leader> :Windows<CR>
-
-"" Search mapps
-"nnoremap <silent> <leader>mm :Maps<CR>
-
-"" Search for marked lines
-"nnoremap <silent> <leader>` :Marks<CR>
-
-"" Search for ctags
-"nnoremap <silent> <leader>`` :BTags<CR>
-"nnoremap <silent> <leader>``` :Tags<CR>
-
-"" Search for lines in buffers
-"nnoremap <silent> <leader>f :BLines<CR>
-"nnoremap <silent> <leader>ff :Lines<CR>
-
-"" Search command and command history
-"nnoremap <silent> <leader>co :Commands<CR>
-"nnoremap <silent> <leader>ch :History:<CR>
-
-"" Search in search history
-"nnoremap <silent> <leader>sh :History/<CR>
-
-"" Search in snippets
-"nnoremap <silent> <leader>ss :Snippets<CR>
-
-"" Search with Ag
-"nnoremap <silent> <leader>ag :Ag<CR>
-
-"" Search with Rg
-"nnoremap <silent> <leader>rg :Rg<CR>
-
-
-""""""""""
-"" yuki-ycino/fzf-preview.vim
 " Search files
-nnoremap <silent> <leader>e :FzfPreviewDirectoryFiles<CR>
-nnoremap <silent> <leader><leader>e :<C-u>FzfPreviewDirectoryFiles -add-fzf-arg=--no-sort -add-fzf-arg=--query="<C-r>=expand('<cword>')<CR>"<CR>
-nnoremap <silent> <leader>ee :FzfPreviewProjectFiles<CR>
-
-" Similar to MRU
-nnoremap <silent> <leader>r :FzfPreviewMruFiles<CR>
-nnoremap <silent> <leader><leader>r :<C-u>FzfPreviewMruFiles -add-fzf-arg=--no-sort -add-fzf-arg=--query="<C-r>=expand('<cword>')<CR>"<CR>
-nnoremap <silent> <leader>rr :FzfPreviewProjectMrwFiles<CR>
-
-" Search buffers
-nnoremap <silent> <leader><leader> :FzfPreviewBuffers<CR>
-nnoremap <silent> <leader><leader><leader> :FzfPreviewAllBuffers<CR>
-
-" Search for marked lines
-nnoremap <silent> <leader>` :FzfPreviewMarks<CR>
-" Search for buffer tags
-nnoremap <silent> <leader>`` :FzfPreviewBufferTags<CR>
-
-" Search for ctags
-nnoremap <silent> <leader>ct :FzfPreviewCtags<CR>
-
-" Grep
-nnoremap <silent> <leader>fg :FzfPreviewProjectCommandGrep<CR>
-
-" Search for lines in buffers
-nnoremap <silent> <leader>f :FzfPreviewLines<CR>
-nnoremap <silent> <leader><leader>f :<C-u>FzfPreviewLines -add-fzf-arg=--no-sort -add-fzf-arg=--query="<C-r>=expand('<cword>')<CR>"<CR>
-nnoremap <silent> <leader>ff :FzfPreviewBufferLines<CR>
-nnoremap <silent> <leader><leader>ff :<C-u>FzfPreviewBufferLines -add-fzf-arg=--no-sort -add-fzf-arg=--query="<C-r>=expand('<cword>')<CR>"<CR>
-
-" Search in git changes
-nnoremap <silent> <leader>gc :FzfPreviewChanges<CR>
+nnoremap <silent> <leader>e :Files<CR>
+nnoremap <silent> <leader>ee :History<CR>
 
 " Search in git files
-nnoremap <silent> <leader>g :FzfPreviewGitFiles<CR>
-nnoremap <silent> <leader><leader>g :<C-u>FzfPreviewGitFiles -add-fzf-arg=--no-sort -add-fzf-arg=--query="<C-r>=expand('<cword>')<CR>"<CR>
+nnoremap <silent> <leader>g :GFiles<CR>
+nnoremap <silent> <leader>gf :GFiles?<CR>
 
-" Search in git status
-nnoremap <silent> <leader>gs :FzfPreviewGitStatus<CR>
+" Search in git commits
+nnoremap <silent> <leader>bc :BCommits<CR>
+nnoremap <silent> <leader>gc :Commits<CR>
+
+" Search buffers
+nnoremap <silent> <leader><leader> :Buffers<CR>
+
+" Search windows
+nnoremap <silent> <leader><leader><leader> :Windows<CR>
+
+" Search mapps
+nnoremap <silent> <leader>mm :Maps<CR>
+
+" Search for marked lines
+nnoremap <silent> <leader>` :Marks<CR>
+
+" Search for ctags
+nnoremap <silent> <leader>`` :BTags<CR>
+nnoremap <silent> <leader>``` :Tags<CR>
+
+" Search for lines in buffers
+nnoremap <silent> <leader>f :BLines<CR>
+nnoremap <silent> <leader>ff :Lines<CR>
+
+" Search command and command history
+nnoremap <silent> <leader>co :Commands<CR>
+nnoremap <silent> <leader>ch :History:<CR>
+
+" Search in search history
+nnoremap <silent> <leader>sh :History/<CR>
+
+" Search in snippets
+nnoremap <silent> <leader>ss :Snippets<CR>
+
+" Search with Ag
+nnoremap <silent> <leader>ag :Ag<CR>
+
+" Search with Rg
+nnoremap <silent> <leader>rg :Rg<CR>
+
+"" fzf layout: - down / up / left / right
+"let g:fzf_layout = { 'down': '80%' }
+"" Always enable preview window on the right with 60% width
+"let g:fzf_preview_window = 'down:50%'
+
+" fzf layout
+let g:fzf_layout = { 'window': { 'width': 1, 'height': 0.8, 'yoffset': 1, 'border': 'top' } }
+" Customize fzf colors to match your color scheme
+let g:fzf_colors = {
+  \ 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', "IncSearch"],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Label'],
+  \ 'info':    ['fg', 'Comment'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Function'],
+  \ 'pointer': ['fg', 'Statement'],
+  \ 'marker':  ['fg', 'Conditional'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+" Hide statusline
+autocmd! FileType fzf set laststatus=0 noshowmode noruler | autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+
+" History directory
+let g:fzf_history_dir = '~/.local/share/fzf-history'
+
+" [Buffers] Jump to the existing window if possible
+let g:fzf_buffers_jump = 1
+" [[B]Commits] Customize the options used by 'git log':
+let g:fzf_commits_log_options = '--graph --color=always --format="%C(yellow)%h%C(red)%d%C(reset) - %C(bold green)(%ar)%C(reset) %s %C(blue)<%an>%C(reset)"'
+" [Tags] Command to generate tags file
+let g:fzf_tags_command = 'ctags -R'
+" [Commands] --expect expression for directly executing the command
+let g:fzf_commands_expect = 'alt-enter,ctrl-x'
+
+" Command for git grep
+if executable('git')
+	command! -bang -nargs=* GGrep call fzf#vim#grep('git grep --line-number '.shellescape(<q-args>), 0, { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
+endif
+
+" Command for string search
+if executable('rg')
+	command! -bang -nargs=* Find call fzf#vim#grep('rg --no-ignore --hidden --follow --ignore-case --column --no-heading --line-number --color=always --glob "!.git/*" --glob "!.svn/*" --glob "!node_modules/*" --glob "!.undodir/*" --glob "!.session.vim" '.shellescape(<q-args>), 1, fzf#vim#with_preview(), <bang>0)
+endif
 
 
 """"""""""
@@ -633,25 +630,6 @@ nnoremap <silent> <leader>gs :FzfPreviewGitStatus<CR>
 
 
 """"""""""
-"" vista
-function! NearestMethodOrFunction() abort
-	return get(b:, 'vista_nearest_method_or_function', '')
-endfunction
-
-"set statusline+=%{NearestMethodOrFunction()}
-
-" If you want to show the nearest function in your statusline automatically,
-" you can add the following line to your vimrc
-autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
-
-let g:vista_fzf_preview = ['bottom:50%']
-let g:vista#renderer#enable_icon = 1
-
-" Toggle vista view window
-nnoremap <silent> <F1> :Vista!!<CR>
-
-
-""""""""""
 "" vim-floaterm
 let g:floaterm_keymap_new = '<leader>{'
 let g:floaterm_keymap_prev = '<leader>['
@@ -693,21 +671,6 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline#extensions#tmuxline#enabled = 0
 let g:tmuxline_powerline_separators = 0
 "let airline#extensions#tmuxline#snapshot_file = '~/.tmux.theme'
-
-
-""""""""""
-"" vim-workspace
-nnoremap <leader>ws :ToggleWorkspace<CR>
-if empty($VIM_SESSION_FILENAME)
-	let g:workspace_session_name = 'Session.vim'
-else
-	let g:workspace_session_name = $VIM_SESSION_FILENAME
-endif
-let g:workspace_session_disable_on_args = 1
-let g:workspace_persist_undo_history = 1
-"let g:workspace_undodir='.undodir'
-let g:workspace_autosave_always = 1
-let g:workspace_autosave_untrailspaces = 0
 
 
 """"""""""
