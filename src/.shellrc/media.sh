@@ -1,3 +1,5 @@
 # vim:ft=sh :
 
-alias yt='youtube-dl -f mp4 --audio-format best'
+ydl() {
+	youtube-dl -f mp4 --audio-format "best" "$@"
+}
