@@ -1,4 +1,3 @@
-#!/bin/sh
 # vim:ft=sh
 # shellcheck source=/dev/null
 
@@ -22,25 +21,11 @@ _files_dot_install() {
 }
 
 _toolset_install() {
-	_zinit_install
 	_packages_install
 }
 
 _toolset_update() {
-	_zinit_update
 	_packages_update
-}
-
-_zinit_install() {
-	if [ ! -f "$HOME"/.zinit/bin/zinit.zsh ]; then
-		cd "$HOME" || exit
-		git clone https://github.com/zdharma/zinit.git "$HOME"/.zinit/bin
-	fi
-}
-
-_zinit_update() {
-	zinit self-update
-	zinit update
 }
 
 _env_check() {

@@ -11,26 +11,45 @@ PATH="$RUBY_PATH:$GEMS_PATH:$PYTHON3_PATH:$HOMEBREW_PATH/bin:$HOMEBREW_PATH/sbin
 MANPATH="$HOMEBREW_PATH/share/man:$MANPATH"
 
 . "$HOME"/.Files/framework.sh || exit 1
-_zinit_install
 
-# ZPM
-source $HOME/.zinit/bin/zinit.zsh
+source "$HOME/.antigen.zsh"
 
-setopt promptsubst
+# Load the oh-my-zsh's library
+antigen use oh-my-zsh
 
-zinit snippet OMZ::lib/directories.zsh
-zinit snippet OMZ::lib/git.zsh
-zinit snippet OMZ::lib/grep.zsh
-zinit snippet OMZ::lib/history.zsh
-zinit snippet OMZ::lib/theme-and-appearance.zsh
+antigen bundle colored-man-pages
+antigen bundle docker
+antigen bundle kubectl
+antigen bundle rsync
+antigen bundle sudo
+antigen bundle textastic
+antigen bundle vagrant
+antigen bundle vi-mode
+antigen bundle zsh-interactive-cd
 
-zinit light zpm-zsh/colors
-zinit light zsh-users/zsh-completions
-zinit light zsh-users/zsh-autosuggestions
-zinit light zdharma/fast-syntax-highlighting
+# Load the theme
+#antigen theme candy
 
-zinit ice wait lucid
-zinit snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-completions
+antigen bundle zsh-users/zsh-history-substring-search
+# Tell Antigen that you're done
+antigen apply
+
+CASE_SENSITIVE="true"
+DISABLE_AUTO_UPDATE="true"
+export UPDATE_ZSH_DAYS=2
+# DISABLE_LS_COLORS="true"
+DISABLE_AUTO_TITLE="true"
+ENABLE_CORRECTION="true"
+COMPLETION_WAITING_DOTS="true"
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+# HIST_STAMPS="mm/dd/yyyy"
+
+# bind k and j for VI mode
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
 
 # Theme
 GREEN="%{$fg_bold[green]%}"
