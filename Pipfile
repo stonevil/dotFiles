@@ -1,6 +1,7 @@
-ansible==2.9.10
+ansible==2.9.11
+ansible-lint==4.2.0
 cffi==1.14.0
-cryptography==2.9.2
+cryptography==3.0
 fasteners==0.15
 google-oauth2l==1.0.2
 greenlet==0.4.16
@@ -13,7 +14,7 @@ msgpack==1.0.0
 neovim==0.3.1
 neovim-remote==2.4.0
 oauth2client==4.1.3
-psutil==5.7.0
+psutil==5.7.2
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycparser==2.20
@@ -21,5 +22,7 @@ pynvim==0.4.1
 pyOpenSSL==19.1.0
 PyYAML==5.3.1
 rsa==4.6
+ruamel.yaml==0.16.10
+ruamel.yaml.clib==0.2.0
 six==1.15.0
 youtube-dl==2020.6.16.1
