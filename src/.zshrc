@@ -25,7 +25,7 @@ antigen bundle sudo
 antigen bundle textastic
 antigen bundle vagrant
 antigen bundle vi-mode
-antigen bundle zsh-interactive-cd
+antigen bundle Aloxaf/fzf-tab
 
 # Load the theme
 #antigen theme candy
