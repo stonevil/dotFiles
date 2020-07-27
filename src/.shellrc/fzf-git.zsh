@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 # vim:ft=zsh :
 
 # ga - Interactive git add selector

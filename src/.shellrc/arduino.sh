@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # vim:ft=sh :
 
 if [ -d "$HOME"/Development/xtensa-esp32-elf ]; then

@@ -1,4 +1,4 @@
-### dotFIles in full redevelopment right now. Use for you own risk.
+### dotFiles in full redevelopment right now. Use for you own risk.
 
 ## dotFiles
 

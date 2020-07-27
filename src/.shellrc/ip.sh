@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # vim:ft=sh :
 
 # Return my IP address

@@ -1,4 +1,5 @@
-# vim:ft=sh :
+#!/usr/bin/env bash
+# vim:ft=sh :
 
 # Git
 if command -v git >/dev/null; then

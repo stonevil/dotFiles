@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # vim:ft=sh :
 
 # Configure packer env

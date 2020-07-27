@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 # vim:ft=zsh :
 
 # Updates editor information when the keymap changes.

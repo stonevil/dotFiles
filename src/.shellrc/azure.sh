@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # vim:ft=sh :
 
 # Disable Microsoft to sneak on you

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # vim:ft=sh :
 
 export VAGRANT_PROVIDER_GUI="false"

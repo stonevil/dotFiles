@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # vim:ft=sh :
 
 export MINIKUBE_CPU_COUNT="2"

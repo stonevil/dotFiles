@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 # vim:ft=zsh :
 
 # TODO

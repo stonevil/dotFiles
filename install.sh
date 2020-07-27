@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 # vim:ft=sh
 # shellcheck source=/dev/null
 
