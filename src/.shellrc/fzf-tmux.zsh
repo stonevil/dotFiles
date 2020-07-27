@@ -8,6 +8,7 @@ if command -v fzf >/dev/null; then
 		session=$(tmux list-sessions -F "#{session_name}" | fzf --query="$1" --select-1 --exit-0) && tmux switch-client -t "$session"
 	}
 
+
 	# tp - switch to selected tmux pane
 	tp() {
 		local panes current_window current_pane target target_window target_pane

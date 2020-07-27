@@ -1,8 +1,10 @@
 #!/usr/bin/env zsh
 # vim:ft=zsh :
 
-# TODO
-# 1. Switch to ag over rg. rg is not available for i86 on Alpine and basically not available for iSH
+# INFO
+# CTRL-f - Edit selected file(s)
+# CTRL-t - Edit selected file(s)
+# CTRL-r - Paste the selected command from history into the command line
 
 if command -v fzf >/dev/null; then
 	export FZF_DEFAULT_COMMAND_IGNORE="--glob '!.git/*' --glob '!.svn/*' --glob '!node_modules/*' --glob '!.undodir/*' --glob '!.session.vim' --glob '!.DS_Store'"
@@ -23,6 +25,7 @@ if command -v fzf >/dev/null; then
 	# Enter key to select the item, CTRL-C / CTRL-G / ESC to exit
 	# On multi-select mode (-m), TAB and Shift-TAB to mark multiple items
 
+
 	# CTRL-f - Edit selected file(s)
 	fzf-file-edit-widget() {
 		local files
@@ -32,6 +35,8 @@ if command -v fzf >/dev/null; then
 	zle -N fzf-file-edit-widget
 	bindkey -s '^f' 'fzf-file-edit-widget^M'
 
+
+	# CTRL-t - Edit selected file(s)
 	__fsel() {
 		local cmd="${FZF_CTRL_T_COMMAND:-"command find -L . -mindepth 1 \\( -path '*/\\.*' -o -fstype 'sysfs' -o -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \\) -prune -o -type f -print -o -type d -print -o -type l -print 2> /dev/null | cut -b3-"}"
 		setopt localoptions pipefail no_aliases 2> /dev/null
@@ -48,7 +53,6 @@ if command -v fzf >/dev/null; then
 	__fzfcmd() {
 		__fzf_use_tmux__ && echo "fzf-tmux -d${FZF_TMUX_HEIGHT:-40%}" || echo "fzf"
 	}
-	# CTRL-t - Edit selected file(s)
 	fzf-file-widget() {
 		LBUFFER="${LBUFFER}$(__fsel)"
 		local ret=$?
@@ -57,6 +61,7 @@ if command -v fzf >/dev/null; then
 	}
 	zle -N fzf-file-widget
 	bindkey '^t' fzf-file-widget
+
 
 	# CTRL-r - Paste the selected command from history into the command line
 	fzf-history-widget() {
@@ -78,21 +83,24 @@ if command -v fzf >/dev/null; then
 	bindkey '^r' fzf-history-widget
 
 
-	# fce [FUZZY PATTERN] - Search by content and edit selected file(s)
-	fce() {
+	# fzf-content-widget [FUZZY PATTERN] - Search by content and edit selected file(s)
+	fzf-content-widget() {
 		local files
 		IFS=$'\n' files=($(rg --files-with-matches --no-messages --no-ignore --hidden --follow --ignore-case --glob '!.git/*' --glob '!.svn/*' --glob '!node_modules/*' --glob '!.undodir/*' --glob '!.session.vim' --glob '!.DS_Store' $1 | fzf --multi --preview "(bat --style=numbers,changes --color=always {}) 2> /dev/null | head -100 | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 100 $1 || rg --ignore-case --pretty --context 100 $1 {}"))
 		[[ ${#files[@]} -ne 0 ]] && vim "${files[@]}"
 	}
+	zle -N fzf-content-widget
+	bindkey '^r' fzf-content-widget
 
-	# fd - cd to selected directory
-	fd() {
+	# cd to selected directory
+	fzf-cd-widget() {
 		local dir
 		dir=$(find "${1:-.}" -not -path '*/\.git/*' -not -path '*/\.svn/*' -not -path '*/\.undodir/*' -type d -print 2>/dev/null | fzf +m) && cd "$dir" || return
 	}
 
-	# fkill - kill selected process
-	fkill() {
+
+	# Kill selected process
+	fzf-kill-widget() {
 		local pid
 		if [ "$UID" != "0" ]; then
 			pid=$(ps -f -u $UID | sed 1d | fzf -m --preview 'echo {}' --preview-window down:5:hidden:wrap | awk '{print $2}')

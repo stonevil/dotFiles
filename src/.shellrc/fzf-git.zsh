@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 # vim:ft=zsh :
 
+# INFO
 # ga - Interactive git add selector
 # glo - Interactive git log viewer
 # gli - Interactive .gitignore generator

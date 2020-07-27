@@ -483,6 +483,9 @@ nnoremap <silent> <leader>sh :History/<CR>
 " Search in snippets
 nnoremap <silent> <leader>ss :Snippets<CR>
 
+" Search in filetypes
+nnoremap <silent> <leader>ft ::Filetypes<CR>
+
 " Search with Ag
 nnoremap <silent> <leader>ag :Ag<CR>
 
