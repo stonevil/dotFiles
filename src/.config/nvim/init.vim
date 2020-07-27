@@ -74,9 +74,6 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'roxma/vim-tmux-clipboard'
 	Plug 'wellle/tmux-complete.vim'
 
-	" Floating terminal
-	Plug 'voldikss/vim-floaterm'
-
 	" Undo tree
 	Plug 'simnalamburt/vim-mundo'
 
@@ -198,7 +195,7 @@ set mouse=a											" Enable proper mouse selection
 set history=1000
 set undolevels=1000
 
-set shell=/bin/zsh\ -i					" -i to load profile files. Enables $PATH, etc.
+set shell=/bin/zsh							" Add -i to load profile files. Enables $PATH, etc. Have an issues with some junk line inserted on file save
 
 set encoding=utf-8							" Set default encoding to UTF-8
 set fileencoding=utf-8
@@ -370,7 +367,7 @@ augroup END
 
 augroup dotFiles
 	au!
-	au BufRead,BufNewFile ~/.Files/* nnoremap <leader><F9> :FloatermNew! --autoclose=1 _files_dot_install && exit <CR><CR> | source $MYVIMRC
+	au BufRead,BufNewFile ~/.Files/* nnoremap <leader><F9> :new +resize20 term://zsh -i -c '_files_dot_install && exit' <CR><CR> | source $MYVIMRC
 augroup END
 
 augroup sshconfig
@@ -380,20 +377,20 @@ augroup END
 
 augroup shellfile
 	au!
-	au FileType sh nnoremap <leader><F12> :FloatermNew! --autoclose=1 shellcheck %<CR>
+	au FileType sh nnoremap <leader><F12> :new +resize20 term://zsh -i -c 'shellcheck %'<CR>
 augroup END
 
 augroup vagrantfile
 	au!
 	au BufRead,BufNewFile Vagrantfile set filetype=ruby
-	au FileType ruby nnoremap <leader><F9> :FloatermNew! --autoclose=1 vagrant up<CR>
-	au FileType ruby nnoremap <leader><F12> :FloatermNew! --autoclose=0 vagrant validate<CR>
+	au FileType ruby nnoremap <leader><F9> :new +resize20 term://zsh -i -c 'vagrant up'<CR>
+	au FileType ruby nnoremap <leader><F12> :new +resize20 term://zsh -i -c 'vagrant validate'<CR>
 augroup END
 
 augroup dockerfile
 	au!
-	au FileType Dockerfile nnoremap <leader><F9> :FloatermNew! --autoclose=1 CONTAINERNAME=`basename $PWD \| tr '[:upper:]' '[:lower:]'`; docker build -t $CONTAINERNAME -f % .<CR><CR>
-	au FileType Dockerfile nnoremap <leader><F12> :FloatermNew! --autoclose=0 hadolint %<CR>
+	au FileType Dockerfile nnoremap <leader><F9> :new +resize20 term://zsh -i -c "CONTAINERNAME=`basename $PWD \| tr '[:upper:]' '[:lower:]'`; docker build -t $CONTAINERNAME -f % ."<CR><CR>
+	au FileType Dockerfile nnoremap <leader><F12> :new +resize20 term://zsh -i -c 'hadolint %'<CR>
 augroup END
 
 augroup arduinofile
@@ -403,14 +400,14 @@ augroup END
 
 augroup helmfile
 	au!
-	au FileType helm nnoremap <leader><F12> :FloatermNew! --autoclose=0 helm install --dry-run --debug .<CR><CR>
+	au FileType helm nnoremap <leader><F12> :new +resize20 term://zsh -i -c 'helm install --dry-run --debug .'<CR><CR>
 augroup END
 
 augroup k8sfile
 	au!
 	au BufRead,BufNewFile */.kube/config set filetype=yaml
 	au BufRead,BufNewFile */templates/*.yaml,*/deployment/*.yaml,*/templates/*.tpl,*/deployment/*.tpl set filetype=yaml.gotexttmpl
-	au FileType yaml nnoremap <leader><F12> :FloatermNew! --autoclose=0 kubectl --dry-run -o yam %<CR>
+	au FileType yaml nnoremap <leader><F12> :new +resize20 term://zsh -i -c 'kubectl --dry-run -o yam %'<CR>
 augroup END
 
 augroup markdownfile
@@ -420,7 +417,7 @@ augroup END
 
 augroup ansiblefile
 	au BufRead,BufNewFile */playbooks/*.yml set filetype=yaml.ansible
-	au FileType yaml.ansible nnoremap <leader><F12> :FloatermNew! --autoclose=0 ansible-lint .<CR>
+	au FileType yaml.ansible nnoremap <leader><F12> :new +resize20 term://zsh -i -c 'ansible-lint .'<CR>
 augroup END
 
 
@@ -627,19 +624,6 @@ endif
 
 " ic					- operates on all lines in the current hunk.
 " ac					- operates on all lines in the current hunk and any trailing empty lines.
-
-
-""""""""""
-"" vim-floaterm
-let g:floaterm_keymap_new = '<leader>{'
-let g:floaterm_keymap_prev = '<leader>['
-let g:floaterm_keymap_next = '<leader>]'
-let g:floaterm_keymap_toggle = '<leader>}'
-
-let g:floaterm_position = 'center'
-let g:floaterm_type = 'floating'
-let g:floaterm_width = 0.9
-let g:floaterm_height = 0.9
 
 
 """"""""""
