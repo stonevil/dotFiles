@@ -22,12 +22,9 @@ Highly optimised for macOS 10.14 and higher. In progress optimisation for Alpine
 - Python 3
 - Go (!)
 
-## Installation (currently broken)
+
+## Installation
 
 ```
 curl -L https://raw.githubusercontent.com/stonevil/dotFiles/master/install.sh | /bin/bash -s --
 ```
-
-## TODO
-
-- rebuild installation and update procedure - macOS - Alpine Linux Docker container - Alpine Linux iSH sandbox
