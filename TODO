@@ -1,2 +1,3 @@
 Sync zsh and vim aliases and shortcuts for git and other commands
 Improve and sync shortcuts for zsh and vim
+fzf-git redevelopment. Unify with fzf-zsh
