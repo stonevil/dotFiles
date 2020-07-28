@@ -3,8 +3,10 @@
 
 # INFO
 # CTRL-f - Edit selected file(s)
-# CTRL-t - Edit selected file(s)
+# CTRL-t - Work with selected file(s)
 # CTRL-r - Paste the selected command from history into the command line
+
+# List of all bindkey: bindkey
 
 if command -v fzf >/dev/null; then
 	export FZF_DEFAULT_COMMAND_IGNORE="--glob '!.git/*' --glob '!.svn/*' --glob '!node_modules/*' --glob '!.undodir/*' --glob '!.session.vim' --glob '!.DS_Store'"
@@ -36,7 +38,7 @@ if command -v fzf >/dev/null; then
 	bindkey -s '^f' 'fzf-file-edit-widget^M'
 
 
-	# CTRL-t - Edit selected file(s)
+	# CTRL-t - Work with selected file(s)
 	__fsel() {
 		local cmd="${FZF_CTRL_T_COMMAND:-"command find -L . -mindepth 1 \\( -path '*/\\.*' -o -fstype 'sysfs' -o -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \\) -prune -o -type f -print -o -type d -print -o -type l -print 2> /dev/null | cut -b3-"}"
 		setopt localoptions pipefail no_aliases 2> /dev/null
@@ -60,7 +62,7 @@ if command -v fzf >/dev/null; then
 		return $ret
 	}
 	zle -N fzf-file-widget
-	bindkey '^t' fzf-file-widget
+	bindkey -s '^t' fzf-file-widget
 
 
 	# CTRL-r - Paste the selected command from history into the command line
@@ -89,8 +91,7 @@ if command -v fzf >/dev/null; then
 		IFS=$'\n' files=($(rg --files-with-matches --no-messages --no-ignore --hidden --follow --ignore-case --glob '!.git/*' --glob '!.svn/*' --glob '!node_modules/*' --glob '!.undodir/*' --glob '!.session.vim' --glob '!.DS_Store' $1 | fzf --multi --preview "(bat --style=numbers,changes --color=always {}) 2> /dev/null | head -100 | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 100 $1 || rg --ignore-case --pretty --context 100 $1 {}"))
 		[[ ${#files[@]} -ne 0 ]] && vim "${files[@]}"
 	}
-	zle -N fzf-content-widget
-	bindkey '^r' fzf-content-widget
+
 
 	# cd to selected directory
 	fzf-cd-widget() {
