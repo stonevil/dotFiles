@@ -6,13 +6,13 @@
 if 0 | endif
 
 if has("gui_vimr")
-	:cd ~/Documents
+	:cd $HOME . '/Documents'
 endif
 
 if has('nvim')
-	let vimplug_exists=expand('~/.config/nvim/autoload/plug.vim')
+	let vimplug_exists=expand($HOME . '/.config/nvim/autoload/plug.vim')
 else
-	let vimplug_exists=expand('~/.vim/autoload/plug.vim')
+	let vimplug_exists=expand($HOME . '/.vim/autoload/plug.vim')
 endif
 
 function! InstallPlug(plugpath)
@@ -41,7 +41,7 @@ call InstallPlug(vimplug_exists)
 
 "" Install vim-plug if required
 "" Required:
-call plug#begin(expand('~/.config/nvim/plugged'))
+call plug#begin(expand($HOME . '/.config/nvim/plugged'))
 	Plug 'sonph/onehalf', {'rtp': 'vim/'}
 	Plug 'aonemd/kuroi.vim'
 	Plug 'bling/vim-airline'
@@ -59,8 +59,9 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 	Plug 'deoplete-plugins/deoplete-go', { 'do': 'make'}
 
 	" FZF
-	Plug '~/.homebrew/opt/fzf'
+	Plug $HOME . '/.homebrew/opt/fzf'
 	Plug 'junegunn/fzf.vim'
+	Plug 'dominickng/fzf-session.vim'
 
 	"Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
 
@@ -180,7 +181,7 @@ call plug#end()
 "let mapleader="\"
 set guioptions=
 
-"http://stackoverflow.com/questions/20186975/vim-mac-how-to-copy-to-clipboard-without-pbcopy
+" http://stackoverflow.com/questions/20186975/vim-mac-how-to-copy-to-clipboard-without-pbcopy
 set clipboard^=unnamed
 set clipboard^=unnamedplus
 
@@ -287,8 +288,8 @@ function! ToggleSpell(lang)
 		setlocal spell
 		let l:newMode = 'spell'
 		execute 'setlocal spelllang=' . a:lang
-		execute 'setlocal spellfile=' . '~/.vim/spell/' . matchstr(a:lang, '[a-zA-Z][a-zA-Z]') . '.' . &encoding . '.add'
-		execute 'setlocal dictionary=' . '~/.vim/spell/' . a:lang . '.' . &encoding . '.dic'
+		execute 'setlocal spellfile=' . $HOME . '/.local/share/nvim-spell/' . matchstr(a:lang, '[a-zA-Z][a-zA-Z]') . '.' . &encoding . '.add'
+		execute 'setlocal dictionary=' . $HOME . '/.local/share/nvim-spell/' . a:lang . '.' . &encoding . '.dic'
 		let l:newMode .= ', ' . a:lang
 	else
 		setlocal nospell
@@ -367,17 +368,25 @@ augroup END
 
 augroup dotFiles
 	au!
-	au BufRead,BufNewFile ~/.Files/* nnoremap <leader><F9> :new +resize20 term://zsh -i -c '_files_dot_install && exit' <CR><CR> | source $MYVIMRC
+	au BufRead,BufNewFile $HOME . /.Files/* nnoremap <leader><F9> :new +resize20 term://zsh -i -c '_files_dot_install && exit' <CR><CR> | source $MYVIMRC | redraw
 augroup END
 
-augroup sshconfig
+augroup tmuxfile
 	au!
-	au BufRead,BufNewFile *.sshconfig set syntax=sshconfig
+	au BufRead,BufNewFile .tmux.conf set filetype=tmux
+	if exists('$TMUX')
+		au FileType tmux nnoremap <leader><F12> :new +resize20 term://zsh -i -c '_files_dot_install && tmux source-file ~/.tmux.conf && exit'<CR>
+	endif
 augroup END
 
 augroup shellfile
 	au!
 	au FileType sh nnoremap <leader><F12> :new +resize20 term://zsh -i -c 'shellcheck %'<CR>
+augroup END
+
+augroup sshconfig
+	au!
+	au BufRead,BufNewFile *.sshconfig set syntax=sshconfig
 augroup END
 
 augroup vagrantfile
@@ -519,7 +528,7 @@ let g:fzf_colors = {
 autocmd! FileType fzf set laststatus=0 noshowmode noruler | autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 
 " History directory
-let g:fzf_history_dir = '~/.local/share/fzf-history'
+let g:fzf_history_dir = $HOME . '/.local/share/fzf-history'
 
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
@@ -542,7 +551,39 @@ endif
 
 
 """"""""""
-" Yggdroot/LeaderF
+"" dominickng/fzf-session
+" Create required directory if not present
+if !isdirectory($HOME . '/.local/share/nvim-session')
+	call mkdir($HOME . '/.local/share/nvim-session', 'p')
+endif
+
+let g:fzf_session_path = $HOME . '/.local/share/nvim-session'
+
+" Create a session called {name}. The session will be automatically tracked.
+" :Session {name}
+"
+" Load session called {name}.
+" :SLoad {name}
+"
+" Delete session called {name}.
+" :SDelete {name}
+"
+" Stop tracking the current active session and close all buffers.
+" :SQuit
+"
+" List all available sessions.
+" :SList
+"
+" Launch fzf prompt for fuzzy searching available sessions.
+" :Sessions
+"
+" Default actions in the prompt:
+" <Ctrl-X>: Delete session under the cursor
+" Any other key: Open session under the cursor
+
+
+""""""""""
+"" Yggdroot/LeaderF
 "let g:Lf_WindowPosition = 'popup'
 "let g:Lf_PreviewInPopup = 1
 "let g:Lf_CommandMap = {'<C-S>': ['<Tab>']}
@@ -657,7 +698,7 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 
 let g:airline#extensions#tmuxline#enabled = 0
 let g:tmuxline_powerline_separators = 0
-"let airline#extensions#tmuxline#snapshot_file = '~/.tmux.theme'
+"let airline#extensions#tmuxline#snapshot_file = $HOME . '/.local/share/tmux.theme'
 
 
 """"""""""
@@ -865,7 +906,7 @@ vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
 
-" TAB to cycle through completion suggestions
+"" TAB to cycle through completion suggestions
 inoremap <silent><expr> <Tab> \ pumvisible() ? "\<C-n>" : "\<TAB>"
 
 
