@@ -337,7 +337,7 @@ nnoremap <leader>hc :call HunkStageAndCommit()<CR>
 """"""""""
 "" Configuration groups
 augroup FileType go
-	au!
+	autocmd!
 	set runtimepath+=$GOPATH/src/github.com/golang/lint/misc/vim
 	let g:go_def_mapping_enabled = 0
 	let g:go_def_mode='gopls'
@@ -367,66 +367,66 @@ augroup FileType go
 augroup END
 
 augroup dotFiles
-	au!
-	au BufRead,BufNewFile $HOME . /.Files/* nnoremap <leader><F9> :new +resize20 term://zsh -i -c '_files_dot_install && exit' <CR><CR> | source $MYVIMRC | redraw
+	autocmd!
+	autocmd BufRead,BufNewFile ~/.Files/* nnoremap <leader><F9> :new +resize20 term://zsh -i -c '_files_dot_install && exit'<CR><CR>
 augroup END
 
 augroup tmuxfile
-	au!
-	au BufRead,BufNewFile .tmux.conf set filetype=tmux
+	autocmd!
+	autocmd BufRead,BufNewFile .tmux.conf set filetype=tmux
 	if exists('$TMUX')
-		au FileType tmux nnoremap <leader><F12> :new +resize20 term://zsh -i -c '_files_dot_install && tmux source-file ~/.tmux.conf && exit'<CR>
+		autocmd FileType tmux nnoremap <leader><F12> :new +resize20 term://zsh -i -c '_files_dot_install && tmux source-file ~/.tmux.conf && exit'<CR>
 	endif
 augroup END
 
 augroup shellfile
-	au!
-	au FileType sh nnoremap <leader><F12> :new +resize20 term://zsh -i -c 'shellcheck %'<CR>
+	autocmd!
+	autocmd FileType sh nnoremap <leader><F12> :new +resize20 term://zsh -i -c 'shellcheck %'<CR>
 augroup END
 
 augroup sshconfig
-	au!
-	au BufRead,BufNewFile *.sshconfig set syntax=sshconfig
+	autocmd!
+	autocmd BufRead,BufNewFile *.sshconfig set syntax=sshconfig
 augroup END
 
 augroup vagrantfile
-	au!
-	au BufRead,BufNewFile Vagrantfile set filetype=ruby
-	au FileType ruby nnoremap <leader><F9> :new +resize20 term://zsh -i -c 'vagrant up'<CR>
-	au FileType ruby nnoremap <leader><F12> :new +resize20 term://zsh -i -c 'vagrant validate'<CR>
+	autocmd!
+	autocmd BufRead,BufNewFile Vagrantfile set filetype=ruby
+	autocmd FileType ruby nnoremap <leader><F9> :new +resize20 term://zsh -i -c 'vagrant up'<CR>
+	autocmd FileType ruby nnoremap <leader><F12> :new +resize20 term://zsh -i -c 'vagrant validate'<CR>
 augroup END
 
 augroup dockerfile
-	au!
-	au FileType Dockerfile nnoremap <leader><F9> :new +resize20 term://zsh -i -c "CONTAINERNAME=`basename $PWD \| tr '[:upper:]' '[:lower:]'`; docker build -t $CONTAINERNAME -f % ."<CR><CR>
-	au FileType Dockerfile nnoremap <leader><F12> :new +resize20 term://zsh -i -c 'hadolint %'<CR>
+	autocmd!
+	autocmd FileType Dockerfile nnoremap <leader><F9> :new +resize20 term://zsh -i -c "CONTAINERNAME=`basename $PWD \| tr '[:upper:]' '[:lower:]'`; docker build -t $CONTAINERNAME -f % ."<CR><CR>
+	autocmd FileType Dockerfile nnoremap <leader><F12> :new +resize20 term://zsh -i -c 'hadolint %'<CR>
 augroup END
 
 augroup arduinofile
-	au!
-	au BufRead,BufNewFile *.ino,*.pde,*ide set filetype=c++
+	autocmd!
+	autocmd BufRead,BufNewFile *.ino,*.pde,*ide set filetype=c++
 augroup END
 
 augroup helmfile
-	au!
-	au FileType helm nnoremap <leader><F12> :new +resize20 term://zsh -i -c 'helm install --dry-run --debug .'<CR><CR>
+	autocmd!
+	autocmd FileType helm nnoremap <leader><F12> :new +resize20 term://zsh -i -c 'helm install --dry-run --debug .'<CR><CR>
 augroup END
 
 augroup k8sfile
-	au!
-	au BufRead,BufNewFile */.kube/config set filetype=yaml
-	au BufRead,BufNewFile */templates/*.yaml,*/deployment/*.yaml,*/templates/*.tpl,*/deployment/*.tpl set filetype=yaml.gotexttmpl
-	au FileType yaml nnoremap <leader><F12> :new +resize20 term://zsh -i -c 'kubectl --dry-run -o yam %'<CR>
+	autocmd!
+	autocmd BufRead,BufNewFile */.kube/config set filetype=yaml
+	autocmd BufRead,BufNewFile */templates/*.yaml,*/deployment/*.yaml,*/templates/*.tpl,*/deployment/*.tpl set filetype=yaml.gotexttmpl
+	autocmd FileType yaml nnoremap <leader><F12> :new +resize20 term://zsh -i -c 'kubectl --dry-run -o yam %'<CR>
 augroup END
 
 augroup markdownfile
-	au!
-	au BufRead,BufNewFile *.markdown,*.mdown,*.mkdn,*.mkd,*.md,*.mdwn set filetype=markdown
+	autocmd!
+	autocmd BufRead,BufNewFile *.markdown,*.mdown,*.mkdn,*.mkd,*.md,*.mdwn set filetype=markdown
 augroup END
 
 augroup ansiblefile
-	au BufRead,BufNewFile */playbooks/*.yml set filetype=yaml.ansible
-	au FileType yaml.ansible nnoremap <leader><F12> :new +resize20 term://zsh -i -c 'ansible-lint .'<CR>
+	autocmd BufRead,BufNewFile */playbooks/*.yml set filetype=yaml.ansible
+	autocmd FileType yaml.ansible nnoremap <leader><F12> :new +resize20 term://zsh -i -c 'ansible-lint .'<CR>
 augroup END
 
 
@@ -510,19 +510,19 @@ nnoremap <silent> <leader>rg :Rg<CR>
 let g:fzf_layout = { 'window': { 'width': 1, 'height': 0.8, 'yoffset': 1, 'border': 'top' } }
 " Customize fzf colors to match your color scheme
 let g:fzf_colors = {
-  \ 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', "IncSearch"],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Label'],
-  \ 'info':    ['fg', 'Comment'],
-  \ 'border':  ['fg', 'Ignore'],
-  \ 'prompt':  ['fg', 'Function'],
-  \ 'pointer': ['fg', 'Statement'],
-  \ 'marker':  ['fg', 'Conditional'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
+	\ 'fg':      ['fg', 'Normal'],
+	\ 'bg':      ['bg', 'Normal'],
+	\ 'hl':      ['fg', "IncSearch"],
+	\ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+	\ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+	\ 'hl+':     ['fg', 'Label'],
+	\ 'info':    ['fg', 'Comment'],
+	\ 'border':  ['fg', 'Function'],
+	\ 'prompt':  ['fg', 'Function'],
+	\ 'pointer': ['fg', 'Statement'],
+	\ 'marker':  ['fg', 'Conditional'],
+	\ 'spinner': ['fg', 'Label'],
+	\ 'header':  ['fg', 'Comment'] }
 
 " Hide statusline
 autocmd! FileType fzf set laststatus=0 noshowmode noruler | autocmd BufLeave <buffer> set laststatus=2 showmode ruler
@@ -823,8 +823,8 @@ if !exists('g:UltiSnipsJumpBackwardTrigger')
 	let g:UltiSnipsJumpBackwardTrigger='<s-tab>'
 endif
 
-au InsertEnter * exec 'inoremap <silent> ' . g:UltiSnipsExpandTrigger . ' <C-R>=g:UltiSnips_Complete()<cr>'
-au InsertEnter * exec 'inoremap <silent> ' . g:UltiSnipsJumpBackwardTrigger . ' <C-R>=g:UltiSnips_Reverse()<cr>'
+autocmd InsertEnter * exec 'inoremap <silent> ' . g:UltiSnipsExpandTrigger . ' <C-R>=g:UltiSnips_Complete()<cr>'
+autocmd InsertEnter * exec 'inoremap <silent> ' . g:UltiSnipsJumpBackwardTrigger . ' <C-R>=g:UltiSnips_Reverse()<cr>'
 
 
 """"""""""
@@ -933,5 +933,5 @@ highlight LineNr ctermbg=NONE guibg=NONE
 """"""""""
 "" Reopen last position
 if has('autocmd')
-	au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+	autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
