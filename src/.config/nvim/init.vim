@@ -63,6 +63,8 @@ call plug#begin(expand($HOME . '/.config/nvim/plugged'))
 	Plug 'junegunn/fzf.vim'
 	Plug 'dominickng/fzf-session.vim'
 
+	Plug 'kevinhwang91/rnvimr'
+
 	"Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
 
 	"Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
@@ -504,7 +506,7 @@ nnoremap <silent> <leader>rg :Rg<CR>
 "" fzf layout: - down / up / left / right
 "let g:fzf_layout = { 'down': '80%' }
 "" Always enable preview window on the right with 60% width
-"let g:fzf_preview_window = 'down:50%'
+let g:fzf_preview_window = 'down:50%'
 
 " fzf layout
 let g:fzf_layout = { 'window': { 'width': 1, 'height': 0.8, 'yoffset': 1, 'border': 'top' } }
@@ -518,7 +520,7 @@ let g:fzf_colors = {
 	\ 'hl+':     ['fg', 'Label'],
 	\ 'info':    ['fg', 'Comment'],
 	\ 'border':  ['fg', 'Function'],
-	\ 'prompt':  ['fg', 'Function'],
+	\ 'prompt':  ['fg', 'Statement'],
 	\ 'pointer': ['fg', 'Statement'],
 	\ 'marker':  ['fg', 'Conditional'],
 	\ 'spinner': ['fg', 'Label'],
@@ -580,6 +582,37 @@ let g:fzf_session_path = $HOME . '/.local/share/nvim-session'
 " Default actions in the prompt:
 " <Ctrl-X>: Delete session under the cursor
 " Any other key: Open session under the cursor
+
+
+""""""""""
+"" kevinhwang91/rnvimr
+" Make Ranger replace Netrw and be the file explorer
+let g:rnvimr_enable_ex = 1
+
+" Make Ranger to be hidden after picking a file
+let g:rnvimr_enable_picker = 1
+
+" Make Neovim wipe the buffers corresponding to the files deleted by Ranger
+let g:rnvimr_enable_bw = 1
+
+" Link CursorLine into RnvimrNormal highlight in the Floating window
+highlight link RnvimrNormal CursorLine
+
+" Disable a border for floating window
+let g:rnvimr_draw_border = 0
+" Change the border's color
+let g:rnvimr_border_attr = {'fg': ['fg', 'Function'], 'bg': -1}
+
+nnoremap <silent> <leader>r :RnvimrToggle<CR>
+tnoremap <silent> <leader>r <C-\><C-n>:RnvimrToggle<CR>
+
+" Customize the initial layout
+let g:rnvimr_layout = { 'relative': 'editor',
+	\ 'width': float2nr(round(1.0 * &columns)),
+	\ 'height': float2nr(round(1.0 * &lines)),
+	\ 'col': float2nr(round(0.0 * &columns)),
+	\ 'row': float2nr(round(0.0 * &lines)),
+	\ 'style': 'minimal' }
 
 
 """"""""""
