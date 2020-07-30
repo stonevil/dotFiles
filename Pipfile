@@ -1,6 +1,6 @@
 ansible==2.9.11
 ansible-lint==4.2.0
-cffi==1.14.0
+cffi==1.14.1
 cryptography==3.0
 fasteners==0.15
 google-oauth2l==1.0.2
@@ -21,8 +21,9 @@ pycparser==2.20
 pynvim==0.4.1
 pyOpenSSL==19.1.0
 PyYAML==5.3.1
+ranger-fm==1.9.3
 rsa==4.6
 ruamel.yaml==0.16.10
 ruamel.yaml.clib==0.2.0
 six==1.15.0
-youtube-dl==2020.6.16.1
+youtube-dl==2020.7.28
