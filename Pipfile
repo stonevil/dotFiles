@@ -1,6 +1,6 @@
-ansible==2.9.11
-ansible-lint==4.2.0
-cffi==1.14.1
+ansible==2.9.12
+ansible-lint==4.3.0
+cffi==1.14.2
 cryptography==3.0
 fasteners==0.15
 google-oauth2l==1.0.2
@@ -8,7 +8,7 @@ greenlet==0.4.16
 httplib2==0.18.1
 Jinja2==2.11.2
 MarkupSafe==1.1.1
-meson==0.55.0
+meson==0.55.1
 monotonic==1.5
 msgpack==1.0.0
 neovim==0.3.1
