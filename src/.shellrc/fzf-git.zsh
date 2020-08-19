@@ -1,6 +1,9 @@
 #!/usr/bin/env zsh
 # vim:ft=zsh :
 
+# TODO
+# 1. Issue with gd with path with space
+
 # INFO
 # ga - Interactive git add selector
 # glo - Interactive git log viewer
