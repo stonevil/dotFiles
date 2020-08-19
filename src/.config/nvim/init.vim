@@ -42,21 +42,10 @@ call InstallPlug(vimplug_exists)
 "" Install vim-plug if required
 "" Required:
 call plug#begin(expand($HOME . '/.config/nvim/plugged'))
-	Plug 'sonph/onehalf', {'rtp': 'vim/'}
+	Plug 'ayu-theme/ayu-vim'
 	Plug 'aonemd/kuroi.vim'
 	Plug 'bling/vim-airline'
 	Plug 'vim-airline/vim-airline-themes'
-
-	" Autocomplition and debug
-	if has('nvim')
-		Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-	else
-		Plug 'Shougo/deoplete.nvim'
-		Plug 'roxma/nvim-yarp'
-		Plug 'roxma/vim-hug-neovim-rpc'
-	endif
-	let g:deoplete#enable_at_startup = 1
-	Plug 'deoplete-plugins/deoplete-go', { 'do': 'make'}
 
 	" FZF
 	Plug $HOME . '/.homebrew/opt/fzf'
@@ -65,23 +54,15 @@ call plug#begin(expand($HOME . '/.config/nvim/plugged'))
 
 	Plug 'kevinhwang91/rnvimr'
 
-	"Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
-
-	"Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-	"Plug 'Yggdroot/LeaderF-marks'
-	"Plug 'tamago324/LeaderF-filer'
-
 	" TMUX integration
 	Plug 'christoomey/vim-tmux-navigator'
 	Plug 'tmux-plugins/vim-tmux-focus-events'
 	Plug 'roxma/vim-tmux-clipboard'
 	Plug 'wellle/tmux-complete.vim'
 
-	" Undo tree
-	Plug 'simnalamburt/vim-mundo'
-
-	" Asynchronous linting/fixing for Vim and Language Server Protocol (LSP) integration
-	Plug 'dense-analysis/ale'
+	" Git Integration
+	Plug 'tpope/vim-fugitive'
+	Plug 'airblade/vim-gitgutter'
 
 	" Comment stuff out. Use gcc to comment out a line (takes a count), gc to comment out the target of a motion
 	Plug 'scrooloose/nerdcommenter'
@@ -140,39 +121,44 @@ call plug#begin(expand($HOME . '/.config/nvim/plugged'))
 	" https://github.com/junegunn/vim-easy-align
 
 	" Provides insert mode auto-completion for quotes, parens, brackets
-	Plug 'Raimondi/delimitMate'
+	"Plug 'Raimondi/delimitMate'
+	"Plug 'jiangmiao/auto-pairs'
 
-	" Snippets
-	Plug 'SirVer/ultisnips'
-	Plug 'honza/vim-snippets'
+	" Adds various text objects to give you more targets to operate on
+	"Plug 'wellle/targets.vim'
 
 	" Enable repeating supported plugin maps with "."
 	Plug 'tpope/vim-repeat'
 
-	" Go Bundle
-	Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'golang' }
-	Plug 'godoctor/godoctor.vim', { 'for': 'golang' }
+	" Go IDE
+	Plug 'fatih/vim-go'
+
+	" Intellisense engine for Vim8 & Neovim
+	Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+	"{ 'do': ':CocInstall -sync coc-json coc-go coc-python coc-sh coc-yaml coc-pairs' }
+	Plug 'neoclide/coc-denite'
+
+	" Asynchronous linting/fixing for Vim and Language Server Protocol (LSP) integration
+	Plug 'dense-analysis/ale'
+
+	" Snippets
+	Plug 'honza/vim-snippets'
 
 	" Ansible Bundle
-	Plug 'pearofducks/ansible-vim', {'for': 'ansible'}
-	Plug 'danihodovic/vim-ansible-vault'
+	"Plug 'pearofducks/ansible-vim', {'for': 'ansible'}
+	"Plug 'danihodovic/vim-ansible-vault'
 
 	" Helm Bundle
 	Plug 'towolf/vim-helm', {'for': 'helm'}
-
-	" Git Bundle
-	Plug 'tpope/vim-fugitive'
-	"Plug 'mhinz/vim-signify'
-	Plug 'airblade/vim-gitgutter'
 
 	" HashiCorp Bundle
 	Plug 'hashivim/vim-hashicorp-tools', {'for': 'terraform'}
 
 	" Logrotate Bundle
-	Plug 'moon-musick/vim-logrotate', {'for': 'logrotate'}
+	"Plug 'moon-musick/vim-logrotate', {'for': 'logrotate'}
 
 	" Hugo Bundle
-	Plug 'robertbasic/vim-hugo-helper'
+	"Plug 'robertbasic/vim-hugo-helper'
 
 	" Polyglot
 	Plug 'sheerun/vim-polyglot'
@@ -229,6 +215,7 @@ set backspace=indent,eol,start	" Makes backspace key more powerful.
 
 set showtabline=2								" Always show tabline
 set laststatus=2								" Show status line always
+set scrolloff=4									" Keep 4 lines above or below the cursor when scrolling
 
 set incsearch										" Shows the match while typing
 set hlsearch										" Highlight found searches
@@ -244,8 +231,8 @@ set splitbelow									" Horizontal windows should split to bottom
 
 set hidden											" Buffer should still exist if window is closed
 set updatetime=300							" Smaller updatetime for CursorHold & CursorHoldI
-"set shortmess+=c								" Don't give |ins-completion-menu| messages
-"set signcolumn=yes							" Always show signcolumns
+set shortmess+=c								" Don't give |ins-completion-menu| messages
+set signcolumn=yes							" Always show signcolumns
 set showmatch										" Show matching brackets by flickering
 set noshowmode									" We show the mode with airline or lightline
 "set completeopt=menu,menuone		" Show popup menu, even if there is one entry
@@ -433,11 +420,6 @@ augroup END
 
 
 """"""""""
-"" liuchengxu/vim-clap
-"let g:clap_layout = { 'width': '80%', 'height': '60%', 'row': '10%', 'col': '10%' }
-
-
-""""""""""
 "" ansible-vim
 let g:ansible_unindent_after_newline = 1
 let g:ansible_attribute_highlight = 'ob'
@@ -563,22 +545,23 @@ let g:fzf_session_path = $HOME . '/.local/share/nvim-session'
 
 " Create a session called {name}. The session will be automatically tracked.
 " :Session {name}
-"
+
 " Load session called {name}.
 " :SLoad {name}
-"
+
 " Delete session called {name}.
 " :SDelete {name}
-"
+
 " Stop tracking the current active session and close all buffers.
 " :SQuit
-"
+
 " List all available sessions.
 " :SList
-"
+
 " Launch fzf prompt for fuzzy searching available sessions.
 " :Sessions
-"
+nnoremap <silent> <leader><leader><leader>s :Sessions<CR>
+
 " Default actions in the prompt:
 " <Ctrl-X>: Delete session under the cursor
 " Any other key: Open session under the cursor
@@ -613,76 +596,6 @@ let g:rnvimr_layout = { 'relative': 'editor',
 	\ 'col': float2nr(round(0.0 * &columns)),
 	\ 'row': float2nr(round(0.0 * &lines)),
 	\ 'style': 'minimal' }
-
-
-""""""""""
-"" Yggdroot/LeaderF
-"let g:Lf_WindowPosition = 'popup'
-"let g:Lf_PreviewInPopup = 1
-"let g:Lf_CommandMap = {'<C-S>': ['<Tab>']}
-"let g:Lf_ShowDevIcons = 0
-
-"" Search files
-"nnoremap <silent> <leader>e :Leaderf file<CR>
-"nnoremap <silent> <leader>ee :Leaderf file --cword<CR>
-"" Similar to MRU
-"nnoremap <silent> <leader>r :Leaderf mru<CR>
-"nnoremap <silent> <leader>r :Leaderf mru --cword<CR>
-
-"" Search open buffers
-"nnoremap <silent> <leader><leader> :Leaderf buffer<CR>
-"nnoremap <silent> <leader><leader><leader> :Leaderf buffer --cword<CR>
-
-"" Search windows
-"nnoremap <silent> <leader>ww :Leaderf window<CR>
-"nnoremap <silent> <leader><leader>www :Leaderf window --cword<CR>
-
-"" Search for marked lines
-"nnoremap <silent> <leader>` :Leaderf marks<CR>
-"nnoremap <silent> <leader>`` :Leaderf marks --cword<CR>
-
-"" Search for lines in current buffer
-"nnoremap <silent> <leader>f :Leaderf line<CR>
-"nnoremap <silent> <leader>ff :Leaderf line --cword<CR>
-
-"" Search command history
-"nnoremap <silent> <leader>ch :Leaderf cmdHistory<CR>
-
-"" Search in search history
-"nnoremap <silent> <leader>sh :Leaderf searchHistory<CR>
-
-"" Search built-in/user-defined Ex commands
-"nnoremap <silent> <leader>co :Leaderf command<CR>
-
-"" Search functions
-"nnoremap <silent> <leader>fu :Leaderf function<CR>
-"nnoremap <silent> <leader>ffu :Leaderf function --cword<CR>
-
-" <C-R>	switch between fuzzy search mode and regex mode
-" <C-F>	switch between full path search mode and name only search mode
-" <C-V> OR <S-Insert>	paste from clipboard
-" <C-U>	clear the prompt
-" <C-W>	delete the word before the cursor in the prompt
-" <C-J>	move the cursor downward in the result window
-" <C-K>	move the cursor upward in the result window
-" <Up>/<Down>	recall last/next input pattern from history
-" <2-LeftMouse> OR <CR>	open the file under cursor or selected(when multiple files are selected)
-" <C-X>	open in horizontal split window
-" <C-]>	open in vertical split window
-" <C-T>	open in new tabpage
-" <F5>	refresh the cache
-" <C-LeftMouse> OR <S-LeftMouse>	select consecutive multiple files
-" <C-A>	select all files
-" <C-L>	clear all selections
-" <BS>	delete the preceding character in the prompt
-" <Del>	delete the current character in the prompt
-" <Home>	move the cursor to the begin of the prompt
-" <End>	move the cursor to the end of the prompt
-" <Left>	move the cursor one character to the left in the prompt
-" <Right>	move the cursor one character to the right in the prompt
-" <C-P>	preview the result
-" <C-Up>	scroll up in the popup preview window
-" <C-Down>	scroll down in the popup preview window
 
 
 """"""""""
@@ -761,40 +674,6 @@ let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'
 
 
 """"""""""
-"" dense-analysis/ale
-" Recommended for macOS
-let g:delve_backend = "native"
-" Enable integration with airline.
-let g:airline#extensions#ale#enabled = 1
-let g:ale_echo_msg_format = '[%code%] %s [%severity%]'
-let g:ale_ansible_ansible_lint_executable = 'ansible-lint -x ANSIBLE0204'
-let g:ale_set_signs = 0
-let g:delve_enable_syntax_highlighting = 1
-let g:delve_new_command = "new"
-
-" Hover window support
-let g:ale_set_balloons = 0
-
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
-
-let g:ale_fixers = { '*': ['trim_whitespace', 'remove_trailing_lines'], 'javascript': ['prettier', 'eslint'], 'css' : ['prettier'], 'html' : ['prettier'], 'markdown' : ['prettier'], 'json': ['prettier'], 'sh': ['shfmt'], 'yaml': ['prettier'], 'c' : ['clang-format'], 'cpp' : ['clang-format'], 'python' : ['black'], 'go': ['gofmt'] }
-
-let g:ale_lint_on_enter = 0
-let g:ale_fix_on_save = 1
-let g:ale_lint_on_text_changed = 'never'
-
-nmap <silent> <leader>[g  <Plug>(ale_previous_wrap)
-nmap <silent> <leader>]g <Plug>(ale_next_wrap)
-
-
-""""""""""
-"" vim-mundo
-nnoremap <silent> <leader>mt :MundoToggle<CR>
-let g:mundo_close_on_revert = 1
-
-
-""""""""""
 "" tpope/vim-fugitive
 " https://github.com/tpope/vim-fugitive/blob/master/doc/fugitive.txt
 " Write to the current file's path and stage the results. When run in a work tree file, it is effectively git add. Elsewhere, it is effectively git-checkout. A great deal of effort is expended to behave sensibly when the work tree or index version of the file is open in another buffer.
@@ -824,40 +703,177 @@ command! -nargs=1 -range TabFirst exec <line1> . ',' . <line2> . 'Tabularize /^[
 
 
 """"""""""
-"" ultisnips
-function! g:UltiSnips_Complete()
-	call UltiSnips#ExpandSnippet()
-	if g:ulti_expand_res == 0
-		if pumvisible()
-			return "\<C-n>"
-		else
-			call UltiSnips#JumpForwards()
-			if g:ulti_jump_forwards_res == 0
-				return "\<TAB>"
-				endif
-			endif
-	endif
-	return ''
+"" coc.nvim
+let g:go_def_mapping_enabled = 0
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin before putting this into your config.
+inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-function! g:UltiSnips_Reverse()
-	call UltiSnips#JumpBackwards()
-	if g:ulti_jump_backwards_res == 0
-		return "\<C-P>"
+inoremap <silent><expr> <c-'> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position. Coc only does snippet and additional edit on confirm.
+" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
+if exists('*complete_info')
+	inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+	inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+	if (index(['vim','help'], &filetype) >= 0)
+		execute 'h '.expand('<cword>')
+	else
+		call CocAction('doHover')
 	endif
-	return ''
 endfunction
 
-if !exists('g:UltiSnipsJumpForwardTrigger')
-	let g:UltiSnipsJumpForwardTrigger = '<tab>'
-endif
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
-if !exists('g:UltiSnipsJumpBackwardTrigger')
-	let g:UltiSnipsJumpBackwardTrigger='<s-tab>'
-endif
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
 
-autocmd InsertEnter * exec 'inoremap <silent> ' . g:UltiSnipsExpandTrigger . ' <C-R>=g:UltiSnips_Complete()<cr>'
-autocmd InsertEnter * exec 'inoremap <silent> ' . g:UltiSnipsJumpBackwardTrigger . ' <C-R>=g:UltiSnips_Reverse()<cr>'
+" Formatting selected code.
+"xmap <leader>f  <Plug>(coc-format-selected)
+"nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+	autocmd!
+	" Setup formatexpr specified filetype(s).
+	autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+	" Update signature help on jump placeholder.
+	autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a <Plug>(coc-codeaction-selected)
+nmap <leader>a <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf <Plug>(coc-fix-current)
+
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" Use CTRL-S for selections ranges.
+" Requires 'textDocument/selectionRange' support of LS, ex: coc-tsserver
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Mappings for CoCList
+" Show all diagnostics.
+nnoremap <silent><nowait> <space>a :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent><nowait> <space>e :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent><nowait> <space>c :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent><nowait> <space>o :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent><nowait> <space>s :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent><nowait> <space>j :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent><nowait> <space>k :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent><nowait> <space>p :<C-u>CocListResume<CR>
+
+
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+
+inoremap <silent><expr> <TAB>
+	\ pumvisible() ? coc#_select_confirm() :
+	\ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+	\ <SID>check_back_space() ? "\<TAB>" :
+	\ coc#refresh()
+
+function! s:check_back_space() abort
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+let g:coc_snippet_next = '<tab>'
+
+
+""""""""""
+"" dense-analysis/ale
+" Recommended for macOS
+let g:delve_backend = "native"
+" Enable integration with airline.
+let g:airline#extensions#ale#enabled = 1
+let g:ale_echo_msg_format = '[%code%] %s [%severity%]'
+let g:ale_ansible_ansible_lint_executable = 'ansible-lint -x ANSIBLE0204'
+let g:ale_set_signs = 1
+let g:delve_enable_syntax_highlighting = 1
+let g:delve_new_command = "new"
+
+" Hover window support
+let g:ale_set_balloons = 0
+
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+
+let g:ale_fixers = { '*': ['trim_whitespace', 'remove_trailing_lines'], 'javascript': ['prettier', 'eslint'], 'css' : ['prettier'], 'html' : ['prettier'], 'markdown' : ['prettier'], 'json': ['prettier'], 'sh': ['shfmt'], 'yaml': ['prettier'], 'c' : ['clang-format'], 'cpp' : ['clang-format'], 'python' : ['black'], 'go': ['gofmt'] }
+
+let g:ale_lint_on_enter = 0
+let g:ale_fix_on_save = 1
+let g:ale_lint_on_text_changed = 'never'
+
+nmap <silent> <leader>[g <Plug>(ale_previous_wrap)
+nmap <silent> <leader>]g <Plug>(ale_next_wrap)
 
 
 """"""""""
@@ -939,20 +955,17 @@ vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
 
-"" TAB to cycle through completion suggestions
-inoremap <silent><expr> <Tab> \ pumvisible() ? "\<C-n>" : "\<TAB>"
-
-
 """"""""""
 "" Theme
-set t_Co=256
-"set termguicolors " Use the true color mode
+"set t_Co=256
+set termguicolors " Use the true color mode
 
-colorscheme kuroi
+let ayucolor="dark"
+colorscheme ayu
 set colorcolumn=0
 set background=dark
 silent do ColorScheme
-" alduin, kuroi, onehalfdark
+" alduin, ayu, kuroi
 "let g:airline_theme='alduin'
 
 highlight Normal ctermbg=NONE guibg=NONE
