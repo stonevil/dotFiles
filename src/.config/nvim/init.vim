@@ -501,7 +501,7 @@ let g:fzf_colors = {
 	\ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
 	\ 'hl+':     ['fg', 'Label'],
 	\ 'info':    ['fg', 'Comment'],
-	\ 'border':  ['fg', 'Function'],
+	\ 'border':  ['fg', 'Identifier'],
 	\ 'prompt':  ['fg', 'Statement'],
 	\ 'pointer': ['fg', 'Statement'],
 	\ 'marker':  ['fg', 'Conditional'],
