@@ -43,9 +43,9 @@ call InstallPlug(vimplug_exists)
 "" Required:
 call plug#begin(expand($HOME . '/.config/nvim/plugged'))
 	Plug 'ayu-theme/ayu-vim'
-	Plug 'aonemd/kuroi.vim'
+	Plug 'danilo-augusto/vim-afterglow'
+
 	Plug 'bling/vim-airline'
-	Plug 'vim-airline/vim-airline-themes'
 
 	" FZF
 	Plug $HOME . '/.homebrew/opt/fzf'
@@ -957,16 +957,18 @@ vnoremap K :m '<-2<CR>gv=gv
 
 """"""""""
 "" Theme
-"set t_Co=256
-set termguicolors " Use the true color mode
+if exists('$TMUX') || $COLORTERM == 'truecolor'
+	set termguicolors " Use the true color mode
+	let ayucolor="dark"
+	colorscheme ayu
+else
+	set t_Co=256
+	colorscheme afterglow
+endif
 
-let ayucolor="dark"
-colorscheme ayu
 set colorcolumn=0
 set background=dark
 silent do ColorScheme
-" alduin, ayu, kuroi
-"let g:airline_theme='alduin'
 
 highlight Normal ctermbg=NONE guibg=NONE
 highlight NonText ctermbg=NONE guibg=NONE
