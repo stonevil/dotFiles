@@ -101,7 +101,7 @@ _packages_update() {
 	fi
 
 	if command -v nvim >/dev/null; then
-		nvim +PlugInstall +PlugClean +PlugUpdate +UpdateRemotePlugins +qall
+		nvim +PlugInstall! +PlugClean! +PlugUpdate! +UpdateRemotePlugins +qall
 	fi
 
 	if command -v gcloud >/dev/null; then
