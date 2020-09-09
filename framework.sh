@@ -55,7 +55,7 @@ _packages_install() {
 			if [ -d "$HOME"/.homebrew ]; then
 				rm -Rf "$HOME"/.homebrew
 			fi
-			git clone https://github.com/Homebrew/brew.git "$HOME"/.homebrew && brew update && brew upgrade && brew cask upgrade
+			git clone https://github.com/Homebrew/brew.git "$HOME"/.homebrew && brew update && brew upgrade && brew upgrade --cask
 			cd "$HOME"/.Files || exit
 			brew bundle install && brew bundle cleanup
 			cd "$HOME" || exit
@@ -91,7 +91,7 @@ _packages_install() {
 _packages_update() {
 	if [ "$(uname)" = "Darwin" ]; then
 		cd "$HOME"/.Files || exit
-		brew update && brew upgrade && brew cask upgrade && brew cleanup
+		brew update && brew upgrade && brew upgrade --cask && brew cleanup
 		cd "$HOME" || exit
 	fi
 	if [ "$(uname)" = "Linux" ]; then
