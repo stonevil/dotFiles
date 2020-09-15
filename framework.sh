@@ -65,14 +65,17 @@ _packages_install() {
 			apk update && apk upgrade && apk --update add $(paste -s -d ' ' Apkfile) || exit 1
 			cd "$HOME" || exit
 		fi
-
+		if command -v kubectl-krew >/dev/null; then
+			cd "$HOME"/.Files || exit
+			kubectl-krew install <Krewfile
+			cd "$HOME" || exit
+		fi
 		if command -v pip3 >/dev/null; then
 			cd "$HOME"/.Files || exit
 			pip3 install --upgrade pip
 			pip3 install --upgrade --force-reinstall -r Pipfile
 			cd "$HOME" || exit
 		fi
-
 		if command -v go >/dev/null; then
 			cd "$HOME"/.Files || exit
 			if [ -f "$HOME"/.shellrc/golang ]; then
@@ -99,19 +102,18 @@ _packages_update() {
 		apk update && apk upgrade
 		cd "$HOME" || exit
 	fi
-
 	if command -v nvim >/dev/null; then
 		nvim +PlugInstall! +PlugClean! +PlugUpdate! +UpdateRemotePlugins +qall
 	fi
-
 	if command -v gcloud >/dev/null; then
 		yes Y | gcloud components update
 	fi
-
+	if command -v kubectl-krew >/dev/null; then
+		kubectl-krew update && kubectl-krew upgrade
+	fi
 	if command -v pip3 >/dev/null; then
 		pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U
 	fi
-
 	if [ -d "$HOME"/.tmux/plugins ]; then
 		for plugin in "$HOME"/.tmux/plugins/*; do
 			if [ -d "$plugin" ]; then
@@ -121,7 +123,6 @@ _packages_update() {
 				fi
 			fi
 		done
-
 		cd "$HOME" || exit
 	fi
 }
@@ -137,6 +138,9 @@ _packages_dump_list() {
 		fi
 		if [ "$(uname)" = "Linux" ]; then
 			apk info >Apkfile
+		fi
+		if command -v kubectl-krew >/dev/null; then
+			kubectl-krew list | awk '{print $1}' >Krewfile
 		fi
 		if command -v pip3 >/dev/null; then
 			pip3 freeze --local >Pipfile
