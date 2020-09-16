@@ -76,6 +76,11 @@ _packages_install() {
 			pip3 install --upgrade --force-reinstall -r Pipfile
 			cd "$HOME" || exit
 		fi
+		if command -v gem >/dev/null; then
+			cd "$HOME"/.Files || exit
+			xargs <Gemsfile gem install
+			cd "$HOME" || exit
+		fi
 		if command -v go >/dev/null; then
 			cd "$HOME"/.Files || exit
 			if [ -f "$HOME"/.shellrc/golang ]; then
@@ -114,6 +119,11 @@ _packages_update() {
 	if command -v pip3 >/dev/null; then
 		pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U
 	fi
+	if command -v gem >/dev/null; then
+		cd "$HOME"/.Files || exit
+		gem update $(gem outdated | cut -d ' ' -f 1)
+		cd "$HOME" || exit
+	fi
 	if [ -d "$HOME"/.tmux/plugins ]; then
 		for plugin in "$HOME"/.tmux/plugins/*; do
 			if [ -d "$plugin" ]; then
@@ -148,7 +158,7 @@ _packages_dump_list() {
 			echo "pip3 command is not installed"
 		fi
 		if command -v ruby >/dev/null; then
-			ruby -e 'puts Gem::Specification.all_names' >Gemsfile
+			ruby -e 'puts Gem::Specification.all_names' | sed 's/-[0-9].*//' | sort -u >Gemsfile
 		else
 			echo "ruby command is not installed"
 		fi
