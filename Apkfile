@@ -16,6 +16,7 @@ perl
 python3
 python3-dev
 py3-apipkg
+py3-pip
 ruby
 ruby-dev
 go
