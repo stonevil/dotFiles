@@ -22,6 +22,8 @@ ruby-dev
 go
 nodejs
 nodejs-dev
+make
+automake
 dos2unix
 linux-headers
 lua5.3
