@@ -739,6 +739,7 @@ let g:delve_backend = "native"
 let g:airline#extensions#ale#enabled = 1
 let g:ale_echo_msg_format = '[%code%] %s [%severity%]'
 let g:ale_ansible_ansible_lint_executable = 'ansible-lint -x ANSIBLE0204'
+let g:ale_yaml_yamllint_options='-d "{extends: relaxed, rules: {line-length: disable}}"'
 let g:ale_set_signs = 1
 let g:delve_enable_syntax_highlighting = 1
 let g:delve_new_command = "new"
