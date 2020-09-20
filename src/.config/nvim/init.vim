@@ -140,16 +140,6 @@ call plug#begin(expand($HOME . '/.config/nvim/plugged'))
 	Plug 'honza/vim-snippets'
 	Plug 'tenfyzhong/CompleteParameter.vim'
 
-	" Ansible Bundle
-	"Plug 'pearofducks/ansible-vim', {'for': 'ansible', 'do': './UltiSnips/generate.sh'}
-	"Plug 'danihodovic/vim-ansible-vault'
-
-	" Helm Bundle
-	Plug 'towolf/vim-helm', {'for': 'helm'}
-
-	" HashiCorp Bundle
-	Plug 'hashivim/vim-hashicorp-tools', {'for': 'terraform'}
-
 	" Logrotate Bundle
 	"Plug 'moon-musick/vim-logrotate', {'for': 'logrotate'}
 
