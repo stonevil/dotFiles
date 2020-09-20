@@ -127,6 +127,7 @@ call plug#begin(expand($HOME . '/.config/nvim/plugged'))
 	" Provides insert mode auto-completion for quotes, parens, brackets
 	"Plug 'Raimondi/delimitMate'
 	Plug 'jiangmiao/auto-pairs'
+	"Plug 'cohama/lexima.vim'
 
 	" Adds various text objects to give you more targets to operate on
 	"Plug 'wellle/targets.vim'
@@ -729,6 +730,11 @@ noremap <leader>grm :Gdelete<CR>
 "" godlygeek/tabular
 " :Tabularize /^[^=]*\zs=
 command! -nargs=1 -range TabFirst exec <line1> . ',' . <line2> . 'Tabularize /^[^' . escape(<q-args>, '\^$.[?*~') . ']*\zs' . escape(<q-args>, '\^$.[?*~')
+
+
+""""""""""
+"" cohama/lexima.vim
+let g:lexima_enable_basic_rules = 1
 
 
 """"""""""
