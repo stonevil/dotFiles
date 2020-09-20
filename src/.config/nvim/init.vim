@@ -183,7 +183,7 @@ call plug#begin(expand($HOME . '/.config/nvim/plugged'))
 	Plug 'ncm2/ncm2-tmux'
 	Plug 'ncm2/ncm2-gtags'
 	Plug 'ncm2/ncm2-jedi'
-	Plug 'ncm2/ncm2-vim'
+	Plug 'ncm2/ncm2-vim' | Plug 'Shougo/neco-vim'
 	Plug 'ncm2/ncm2-go'
 	Plug 'ncm2/ncm2-ultisnips'
 call plug#end()
