@@ -680,9 +680,10 @@ let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'
 
 """"""""""
 "" nerdcommenter
-"let g:NERDCompactSexyComs = 1
-"let g:NERDCommentEmptyLines = 1
-"let g:NERDTrimTrailingWhitespace = 1
+let g:NERDDefaultAlign = 'left'
+let g:NERDCompactSexyComs = 1
+let g:NERDCommentEmptyLines = 1
+let g:NERDTrimTrailingWhitespace = 1
 "let g:NERDToggleCheckAllLines = 1
 
 " Comment out the current line or text selected in visual mode
