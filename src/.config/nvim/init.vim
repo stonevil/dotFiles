@@ -436,8 +436,10 @@ augroup END
 """"""""""
 "" ansible-vim
 let g:ansible_unindent_after_newline = 1
-let g:ansible_attribute_highlight = 'ob'
+"let g:ansible_attribute_highlight = 'ab'
 let g:ansible_template_syntaxes = { '*.rb.j2': 'ruby' }
+let g:ansible_extra_keywords_highlight = 1
+let g:ansible_name_highlight = 'd'
 
 
 """"""""""
