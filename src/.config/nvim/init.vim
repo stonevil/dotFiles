@@ -71,8 +71,8 @@ call plug#begin(expand($HOME . '/.config/nvim/plugged'))
 	Plug 'scrooloose/nerdcommenter'
 
 	" Displaying thin vertical lines at each indentation level for code indented with spaces
-	"Plug 'Yggdroot/indentLine'
-	Plug 'thaerkh/vim-indentguides'
+	Plug 'Yggdroot/indentLine'
+	"Plug 'thaerkh/vim-indentguides'
 
 	" Better % navigate and highlight matching words modern matchit and matchparen replacement
 	"Plug 'andymass/vim-matchup'
