@@ -70,6 +70,9 @@ call plug#begin(expand($HOME . '/.config/nvim/plugged'))
 	" Comment stuff out. Use gcc to comment out a line (takes a count), gc to comment out the target of a motion
 	Plug 'scrooloose/nerdcommenter'
 
+	" Search and preview file/symbol under cursor in the floating window
+	Plug 'voldikss/vim-skylight'
+
 	" Displaying thin vertical lines at each indentation level for code indented with spaces
 	Plug 'Yggdroot/indentLine'
 	"Plug 'thaerkh/vim-indentguides'
@@ -793,6 +796,12 @@ let g:UltiSnipsJumpBackwardTrigger	= "<a-e>"
 let g:UltiSnipsRemoveSelectModeMappings = 0
 " CompleteParameter
 let g:complete_parameter_use_ultisnips_mapping = 1
+
+
+""""""""""
+"" voldikss/vim-skylight
+nnoremap <silent><leader>go :SkylightJumpTo<CR>
+nnoremap <silent><leader>gp :SkylightPreview<CR>
 
 
 """"""""""
