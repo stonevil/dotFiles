@@ -1,4 +1,4 @@
-ansible==2.10.3
+ansible==2.10.4
 ansible-base==2.10.3
 ansible-lint==4.3.7
 cffi==1.14.4
@@ -30,10 +30,10 @@ pyOpenSSL==20.0.0
 pyparsing==2.4.7
 PyYAML==5.3.1
 ranger-fm==1.9.3
-rich==9.2.0
+rich==9.3.0
 rsa==4.6
 ruamel.yaml==0.16.12
 ruamel.yaml.clib==0.2.2
 six==1.15.0
 typing-extensions==3.7.4.3
-youtube-dl==2020.11.29
+youtube-dl==2020.12.2
