@@ -30,7 +30,7 @@ _toolset_update() {
 }
 
 _env_check() {
-	if [ "$(uname)" = "Darwin" ] && [ -d "$HOME"/.homebrew ]; then
+	if [ "$(uname)" = "Darwin" ]; then
 		export PATH=$HOME/.homebrew/bin:$HOME/.homebrew/sbin:$PATH
 		# Set shell to zsh
 		chsh -s /bin/zsh
