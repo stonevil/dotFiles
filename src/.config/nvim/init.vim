@@ -48,7 +48,11 @@ call plug#begin(expand($HOME . '/.config/nvim/plugged'))
 	Plug 'bling/vim-airline'
 
 	" FZF
-	Plug $HOME . '/.homebrew/opt/fzf'
+	if !isdirectory($HOME . '/.homebrew/opt/fzf')
+		Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+	elseif
+		Plug $HOME . '/.homebrew/opt/fzf'
+	endif
 	Plug 'junegunn/fzf.vim'
 	Plug 'dominickng/fzf-session.vim'
 
