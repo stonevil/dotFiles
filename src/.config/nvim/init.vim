@@ -50,7 +50,7 @@ call plug#begin(expand($HOME . '/.config/nvim/plugged'))
 	" FZF
 	if !isdirectory($HOME . '/.homebrew/opt/fzf')
 		Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-	elseif
+	else
 		Plug $HOME . '/.homebrew/opt/fzf'
 	endif
 	Plug 'junegunn/fzf.vim'
