@@ -339,7 +339,7 @@ endfunction
 " Hunk stage and stage commit
 function! HunkStageAndCommit() abort
 	:GitGutterStageHunk
-	:Gcommit
+	:Git commit
 endfunction
 nnoremap <leader>hc :call HunkStageAndCommit()<CR>
 
