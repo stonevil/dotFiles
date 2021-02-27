@@ -283,7 +283,7 @@ working_directory: None
 
 winpty_backend: false
 
-alt_send_esc: true
+alt_send_esc: false
 
 mouse:
   double_click: { threshold: 300 }
