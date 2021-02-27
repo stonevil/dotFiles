@@ -435,5 +435,5 @@ key_bindings:
 debug:
   render_timer: false
   persistent_logging: false
-  log_level: None
+  log_level: Off
   print_events: false
