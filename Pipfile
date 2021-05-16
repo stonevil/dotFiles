@@ -1,4 +1,4 @@
-ansible==3.3.0
+ansible==3.4.0
 ansible-base==2.10.9
 ansible-lint==5.0.8
 argcomplete==1.12.3
@@ -10,11 +10,11 @@ cryptography==3.4.7
 enrich==1.2.6
 fasteners==0.16
 google-oauth2l==1.0.2
-greenlet==1.0.0
+greenlet==1.1.0
 httplib2==0.19.1
 jedi==0.18.0
-Jinja2==2.11.3
-MarkupSafe==1.1.1
+Jinja2==3.0.0
+MarkupSafe==2.0.0
 meson==0.58.0
 monotonic==1.6
 msgpack==1.0.2
@@ -35,7 +35,7 @@ pyparsing==2.4.7
 python-dateutil==2.8.1
 PyYAML==5.4.1
 ranger-fm==1.9.3
-rich==10.1.0
+rich==10.2.0
 rsa==4.7.2
 ruamel.yaml==0.17.4
 ruamel.yaml.clib==0.2.2

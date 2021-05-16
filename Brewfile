@@ -186,7 +186,6 @@ brew "speedtest-cli"
 brew "sphinx-doc"
 brew "ssh-copy-id", link: true
 brew "star"
-brew "starship"
 brew "stern"
 brew "swiftformat"
 brew "swiftlint"
