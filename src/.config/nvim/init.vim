@@ -904,12 +904,15 @@ set colorcolumn=0
 set background=dark
 silent do ColorScheme
 
-highlight Normal ctermbg=NONE guibg=NONE
-highlight NonText ctermbg=NONE guibg=NONE
-highlight Comment ctermbg=NONE guibg=NONE
-"highlight CursorLine ctermbg=NONE guibg=NONE
-highlight CursorColumn ctermbg=NONE guibg=NONE
-highlight LineNr ctermbg=NONE guibg=NONE
+highlight Normal guibg=none ctermbg=none
+highlight Comment ctermbg=none guibg=none
+highlight LineNr guibg=none ctermbg=none
+highlight Folded guibg=none ctermbg=none
+highlight NonText guibg=none ctermbg=none
+highlight SpecialKey guibg=none ctermbg=none
+highlight VertSplit guibg=none ctermbg=none
+highlight SignColumn guibg=none ctermbg=none
+highlight EndOfBuffer guibg=none ctermbg=none
 
 
 """"""""""
