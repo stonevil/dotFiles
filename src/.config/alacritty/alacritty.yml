@@ -166,11 +166,6 @@ mouse:
   double_click: { threshold: 300 }
   triple_click: { threshold: 300 }
   hide_when_typing: false
-  url:
-    launcher:
-      program: open
-      args: []
-    modifiers: Command
 
 mouse_bindings:
   - { mouse: Middle, action: PasteSelection }
