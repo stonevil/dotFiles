@@ -138,8 +138,6 @@ _packages_update() {
 }
 
 _packages_dump_list() {
-	_tools_dev_check
-	_env_check
 	echo "Dumping list of installed packages"
 	if [ -d "$HOME"/.Files ]; then
 		cd "$HOME"/.Files || exit
